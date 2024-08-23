@@ -20,10 +20,8 @@ export const Hero = () => {
         <button
           className={`
               bg-gradient rounded-xl md:px-20 px-6 md:py-5 py-3
-              border-2 border-yellow-500
               transition-all duration-300
-              hover:scale-105 hover:brightness-110
-              active:scale-100`}
+              active:scale-95`}
         >
           <p className="text-white md:text-2xl text-sm font-semibold">
             <span className="md:text-xl text-xs">Get started with </span>

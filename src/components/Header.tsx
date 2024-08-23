@@ -31,8 +31,7 @@ export const Header = () => {
             href="#"
             className={`
               flex items-center mx-2 font-semibold bg-yellow-600 text-white px-4 py-2 rounded
-              transition-all duration-200
-              hover:shadow-xl hover:bg-yellow-700 active:shadow-none`}
+              transition-all duration-200 active:scale-95`}
           >
             <span className="material-icons text-sm pr-1">egg_alt</span>
             レシピを投稿する
