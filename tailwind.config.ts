@@ -17,9 +17,6 @@ const config: Config = {
       animation: {
         drop: "drop 1s ease-in-out forwards",
       },
-      fontFamily: {
-        Zen_Kaku_Gothic_New: ["var(--font-ZenKakuGothicNew)"],
-      },
       height: {
         "600px": "600px", // h-600 クラスを定義
       },

@@ -21,7 +21,7 @@ export const Hero = () => {
           className={`
               bg-gradient rounded-xl md:px-20 px-6 md:py-5 py-3
               border-2 border-yellow-500
-              transition-all duration-700
+              transition-all duration-300
               hover:scale-105 hover:brightness-110
               active:scale-100`}
         >
