@@ -1,13 +1,20 @@
 import Link from "next/link";
+import logo from "/public/images/tkg_logo.png";
+import Image from "next/image";
 
 export const Header = () => {
   return (
-    <header className="fixed top-0 h-16 w-full px-5 py-2 font-Zen_Kaku_Gothic_New bg-white bg-opacity-40 z-50">
+    <header className="fixed top-0 h-16 w-full md:px-5 px-2 py-2 font-Zen_Kaku_Gothic_New bg-white bg-opacity-40 z-50">
       <div className="flex items-center justify-between h-full">
-        <p className="text-black md:text-2xl text-xl font-black">
+        <div className="text-black md:text-2xl text-xl font-black flex items-center">
+          <Image
+            src={logo}
+            alt="logo"
+            className="md:h-12 md:w-12 h-10 w-10 object-cover"
+          />
           たまごかけごはん
           <span className="text-xl font-semibold">.com</span>
-        </p>
+        </div>
         {/* md以上で表示 */}
         <div className="items-center md:flex hidden">
           <form>
@@ -32,8 +39,8 @@ export const Header = () => {
           </Link>
         </div>
         <div className="md:hidden flex items-center h-full">
-          <span className="material-icons mr-1">search</span>
-          <span className="material-icons ml-1">menu</span>
+          <span className="material-icons m-2">search</span>
+          <span className="material-icons m-2">menu</span>
         </div>
       </div>
     </header>
