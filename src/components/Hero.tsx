@@ -3,7 +3,7 @@ import hero_photo from "/public/images/bg_photo_tkg.png";
 
 export const Hero = () => {
   return (
-    <div className="relative border-b-4 border-white md:h-600px h-96">
+    <div className="relative border-b-4 border-white md:h-600px h-80">
       <Image
         src={hero_photo}
         alt="hero_photo"
@@ -19,7 +19,7 @@ export const Hero = () => {
         </p>
         <button
           className={`
-              bg-gradient rounded-xl md:px-20 px-10 md:py-5 py-3
+              bg-gradient rounded-xl md:px-20 px-6 md:py-5 py-3
               border-2 border-yellow-500
               transition-all duration-700
               hover:scale-105 hover:brightness-110

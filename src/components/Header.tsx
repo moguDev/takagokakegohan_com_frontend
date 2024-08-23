@@ -3,11 +3,12 @@ import Link from "next/link";
 export const Header = () => {
   return (
     <header className="fixed top-0 h-16 w-full px-5 py-2 font-Zen_Kaku_Gothic_New bg-white bg-opacity-40 z-50">
-      <div className="flex items-center md:justify-between justify-center h-full">
+      <div className="flex items-center justify-between h-full">
         <p className="text-black md:text-2xl text-xl font-black">
           たまごかけごはん
           <span className="text-xl font-semibold">.com</span>
         </p>
+        {/* md以上で表示 */}
         <div className="items-center md:flex hidden">
           <form>
             <div className="flex items-center border border-gray-200 rounded-lg p-2 bg-white w-96">
@@ -29,6 +30,10 @@ export const Header = () => {
             <span className="material-icons text-sm pr-1">egg_alt</span>
             レシピを投稿する
           </Link>
+        </div>
+        <div className="md:hidden flex items-center h-full">
+          <span className="material-icons mr-1">search</span>
+          <span className="material-icons ml-1">menu</span>
         </div>
       </div>
     </header>
