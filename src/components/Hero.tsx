@@ -11,7 +11,7 @@ export const Hero = () => {
         style={{ height: 600 }}
       />
       <div
-        className="absolute w-full flex flex-col items-center justify-center z-10 bg-white bg-opacity-50"
+        className="absolute w-full flex flex-col items-center justify-center z-10 bg-white bg-opacity-50 pt-10"
         style={{ height: 600 }}
       >
         <div className="h-1/2" />
