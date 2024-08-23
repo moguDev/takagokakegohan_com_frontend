@@ -20,6 +20,9 @@ const config: Config = {
       fontFamily: {
         Zen_Kaku_Gothic_New: ["var(--font-ZenKakuGothicNew)"],
       },
+      height: {
+        "600px": "600px", // h-600 クラスを定義
+      },
     },
   },
   plugins: [],
