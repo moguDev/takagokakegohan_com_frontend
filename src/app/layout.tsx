@@ -3,6 +3,7 @@ import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
+import { Footer } from "@/components/Footer";
 
 const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
           <Hero />
           {children}
         </main>
+        <Footer />
       </body>
     </html>
   );

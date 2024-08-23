@@ -6,7 +6,10 @@ export const Header = () => {
   return (
     <header className="fixed top-0 h-16 w-full md:px-5 px-2 py-2 font-Zen_Kaku_Gothic_New bg-white bg-opacity-40 z-50">
       <div className="flex items-center justify-between h-full">
-        <div className="text-black md:text-2xl text-xl font-black flex items-center">
+        <Link
+          href="/"
+          className="text-black md:text-2xl text-xl font-black flex items-center select-none"
+        >
           <Image
             src={logo}
             alt="logo"
@@ -14,7 +17,7 @@ export const Header = () => {
           />
           たまごかけごはん
           <span className="text-xl font-semibold">.com</span>
-        </div>
+        </Link>
         {/* md以上で表示 */}
         <div className="items-center md:flex hidden">
           <form>
@@ -38,8 +41,12 @@ export const Header = () => {
           </Link>
         </div>
         <div className="md:hidden flex items-center h-full">
-          <span className="material-icons m-2">search</span>
-          <span className="material-icons m-2">menu</span>
+          <span className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
+            search
+          </span>
+          <span className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
+            menu
+          </span>
         </div>
       </div>
     </header>

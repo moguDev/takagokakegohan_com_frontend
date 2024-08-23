@@ -23,8 +23,8 @@ export const Hero = () => {
               transition-all duration-300
               active:scale-95`}
         >
-          <p className="text-white md:text-2xl text-sm font-semibold">
-            <span className="md:text-xl text-xs">Get started with </span>
+          <p className="text-white md:text-2xl text-lg font-semibold">
+            <span className="md:text-xl text-md">Get started with </span>
             たまごかけごはん！
           </p>
         </button>
