@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
 import { Footer } from "@/components/Footer";
 
 const font = Zen_Kaku_Gothic_New({
@@ -30,10 +29,7 @@ export default function RootLayout({
       </head>
       <body className={font.className}>
         <Header />
-        <main>
-          <Hero />
-          {children}
-        </main>
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
