@@ -41,12 +41,12 @@ export const Header = () => {
           </Link>
         </div>
         <div className="md:hidden flex items-center h-full">
-          <span className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
+          <button className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
             search
-          </span>
-          <span className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
+          </button>
+          <button className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
             menu
-          </span>
+          </button>
         </div>
       </div>
     </header>

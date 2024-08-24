@@ -9,13 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       keyframes: {
-        drop: {
-          "0%": { transform: "translateY(0)" },
-          "100%": { transform: "translateY(calc(50vh - 1.5rem))" }, // 1.5remは水玉の半径（w-12/h-12に基づく）
+        "fade-up": {
+          "0%": { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
       animation: {
-        drop: "drop 1s ease-in-out forwards",
+        "fade-up-2s": "fade-up 2s ease-out",
+        "fade-in-2s": "fade-in 2s ease-out",
       },
       height: {
         "600px": "600px", // h-600 クラスを定義
