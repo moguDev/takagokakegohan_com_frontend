@@ -17,12 +17,7 @@ const uploadImage = async (file: File) => {
         "Content-Type": "multipart/form-data",
       },
     });
-
-    if (response.status === 200) {
-      console.log("Image uploaded successfully");
-    } else {
-      console.error("Failed to upload image");
-    }
+    console.log(response);
   } catch (error) {
     console.error("Error:", error);
   }
