@@ -1,14 +1,24 @@
 "use client";
 import { Hero } from "@/components/Hero";
-import { useState } from "react";
+import { axiosInstance } from "@/lib/axiosInstance";
+import { useEffect } from "react";
+
+const checkStatus: () => Promise<void> = async () => {
+  try {
+    const res = await axiosInstance.get("status");
+    console.log(res);
+  } catch (error) {
+    console.log(`error: ${error}`);
+  }
+};
 
 export default function Home() {
+  useEffect(() => {
+    checkStatus();
+  }, []);
   return (
     <>
       <Hero />
-      <div className="bg-white bg-opacity-50 h-52 border-y border-gray-100">
-        <p className="font-semibold p-2">人気たまごかけごはん</p>
-      </div>
     </>
   );
 }

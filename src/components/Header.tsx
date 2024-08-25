@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export const Header = () => {
   return (
-    <header className="fixed top-0 h-16 w-full md:px-5 px-2 py-2 font-Zen_Kaku_Gothic_New bg-white bg-opacity-40 z-50">
+    <header className="fixed top-0 h-16 w-full md:px-5 px-2 py-2 font-Zen_Kaku_Gothic_New bg-white bg-opacity-40 z-50 border-b border-gray-200">
       <div className="flex items-center justify-between h-full">
         <Link
           href="/"
@@ -26,26 +26,14 @@ export const Header = () => {
               <input
                 type="text"
                 className="outline-none w-full"
-                placeholder="たまごかけごはんを探す"
+                placeholder="キーワードで探す"
               />
             </div>
           </form>
-          <Link
-            href="#"
-            className={`
-              flex items-center mx-2 font-semibold bg-yellow-600 text-white px-4 py-2 rounded
-              transition-all duration-200 active:scale-95`}
-          >
-            <span className="material-icons text-sm pr-1">egg_alt</span>
-            レシピを投稿する
-          </Link>
         </div>
         <div className="md:hidden flex items-center h-full">
           <button className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
             search
-          </button>
-          <button className="material-icons m-2 active:scale-90 transition-all duration-300 select-none">
-            menu
           </button>
         </div>
       </div>

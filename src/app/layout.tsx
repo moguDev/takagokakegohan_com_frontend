@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import Link from "next/link";
+import { LoginForm } from "@/components/LoginForm";
+import { TabNavigation } from "@/components/TabNavigation";
 
 const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -20,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja">
       <head>
         <link
           rel="stylesheet"
@@ -29,8 +31,19 @@ export default function RootLayout({
       </head>
       <body className={font.className}>
         <Header />
-        <main>{children}</main>
-        <Footer />
+        <main className="flex">
+          <div className="w-full">
+            {children}
+            <div className="lg:hidden">
+              <TabNavigation />
+            </div>
+          </div>
+          <div className="relative lg:block hidden w-1/3">
+            <div className="pt-20 border-l border-gray-200 h-screen">
+              <LoginForm />
+            </div>
+          </div>
+        </main>
       </body>
     </html>
   );
