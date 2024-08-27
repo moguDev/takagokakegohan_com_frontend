@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-image: linear-gradient(to right, #fef9c3, white);
+.my-btn {
+  transition: all 0.3s ease;
+  transform: scale(1);
+  user-select: none;
+}
+
+.my-btn:active {
+  transform: scale(0.9);
 }
 
 .bg-gradient {
-  background-image: linear-gradient(to right, #f59e0b, #d97706);
+  background-image: linear-gradient(to right, #f59e0b, #b45309);
 }
 
 .bg-gradient-02 {

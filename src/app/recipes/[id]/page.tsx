@@ -1,6 +1,5 @@
 import Image from "next/image";
 import sampleImage from "/public/images/bg_photo_tkg.png";
-import { cookies } from "next/headers";
 
 type RecipeData = {
   id: 1;

@@ -23,10 +23,19 @@ const config: Config = {
         "fade-in-2s": "fade-in 2s ease-out",
       },
       height: {
-        "600px": "600px", // h-600 クラスを定義
+        hero: "800px", // h-600 クラスを定義
+      },
+      backgroundColor: {
+        theme: "#1B191A",
+      },
+      borderColor: {
+        theme: "#1B191A",
       },
     },
   },
-  plugins: [],
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: [],
+  },
 };
 export default config;

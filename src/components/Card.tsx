@@ -1,15 +1,32 @@
+import Image from "next/image";
+import sampleImage from "/public/images/bg_photo_tkg.png";
+
 type CardProps = { title: string };
 
 export const Card = (props: CardProps) => {
   return (
-    <figure>
-      <div className="bg-white border border-gray-100 rounded-lg shadow cursor-pointer hover:shadow-lg transition-all duration-300 active:shadow">
-        <div className="bg-gray-50 flex items-center justify-center h-52 w-full rounded-t-lg overflow-hidden">
-          <span className="material-icons text-gray-300 select-none">
-            image
-          </span>
-        </div>
-        <p className="px-2 py-4 select-none font-bold">{props.title}</p>
+    <figure className="p-3">
+      <div className="cursor-pointer transition-all duration-300">
+        <Image
+          src={sampleImage}
+          alt="sampleImage"
+          className="w-full h-52 object-cover rounded"
+        />
+        <section className="px-1">
+          <div className="flex items-center justify-between py-1">
+            <p className="text-xl select-none font-bold underline">
+              {props.title}
+            </p>
+            <p className="text-sm flex items-center">
+              <span>★</span>
+              {4.5}
+            </p>
+          </div>
+          <div className="flex items-center justify-between pb-1">
+            <p>mogu</p>
+            <p className="text-sm">調理時間 {"60"}秒</p>
+          </div>
+        </section>
       </div>
     </figure>
   );
