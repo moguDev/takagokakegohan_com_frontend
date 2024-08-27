@@ -1,7 +1,13 @@
 import { useCallback, useState } from "react";
+import { atom, useRecoilState } from "recoil";
+
+const authState = atom({
+  key: "authState",
+  default: { isAuthenticated: false },
+});
 
 const useAuth = () => {
-  const [auth, setAuth] = useState({ isAuthenticated: false });
+  const [auth, setAuth] = useRecoilState(authState);
 
   const signup = useCallback(
     async (
@@ -37,7 +43,7 @@ const useAuth = () => {
     setAuth((prev) => ({ ...prev, isAuthenticated: false }));
   }, [setAuth]);
 
-  return { auth, signup, login, logout };
+  return { isAuthenticated: auth.isAuthenticated, signup, login, logout };
 };
 
 export default useAuth;

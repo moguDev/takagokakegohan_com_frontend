@@ -6,7 +6,7 @@ import sampleImage from "/public/images/bg_photo_tkg.png";
 import { RecipesCarousel } from "@/components/RecipesCarousel";
 import useAuth from "@/hooks/useAuth";
 
-const shipporiMincho = Sawarabi_Mincho({
+const sawarabiMincho = Sawarabi_Mincho({
   subsets: ["latin"],
   weight: ["400"],
 });
@@ -35,8 +35,6 @@ const recipes = [
 ];
 
 const SearchBar: React.FC = () => {
-  const { auth, login, signup } = useAuth();
-
   return (
     <div className="relative">
       <div className="absolute flex items-center justify-center bottom-0 -mb-6 z-40 w-full">
@@ -57,6 +55,7 @@ const SearchBar: React.FC = () => {
 };
 
 export default function Home() {
+  const { isAuthenticated, login, signup } = useAuth();
   const recipes = [
     { title: "たまごかけごはん" },
     { title: "たまごかけごはん" },
@@ -70,11 +69,11 @@ export default function Home() {
       <Hero />
       <SearchBar />
       <div
-        className={`pt-5 p-3 ${shipporiMincho.className} divide-y divide-black divide-opacity-20`}
+        className={`pt-5 p-3 ${sawarabiMincho.className} divide-y divide-black divide-opacity-20`}
       >
         <div className="py-5">
           <h2
-            className={`mx-3 my-1 flex items-center text-2xl font-bold ${shipporiMincho.className}`}
+            className={`mx-3 my-1 flex items-center text-2xl font-bold ${sawarabiMincho.className}`}
           >
             <span className="material-icons text-yellow-600 mr-2">
               new_releases
@@ -85,7 +84,7 @@ export default function Home() {
         </div>
         <div className="py-5">
           <h2
-            className={`mx-3 my-1 flex items-center text-2xl font-bold ${shipporiMincho.className}`}
+            className={`mx-3 my-1 flex items-center text-2xl font-bold ${sawarabiMincho.className}`}
           >
             <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
               NEW
@@ -95,7 +94,7 @@ export default function Home() {
           <RecipesCarousel recipes={recipes} />
         </div>
       </div>
-      <LoginModal />
+      <LoginModal handleLogin={login} />
     </div>
   );
 }

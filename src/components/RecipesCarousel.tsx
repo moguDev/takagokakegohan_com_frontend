@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card } from "./Card";
+import { RecipeCard } from "./RecipeCard";
 
 type RecipesCarouselProps = {
   recipes: { title: string }[];
@@ -44,7 +44,7 @@ export const RecipesCarousel = ({ recipes }: RecipesCarouselProps) => {
               }%)`,
             }}
           >
-            <Card title={recipe.title} />
+            <RecipeCard id={1} title={recipe.title} cooking_time={60} />
           </div>
         ))}
       </div>

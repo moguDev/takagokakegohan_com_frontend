@@ -1,6 +1,9 @@
+"use client";
+import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 
 export const Header = () => {
+  const { isAuthenticated, logout } = useAuth();
   return (
     <header className="bg-theme bg-opacity-80 backdrop-blur-sm fixed top-0 h-16 w-full md:px-5 px-3 py-2 font-Zen_Kaku_Gothic_New z-50">
       <div className="flex items-center justify-between h-full">
@@ -15,20 +18,30 @@ export const Header = () => {
         </Link>
         {/* md以上で表示 */}
         <div className="items-center md:flex hidden">
-          <label
-            htmlFor="login-modal"
-            className="flex items-center rounded mx-1 px-6 py-3 bg-yellow-600 text-white active:scale-95 transition-all duration-300"
-          >
-            <span className="material-icons pr-1">login</span>
-            <p className="outline-none w-full font-bold">ログイン</p>
-          </label>
-          <Link
-            href="/signup"
-            className="flex items-center rounded mx-1 px-4 py-3 bg-white bg-opacity-80 text-black active:scale-95 transition-all duration-300"
-          >
-            <span className="material-icons pr-1">person_add</span>
-            <p className="outline-none w-full font-bold">アカウント作成</p>
-          </Link>
+          {isAuthenticated ? (
+            <Link href="/" className="text-white flex items-center rounded p-2">
+              <span className="material-icons mr-1">person</span>
+              <span className="mr-1">user_name</span>
+              <span className="">Lv. {0}</span>
+            </Link>
+          ) : (
+            <div className="flex items-center">
+              <label
+                htmlFor="login-modal"
+                className="flex items-center rounded mx-1 px-6 py-3 bg-yellow-600 text-white active:scale-95 transition-all duration-300"
+              >
+                <span className="material-icons pr-1">login</span>
+                <p className="outline-none w-full font-bold">ログイン</p>
+              </label>
+              <Link
+                href="/signup"
+                className="flex items-center rounded mx-1 px-4 py-3 bg-white bg-opacity-80 text-black active:scale-95 transition-all duration-300"
+              >
+                <span className="material-icons pr-1">person_add</span>
+                <p className="outline-none w-full font-bold">アカウント作成</p>
+              </Link>
+            </div>
+          )}
         </div>
         <div className="md:hidden flex items-center h-full text-white">
           <div className="dropdown dropdown-end">

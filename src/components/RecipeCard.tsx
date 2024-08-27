@@ -1,11 +1,12 @@
 import Image from "next/image";
 import sampleImage from "/public/images/bg_photo_tkg.png";
+import Link from "next/link";
 
-type CardProps = { title: string };
+type RecipeCardProps = { id: number; title: string; cooking_time: number };
 
-export const Card = (props: CardProps) => {
+export const RecipeCard = ({ id, title, cooking_time }: RecipeCardProps) => {
   return (
-    <figure className="p-2 inline-block">
+    <Link href={`/recipes/${id}`} className="p-2 inline-block">
       <div className="bg-white p-3 shadow hover:shadow-xl cursor-pointer transition-all duration-300">
         <Image
           src={sampleImage}
@@ -14,9 +15,7 @@ export const Card = (props: CardProps) => {
         />
         <section className="px-1 pt-1 pb-3">
           <div className="flex items-center justify-between py-1">
-            <p className="text-xl select-none font-bold underline">
-              {props.title}
-            </p>
+            <p className="text-xl select-none font-bold underline">{title}</p>
             <p className="text-sm flex items-center">
               <span>★</span>
               {4.5}
@@ -24,10 +23,10 @@ export const Card = (props: CardProps) => {
           </div>
           <div className="flex items-center justify-between pb-1">
             <p>mogu</p>
-            <p className="text-sm">調理時間 {"60"}秒</p>
+            <p className="text-sm">調理時間 {cooking_time}秒</p>
           </div>
         </section>
       </div>
-    </figure>
+    </Link>
   );
 };

@@ -26,7 +26,7 @@ export const Hero: React.FC = () => {
           >
             <h1 className="text-center text-white py-2">
               たまごかけごはん
-              <span className="text-4xl">
+              <span className="md:text-4xl text-xl">
                 <span className="text-yellow-500">.</span>com
               </span>
             </h1>
