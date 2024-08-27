@@ -3,6 +3,7 @@ import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
 
 const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -28,11 +29,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${font.className} bg-yellow-50`}>
-        <Header />
-        <main className="flex">
-          <div className="w-full">{children}</div>
-        </main>
-        <Footer />
+        <RecoilRootWrapper>
+          <Header />
+          <main className="flex">
+            <div className="w-full">{children}</div>
+          </main>
+          <Footer />
+        </RecoilRootWrapper>
       </body>
     </html>
   );

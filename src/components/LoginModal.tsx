@@ -6,7 +6,11 @@ type FormData = {
   password: string;
 };
 
-export const LoginModal = () => {
+export const LoginModal = ({
+  handleLogin,
+}: {
+  handleLogin: (email: string, password: string) => Promise<void>;
+}) => {
   const defaultValues = {
     email: "",
     password: "",
@@ -20,6 +24,7 @@ export const LoginModal = () => {
 
   const onsubmit = (data: FormData) => {
     console.log(`onsubmit: ${{ data }}`);
+    handleLogin(data.email, data.password);
   };
 
   return (
