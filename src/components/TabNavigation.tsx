@@ -13,7 +13,10 @@ type NavLinkProps = {
 const NavLink: React.FC<NavLinkProps> = (props: NavLinkProps) => {
   const pathName: string = usePathname();
   const [isSeleceted, setIsSelected] = useState<boolean>(false);
-  useEffect(() => setIsSelected(pathName === props.href), [pathName]);
+  useEffect(
+    () => setIsSelected(pathName === props.href),
+    [pathName, props.href]
+  );
   return (
     <Link
       href={props.href}

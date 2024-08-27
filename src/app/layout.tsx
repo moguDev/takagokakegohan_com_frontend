@@ -2,13 +2,11 @@ import type { Metadata } from "next";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
-import Link from "next/link";
-import { LoginForm } from "@/components/LoginForm";
-import { TabNavigation } from "@/components/TabNavigation";
+import { Footer } from "@/components/Footer";
 
 const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700", "900"],
+  weight: ["400", "500", "700", "900"],
 });
 
 export const metadata: Metadata = {
@@ -29,21 +27,12 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={font.className}>
+      <body className={`${font.className} bg-yellow-50`}>
         <Header />
         <main className="flex">
-          <div className="w-full">
-            {children}
-            <div className="lg:hidden">
-              <TabNavigation />
-            </div>
-          </div>
-          <div className="relative lg:block hidden w-1/3">
-            <div className="pt-20 border-l border-gray-200 h-screen">
-              <LoginForm />
-            </div>
-          </div>
+          <div className="w-full">{children}</div>
         </main>
+        <Footer />
       </body>
     </html>
   );

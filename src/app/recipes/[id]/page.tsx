@@ -1,8 +1,8 @@
 import Image from "next/image";
 import sampleImage from "/public/images/bg_photo_tkg.png";
-import { cookies } from "next/headers";
 
 type RecipeData = {
+  id: 1;
   title: string;
   chef: string;
   cooking_time: number;
@@ -11,6 +11,7 @@ type RecipeData = {
 
 const RecipeDetailPage: React.FC = () => {
   const data: RecipeData = {
+    id: 1,
     title: "めんつゆのたまごかけごはん",
     chef: "もぐ",
     cooking_time: 60,
@@ -40,10 +41,10 @@ const RecipeDetailPage: React.FC = () => {
             材料<span className="text-lg">（1人前）</span>
           </h2>
           <div className="p-1 divide-y divide-gray-200">
-            {data.ingredients.map((e) => (
-              <p className="my-auto py-2">
-                <span className="font-semibold">{e.ingredient}</span>
-                <span className="ml-2">{e.amount}</span>
+            {data.ingredients.map((item, index) => (
+              <p key={index} className="my-auto py-2">
+                <span className="font-semibold">{item.ingredient}</span>
+                <span className="ml-2">{item.amount}</span>
               </p>
             ))}
           </div>
