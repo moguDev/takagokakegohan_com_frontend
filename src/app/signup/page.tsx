@@ -35,15 +35,12 @@ const LoginPage = () => {
       <h1 className={`text-3xl font-semibold ${shipporiMincho.className}`}>
         アカウントの作成
       </h1>
-      <form onSubmit={handleSubmit(onsubmit)}>
+      <form onSubmit={handleSubmit(onsubmit)} method="post">
         <div className="flex flex-col my-5">
-          <label
-            htmlFor="name"
-            className="text-sm font-semibold text-gray-400 p-1"
-          >
+          <label htmlFor="name" className="text-sm text-gray-400 p-1">
             アカウント名
           </label>
-          <div className="bg-white flex items-center rounded-lg border border-gray-200 p-1">
+          <div className="bg-white flex items-center border-b border-gray-200 p-1">
             <span className="material-icons opacity-20 p-2">person</span>
             <input
               type="text"
@@ -53,13 +50,10 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="flex flex-col my-5">
-          <label
-            htmlFor="email"
-            className="text-sm font-semibold text-gray-400 p-1"
-          >
+          <label htmlFor="email" className="text-sm text-gray-400 p-1">
             メールアドレス
           </label>
-          <div className="bg-white flex items-center rounded-lg border border-gray-200 p-1">
+          <div className="bg-white flex items-center border-b border-gray-200 p-1">
             <span className="material-icons opacity-20 p-2">email</span>
             <input
               type="email"
@@ -69,13 +63,10 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="flex flex-col my-5">
-          <label
-            htmlFor="password"
-            className="text-sm font-semibold text-gray-400 p-1"
-          >
+          <label htmlFor="password" className="text-sm text-gray-400 p-1">
             パスワード
           </label>
-          <div className="bg-white flex items-center rounded-lg border border-gray-200 p-1">
+          <div className="bg-white flex items-center border-b border-gray-200 p-1">
             <span className="material-icons opacity-20 p-2">password</span>
             <input
               type="password"
@@ -88,13 +79,10 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="flex flex-col my-5">
-          <label
-            htmlFor="password"
-            className="text-sm font-semibold text-gray-400 p-1"
-          >
+          <label htmlFor="password" className="text-sm text-gray-400 p-1">
             パスワード（確認用）
           </label>
-          <div className="bg-white flex items-center rounded-lg border border-gray-200 p-1">
+          <div className="bg-white flex items-center border-b border-gray-200 p-1">
             <span className="material-icons opacity-20 p-2">password</span>
             <input
               type="password"
@@ -121,7 +109,7 @@ const LoginPage = () => {
           <button
             type="submit"
             className={`
-          bg-yellow-600 px-6 py-4 rounded-lg mx-1
+          bg-yellow-600 px-6 py-4 rounded mx-1
           transition-all duration-300 active:scale-95`}
           >
             <p className="text-white font-semibold flex items-center justify-center">

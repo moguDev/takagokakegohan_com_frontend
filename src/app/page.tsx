@@ -1,12 +1,10 @@
 "use client";
-import { Card } from "@/components/Card";
 import { Hero } from "@/components/Hero";
-import { axiosInstance } from "@/lib/axiosInstance";
-import { useEffect, useRef, useState } from "react";
 import { Sawarabi_Mincho } from "next/font/google";
 import { LoginModal } from "@/components/LoginModal";
 import sampleImage from "/public/images/bg_photo_tkg.png";
 import { RecipesCarousel } from "@/components/RecipesCarousel";
+import useAuth from "@/hooks/useAuth";
 
 const shipporiMincho = Sawarabi_Mincho({
   subsets: ["latin"],
@@ -36,16 +34,9 @@ const recipes = [
   },
 ];
 
-const checkStatus: () => Promise<void> = async () => {
-  try {
-    const res = await axiosInstance.get("status");
-    console.log(res);
-  } catch (error) {
-    console.log(`error: ${error}`);
-  }
-};
-
 const SearchBar: React.FC = () => {
+  const { auth, login, signup } = useAuth();
+
   return (
     <div className="relative">
       <div className="absolute flex items-center justify-center bottom-0 -mb-6 z-40 w-full">
@@ -53,7 +44,7 @@ const SearchBar: React.FC = () => {
           <span className="material-icons opacity-30 pl-3 pr-1">search</span>
           <input
             type="text"
-            placeholder="レシピ名や食材で検索"
+            placeholder="レシピ名や調味料で検索"
             className="outline-none py-3 w-full"
           />
           <button className="bg-yellow-600 h-full w-28 text-white rounded px-3 py-2 m-0.5 active:scale-95 transition-all duration-300">
@@ -79,7 +70,7 @@ export default function Home() {
       <Hero />
       <SearchBar />
       <div
-        className={`pt-5 p-3 ${shipporiMincho.className} divide-y divide-y-gray-100`}
+        className={`pt-5 p-3 ${shipporiMincho.className} divide-y divide-black divide-opacity-20`}
       >
         <div className="py-5">
           <h2

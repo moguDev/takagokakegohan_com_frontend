@@ -26,17 +26,17 @@ export const LoginModal = () => {
     <div>
       <input type="checkbox" id="login-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box bg-white bg-opacity-90 rounded shadow backdrop-blur-sm">
+        <div className="modal-box bg-white rounded-none shadow-xl backdrop-blur-sm">
           <h3 className="font-bold text-xl py-3 text-yellow-950">ログイン</h3>
           <div className="relative">
             <form method="post" onSubmit={handleSubmit(onsubmit)}>
               <div className="form-control pb-3">
                 <label htmlFor="email" className="label">
-                  <span className="label-text text-yellow-950">
+                  <span className="label-text text-xs text-yellow-950">
                     メールアドレス
                   </span>
                 </label>
-                <div className="bg-white flex items-center rounded-lg border border-gray-200">
+                <div className="bg-white flex items-center border-b border-gray-200">
                   <span className="material-icons opacity-20 p-2">email</span>
                   <input
                     type="email"
@@ -59,9 +59,11 @@ export const LoginModal = () => {
               </div>
               <div className="form-control pb-2">
                 <label htmlFor="password" className="label">
-                  <span className="label-text text-yellow-950">パスワード</span>
+                  <span className="label-text text-xs text-yellow-950">
+                    パスワード
+                  </span>
                 </label>
-                <div className="bg-white flex items-center rounded-lg border border-gray-200">
+                <div className="bg-white flex items-center border-b border-gray-200">
                   <span className="material-icons opacity-20 p-2">
                     password
                   </span>

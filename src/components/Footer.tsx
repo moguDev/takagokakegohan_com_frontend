@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="p-2">
+    <footer className="pt-5 p-2">
       <div className="lg:flex items-center justify-between">
         <div className="flex items-center">
           <Link
