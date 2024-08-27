@@ -2,14 +2,39 @@
 import { Card } from "@/components/Card";
 import { Hero } from "@/components/Hero";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Sawarabi_Mincho } from "next/font/google";
 import { LoginModal } from "@/components/LoginModal";
+import sampleImage from "/public/images/bg_photo_tkg.png";
+import { RecipesCarousel } from "@/components/RecipesCarousel";
 
 const shipporiMincho = Sawarabi_Mincho({
   subsets: ["latin"],
   weight: ["400"],
 });
+
+const recipes = [
+  {
+    thumbnail: sampleImage,
+    name: "たまごかけごはん1",
+  },
+  {
+    thumbnail: sampleImage,
+    name: "たまごかけごはん2",
+  },
+  {
+    thumbnail: sampleImage,
+    name: "たまごかけごはん3",
+  },
+  {
+    thumbnail: sampleImage,
+    name: "たまごかけごはん4",
+  },
+  {
+    thumbnail: sampleImage,
+    name: "たまごかけごはん5",
+  },
+];
 
 const checkStatus: () => Promise<void> = async () => {
   try {
@@ -41,24 +66,42 @@ const SearchBar: React.FC = () => {
 };
 
 export default function Home() {
-  useEffect(() => {
-    checkStatus();
-  }, []);
+  const recipes = [
+    { title: "たまごかけごはん" },
+    { title: "たまごかけごはん" },
+    { title: "たまごかけごはん" },
+    { title: "たまごかけごはん" },
+    { title: "たまごかけごはん" },
+  ];
+
   return (
     <div>
       <Hero />
       <SearchBar />
-      <div className={`pt-10 p-3 ${shipporiMincho.className}`}>
-        <h2
-          className={`mx-3 my-1 text-2xl font-bold ${shipporiMincho.className}`}
-        >
-          今週の人気
-        </h2>
-        <div className="grid lg:grid-cols-4 grid-cols-1 border-b border-theme border-opacity-50">
-          <Card title="たまごかけごはん" />
-          <Card title="たまごかけごはん" />
-          <Card title="たまごかけごはん" />
-          <Card title="たまごかけごはん" />
+      <div
+        className={`pt-5 p-3 ${shipporiMincho.className} divide-y divide-y-gray-100`}
+      >
+        <div className="py-5">
+          <h2
+            className={`mx-3 my-1 flex items-center text-2xl font-bold ${shipporiMincho.className}`}
+          >
+            <span className="material-icons text-yellow-600 mr-2">
+              new_releases
+            </span>
+            注目のレシピ
+          </h2>
+          <RecipesCarousel recipes={recipes} />
+        </div>
+        <div className="py-5">
+          <h2
+            className={`mx-3 my-1 flex items-center text-2xl font-bold ${shipporiMincho.className}`}
+          >
+            <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
+              NEW
+            </span>
+            新着のレシピ
+          </h2>
+          <RecipesCarousel recipes={recipes} />
         </div>
       </div>
       <LoginModal />

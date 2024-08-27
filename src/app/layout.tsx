@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
         <main className="flex">
           <div className="w-full">{children}</div>
         </main>
+        <Footer />
       </body>
     </html>
   );
