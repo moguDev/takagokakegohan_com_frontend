@@ -2,10 +2,14 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { Sawarabi_Mincho } from "next/font/google";
+import useAuth from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 type FormData = {
+  name: string;
   email: string;
   password: string;
+  passwordConfirmation: string;
 };
 
 const shipporiMincho = Sawarabi_Mincho({
@@ -13,12 +17,14 @@ const shipporiMincho = Sawarabi_Mincho({
   weight: ["400"],
 });
 
-const LoginPage = () => {
+const SignupPage = () => {
+  const { loading, signup } = useAuth();
+  const router = useRouter();
   const defaultValues = {
-    name: "",
     email: "",
     password: "",
     passwordConfirmation: "",
+    name: "",
   };
   const {
     register,
@@ -26,8 +32,18 @@ const LoginPage = () => {
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onsubmit = (data: FormData) => {
-    console.log(`onsubmit: ${{ data }}`);
+  const onsubmit = async (data: FormData) => {
+    try {
+      await signup(
+        data.email,
+        data.password,
+        data.passwordConfirmation,
+        data.name
+      );
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -46,8 +62,16 @@ const LoginPage = () => {
               type="text"
               className="w-full rounded-lg outline-none"
               placeholder="アカウント名"
+              {...register("name", {
+                required: "アカウント名を入力してください。",
+                maxLength: {
+                  value: 32,
+                  message: "アカウント名は32文字以上にしてください。",
+                },
+              })}
             />
           </div>
+          <div className="text-red-500 text-xs p-1">{errors.name?.message}</div>
         </div>
         <div className="flex flex-col my-5">
           <label htmlFor="email" className="text-sm text-gray-400 p-1">
@@ -59,7 +83,17 @@ const LoginPage = () => {
               type="email"
               className="w-full rounded-lg outline-none"
               placeholder="メールアドレス"
+              {...register("email", {
+                required: "メールアドレスを入力してください。",
+                pattern: {
+                  value: /^[a-zA-Z\d._%+-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/i,
+                  message: "メールアドレスの形式が不正です。",
+                },
+              })}
             />
+          </div>
+          <div className="text-red-500 text-xs p-1">
+            {errors.email?.message}
           </div>
         </div>
         <div className="flex flex-col my-5">
@@ -72,10 +106,20 @@ const LoginPage = () => {
               type="password"
               className="h-full w-full rounded-lg outline-none"
               placeholder="パスワード"
+              {...register("password", {
+                required: "パスワードを入力してください。",
+                minLength: {
+                  value: 8,
+                  message: "パスワードは8文字以上にしてください。",
+                },
+              })}
             />
             <span className="material-icons opacity-20 p-2">
               visibility_off
             </span>
+          </div>
+          <div className="text-red-500 text-xs p-1">
+            {errors.password?.message}
           </div>
         </div>
         <div className="flex flex-col my-5">
@@ -88,10 +132,16 @@ const LoginPage = () => {
               type="password"
               className="h-full w-full rounded-lg outline-none"
               placeholder="パスワード（確認用）"
+              {...register("passwordConfirmation", {
+                required: "パスワード（確認用）を入力してください。",
+              })}
             />
             <span className="material-icons opacity-20 p-2">
               visibility_off
             </span>
+          </div>
+          <div className="text-red-500 text-xs p-1">
+            {errors.passwordConfirmation?.message}
           </div>
         </div>
         <div className="flex items-center justify-between">
@@ -123,4 +173,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;

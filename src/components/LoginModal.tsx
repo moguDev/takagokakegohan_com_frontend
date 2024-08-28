@@ -1,4 +1,5 @@
 "use client";
+import useAuth from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 type FormData = {
@@ -6,11 +7,8 @@ type FormData = {
   password: string;
 };
 
-export const LoginModal = ({
-  handleLogin,
-}: {
-  handleLogin: (email: string, password: string) => Promise<void>;
-}) => {
+export const LoginModal = () => {
+  const { loading, login } = useAuth();
   const defaultValues = {
     email: "",
     password: "",
@@ -22,18 +20,31 @@ export const LoginModal = ({
     formState: { errors },
   } = useForm({ defaultValues });
 
-  const onsubmit = (data: FormData) => {
-    console.log(`onsubmit: ${{ data }}`);
-    handleLogin(data.email, data.password);
+  const onsubmit = async (data: FormData) => {
+    try {
+      await login(data.email, data.password);
+      const checkBox = document.getElementById(
+        "login-modal"
+      ) as HTMLInputElement;
+      checkBox.checked = false;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div>
       <input type="checkbox" id="login-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box bg-white rounded-none shadow-xl backdrop-blur-sm">
+        <div className="modal-box bg-white rounded shadow-xl">
           <h3 className="font-bold text-xl py-3 text-yellow-950">ログイン</h3>
           <div className="relative">
+            {loading && (
+              <div className="absolute flex items-center justify-center top-0 h-full w-full bg-white opacity-50">
+                <span className="loading loading-spinner loading-xs mr-2" />
+                ログイン中...
+              </div>
+            )}
             <form method="post" onSubmit={handleSubmit(onsubmit)}>
               <div className="form-control pb-3">
                 <label htmlFor="email" className="label">
@@ -47,7 +58,7 @@ export const LoginModal = ({
                     type="email"
                     autoComplete="email"
                     placeholder="user@example.com"
-                    className="w-full outline-none pr-2 rounded-lg text-lg"
+                    className="w-full outline-none p-1 rounded text-lg"
                     {...register("email", {
                       required: "メールアドレスを入力してください。",
                       pattern: {
@@ -74,7 +85,7 @@ export const LoginModal = ({
                   </span>
                   <input
                     type="password"
-                    className="w-full outline-none pr-2 rounded-lg text-lg"
+                    className="w-full outline-none p-1 rounded text-lg"
                     autoComplete="current-password"
                     placeholder="パスワード"
                     {...register("password", {
@@ -91,15 +102,9 @@ export const LoginModal = ({
                 </div>
               </div>
               <div className="modal-action flex items-center">
-                <label
-                  htmlFor="login-modal"
-                  className="text-gray-800 bg-opacity-0 mx-1 cursor-pointer my-btn"
-                >
-                  キャンセル
-                </label>
                 <button
                   type="submit"
-                  className="rounded font-bold bg-yellow-600 text-yellow-100 px-5 py-3 my-btn mx-1"
+                  className="rounded font-bold bg-yellow-600 text-yellow-100 w-full py-3 my-btn mx-1"
                 >
                   ログイン
                 </button>
