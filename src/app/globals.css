@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+h1,
+h2,
+h3 {
+  user-select: none;
+}
+
 .my-btn {
   transition: all 0.3s ease;
   transform: scale(1);
@@ -17,7 +23,7 @@
 }
 
 .bg-gradient-02 {
-  background-image: linear-gradient(to right, #fffbeb, white);
+  background-image: linear-gradient(to right, white, #fef3c7);
 }
 
 .text-gradient-01 {

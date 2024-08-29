@@ -48,18 +48,6 @@ export const RecipesCarousel = ({ recipes }: RecipesCarouselProps) => {
           </div>
         ))}
       </div>
-      <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow"
-        onClick={handlePrev}
-      >
-        &#9664;
-      </button>
-      <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow"
-        onClick={handleNext}
-      >
-        &#9654;
-      </button>
     </div>
   );
 };

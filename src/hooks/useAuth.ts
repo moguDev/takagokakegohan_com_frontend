@@ -34,7 +34,7 @@ const setCookies = (accessToken: string, client: string, uid: string) => {
   Cookies.set("uid", uid, { secure: true, sameSite: "strict" });
 };
 
-const useAuth = () => {
+export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
   const [loading, setLoading] = useRecoilState(loadingState);
 
@@ -53,7 +53,7 @@ const useAuth = () => {
     } finally {
       setLoading(false);
     }
-  }, [setAuth]);
+  }, [setAuth, setLoading]);
 
   const signup = useCallback(
     async (
@@ -86,7 +86,7 @@ const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth]
+    [setAuth, setLoading]
   );
 
   const login = useCallback(
@@ -114,7 +114,7 @@ const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth]
+    [setAuth, setLoading]
   );
 
   const logout = useCallback(async () => {
@@ -130,7 +130,7 @@ const useAuth = () => {
     } finally {
       setLoading(false);
     }
-  }, [setAuth]);
+  }, [setAuth, setLoading]);
 
   return {
     auth,
@@ -141,5 +141,3 @@ const useAuth = () => {
     logout,
   };
 };
-
-export default useAuth;

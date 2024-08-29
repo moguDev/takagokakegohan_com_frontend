@@ -23,7 +23,7 @@ const config: Config = {
         "fade-in-2s": "fade-in 2s ease-out",
       },
       height: {
-        hero: "800px", // h-600 クラスを定義
+        hero: "580px", // h-600 クラスを定義
       },
       backgroundColor: {
         theme: "#1B191A",

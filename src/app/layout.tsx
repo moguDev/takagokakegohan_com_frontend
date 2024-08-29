@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
+import { LoginModal } from "@/components/LoginModal";
 
 const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -30,11 +31,17 @@ export default function RootLayout({
       </head>
       <body className={`${font.className} bg-yellow-50`}>
         <RecoilRootWrapper>
-          <Header />
-          <main className="flex">
-            <div className="w-full">{children}</div>
-          </main>
-          <Footer />
+          <div className="drawer drawer-end">
+            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              <Header />
+              <main className="flex">
+                <div className="w-full">{children}</div>
+              </main>
+              <Footer />
+            </div>
+          </div>
+          <LoginModal />
         </RecoilRootWrapper>
       </body>
     </html>

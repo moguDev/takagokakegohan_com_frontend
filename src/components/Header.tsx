@@ -1,6 +1,7 @@
 "use client";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
+import { CardMenu } from "./CardMenu";
 
 export const Header = () => {
   const { auth, loading } = useAuth();
@@ -9,10 +10,10 @@ export const Header = () => {
       <div className="flex items-center justify-between h-full">
         <Link
           href="/"
-          className="text-white md:text-2xl text-xl font-black select-none"
+          className="text-white md:text-2xl text-lg font-black select-none"
         >
           たまごかけごはん
-          <span className="text-xl font-semibold">
+          <span className="md:text-xl text-base font-semibold">
             <span className="text-yellow-500">.</span>com
           </span>
         </Link>
@@ -23,13 +24,16 @@ export const Header = () => {
               Loading...
             </div>
           ) : auth.isAuthenticated ? (
-            <label
-              htmlFor="my-drawer-4"
-              className="text-white font-bold flex items-center rounded p-2 my-btn"
-            >
-              <span className="material-icons">account_circle</span>
-              <span className="ml-1 hidden md:inline-block">{auth.name}</span>
-            </label>
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="text-white material-icons m-1"
+              >
+                account_circle
+              </div>
+              <CardMenu />
+            </div>
           ) : (
             <>
               <div className="md:flex items-center hidden">
@@ -50,12 +54,16 @@ export const Header = () => {
                   </p>
                 </Link>
               </div>
-              <label
-                htmlFor="my-drawer-4"
-                className="text-white font-bold md:hidden flex items-center rounded p-2"
-              >
-                <span className="material-icons mr-1">menu</span>
-              </label>
+              <div className="dropdown dropdown-end md:hidden block">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="text-white material-icons m-1"
+                >
+                  menu
+                </div>
+                <CardMenu />
+              </div>
             </>
           )}
         </div>

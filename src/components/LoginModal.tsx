@@ -1,5 +1,5 @@
 "use client";
-import useAuth from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
 type FormData = {

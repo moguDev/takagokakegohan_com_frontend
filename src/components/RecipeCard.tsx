@@ -7,7 +7,7 @@ type RecipeCardProps = { id: number; title: string; cooking_time: number };
 export const RecipeCard = ({ id, title, cooking_time }: RecipeCardProps) => {
   return (
     <Link href={`/recipes/${id}`} className="p-2 inline-block">
-      <div className="bg-white p-3 shadow hover:shadow-xl cursor-pointer transition-all duration-300">
+      <div className="bg-white p-3 shadow hover:shadow-lg hover:-translate-y-1 cursor-pointer transition-all duration-300">
         <Image
           src={sampleImage}
           alt="sampleImage"
