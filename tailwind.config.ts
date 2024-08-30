@@ -27,6 +27,8 @@ const config: Config = {
       },
       backgroundColor: {
         theme: "#1B191A",
+        primary: "#1B191A",
+        secondary: "#C5A797",
       },
       borderColor: {
         theme: "#1B191A",

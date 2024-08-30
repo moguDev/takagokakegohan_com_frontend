@@ -2,8 +2,7 @@
 import { Hero } from "@/components/Hero";
 import { Sawarabi_Mincho } from "next/font/google";
 import { RecipesCarousel } from "@/components/RecipesCarousel";
-import { useAuth } from "@/hooks/useAuth";
-import { useEffect, useRef, useState } from "react";
+import { useRecipes } from "@/hooks/useRecipes";
 
 const sawarabiMincho = Sawarabi_Mincho({
   subsets: ["latin"],
@@ -31,18 +30,7 @@ const SearchBar: React.FC = () => {
 };
 
 export default function Home() {
-  const { checkAuth } = useAuth();
-  const recipes = [
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-  ];
-
-  useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+  const { recipes } = useRecipes();
 
   return (
     <>

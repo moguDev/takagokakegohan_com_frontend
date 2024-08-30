@@ -2,9 +2,15 @@
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { CardMenu } from "./CardMenu";
+import { useEffect } from "react";
 
 export const Header = () => {
-  const { auth, loading } = useAuth();
+  const { auth, loading, checkAuth } = useAuth();
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
+
   return (
     <header className="bg-theme bg-opacity-80 backdrop-blur-sm fixed top-0 h-16 w-full md:px-5 px-3 py-2 font-Zen_Kaku_Gothic_New z-40">
       <div className="flex items-center justify-between h-full">
