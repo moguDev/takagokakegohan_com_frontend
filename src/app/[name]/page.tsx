@@ -13,7 +13,11 @@ const UserDetailsPage: React.FC = () => {
   const { auth } = useAuth();
   const { recipes } = useRecipes();
   const { name } = useParams();
-  const { userDetails } = useUserDetails(name as string);
+  const { userDetails, fetchUserDetails } = useUserDetails(name as string);
+
+  useEffect(() => {
+    fetchUserDetails;
+  }, [auth]);
 
   return (
     <div className="max-w-4xl mx-auto pt-20">
@@ -23,9 +27,9 @@ const UserDetailsPage: React.FC = () => {
             <div className="h-20 w-20 rounded-full border-2 border-white shadow relative">
               <Image
                 src={
-                  userDetails?.avatar === ""
+                  userDetails.avatar === null
                     ? defaultImage
-                    : userDetails?.avatar
+                    : userDetails.avatar
                 }
                 alt="アイコン"
                 className="object-cover rounded-full"

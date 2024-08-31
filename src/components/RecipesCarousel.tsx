@@ -1,12 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import { RecipeCard } from "./RecipeCard";
+import { Recipe } from "@/hooks/useRecipes";
 
-type RecipesCarouselProps = {
-  recipes: { title: string }[];
-};
-
-export const RecipesCarousel = ({ recipes }: RecipesCarouselProps) => {
+export const RecipesCarousel = ({ recipes }: { recipes: Recipe[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const handlePrev = () => {
     if (currentIndex <= 0) {
@@ -45,7 +42,7 @@ export const RecipesCarousel = ({ recipes }: RecipesCarouselProps) => {
               }%)`,
             }}
           >
-            <RecipeCard id={1} title={recipe.title} cooking_time={60} />
+            <RecipeCard recipe={recipe} />
           </div>
         ))}
       </div>

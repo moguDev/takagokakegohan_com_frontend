@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { Sawarabi_Mincho } from "next/font/google";
 import { RecipesCarousel } from "@/components/RecipesCarousel";
 import { useRecipes } from "@/hooks/useRecipes";
+import { useEffect } from "react";
 
 const sawarabiMincho = Sawarabi_Mincho({
   subsets: ["latin"],
@@ -30,7 +31,10 @@ const SearchBar: React.FC = () => {
 };
 
 export default function Home() {
-  const { recipes } = useRecipes();
+  const { recipes, fetchRecipes } = useRecipes();
+  useEffect(() => {
+    fetchRecipes();
+  }, []);
 
   return (
     <>
