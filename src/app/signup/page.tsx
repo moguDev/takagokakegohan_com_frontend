@@ -6,10 +6,11 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
 type FormData = {
-  name: string;
   email: string;
   password: string;
   passwordConfirmation: string;
+  name: string;
+  nickname: string;
 };
 
 const shipporiMincho = Sawarabi_Mincho({
@@ -25,6 +26,7 @@ const SignupPage = () => {
     password: "",
     passwordConfirmation: "",
     name: "",
+    nickname: "",
   };
   const {
     register,
@@ -38,7 +40,8 @@ const SignupPage = () => {
         data.email,
         data.password,
         data.passwordConfirmation,
-        data.name
+        data.name,
+        data.nickname
       );
       router.push("/");
     } catch (error) {
@@ -48,26 +51,50 @@ const SignupPage = () => {
 
   return (
     <div className="pt-20 p-2">
-      <div className="max-w-4xl mx-auto bg-white p-10 shadow">
+      <div className="max-w-4xl mx-auto mt-32 bg-white p-10 shadow">
         <h1 className={`text-3xl font-semibold ${shipporiMincho.className}`}>
           アカウントの作成
         </h1>
         <form onSubmit={handleSubmit(onsubmit)} method="post">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="text-sm text-gray-400 p-1">
+              ユーザID
+            </label>
+            <div className="bg-white flex items-center border-b border-gray-200 p-1">
+              <span className="text-gray-400 font-bold px-3">@</span>
+              <input
+                type="text"
+                className="w-full rounded-lg outline-none"
+                placeholder={`半角英数字および、"_"、"-"のみ使用可能`}
+                {...register("name", {
+                  required: "ユーザIDを入力してください。",
+                  maxLength: {
+                    value: 32,
+                    message: "ユーザIDは32文字以内にしてください。",
+                  },
+                })}
+              />
+            </div>
+            <div className="text-red-500 text-xs p-1">
+              {errors.name?.message}
+            </div>
+          </div>
+          <div className="flex flex-col my-5">
+            <label htmlFor="nickname" className="text-sm text-gray-400 p-1">
               アカウント名
             </label>
             <div className="bg-white flex items-center border-b border-gray-200 p-1">
               <span className="material-icons opacity-20 p-2">person</span>
               <input
+                id="nickname"
                 type="text"
                 className="w-full rounded-lg outline-none"
                 placeholder="アカウント名"
-                {...register("name", {
+                {...register("nickname", {
                   required: "アカウント名を入力してください。",
                   maxLength: {
                     value: 32,
-                    message: "アカウント名は32文字以上にしてください。",
+                    message: "アカウント名は32文字以内にしてください。",
                   },
                 })}
               />

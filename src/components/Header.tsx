@@ -3,6 +3,8 @@ import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { CardMenu } from "./CardMenu";
 import { useEffect } from "react";
+import Image from "next/image";
+import defaultImage from "/public/images/default_avatar.png";
 
 export const Header = () => {
   const { auth, loading, checkAuth } = useAuth();
@@ -34,9 +36,14 @@ export const Header = () => {
               <div
                 tabIndex={0}
                 role="button"
-                className="text-white material-icons m-1"
+                className="border border-white border-opacity-50 rounded-full h-10 w-10 relative m-1"
               >
-                account_circle
+                <Image
+                  src={auth.avatar === "" ? defaultImage : auth.avatar}
+                  alt="アイコン"
+                  className="object-cover rounded-full"
+                  fill
+                />
               </div>
               <CardMenu />
             </div>

@@ -5,49 +5,46 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import defaultImage from "/public/images/default_avatar.png";
 
 const UserDetailsPage: React.FC = () => {
   const { auth } = useAuth();
   const { recipes } = useRecipes();
-  const { id } = useParams();
-  const [imageURL, setImageURL] = useState("");
-
-  useEffect(() => {
-    auth.avatar && setImageURL(`http://localhost:3000${auth.avatar}`);
-  }, [auth]);
+  const { name } = useParams();
 
   return (
     <div className="max-w-4xl mx-auto pt-20">
       <div className="">
         <section className="m-1 p-5 bg-gradient-single rounded-md shadow">
           <div className="flex items-start justify-between">
-            <div className="h-20 w-20 relative">
+            <div className="h-20 w-20 rounded-full border-2 border-white shadow relative">
               <Image
-                src={imageURL}
+                src={auth.avatar === "" ? defaultImage : auth.avatar}
                 alt="アイコン"
                 className="object-cover rounded-full"
                 fill
               />
             </div>
-            {auth.user_id && auth.user_id.toString() === id[0] && (
+            {auth.name === name && (
               <label
                 htmlFor="edit-profile-modal"
-                className="flex items-center text-gray-700 font-semibold text-sm py-0.5 px-3 opacity-80 my-btn rounded-full border border-gray-700 cursor-pointer my-btn"
+                className="flex items-center text-gray-700 font-semibold text-xs py-0.5 px-2 opacity-60 my-btn rounded-full border border-gray-700 cursor-pointer my-btn"
               >
                 <span className="material-icons scale-75">edit</span>
-                編集
+                プロフィールを編集
               </label>
             )}
           </div>
-          <div className="flex items-center w-full border-b border-gray-200">
-            <h2 className="text-2xl pb-2 mr-2 font-bold">{auth.name}</h2>
-            <p className="text-xs bg-gradient text-white rounded-full ml-2 px-6 py-0.5 shadow select-none">
+          <div className="flex items-center w-full my-1 pb-2 border-b border-gray-200">
+            <h2 className="text-2xl mr-2 font-bold">
+              {auth.nickname}
+              <span className="text-gray-400 font-normal text-sm ml-1">
+                @{auth.name}
+              </span>
+            </h2>
+            <p className="text-xs bg-gradient text-white rounded-full ml-1 px-6 py-0.5 shadow select-none">
               {"三つ星 ★★★"}
             </p>
-          </div>
-          <div>
-            <p>{}</p>
           </div>
           <div className="pt-2 flex items-end text-gray-500">
             <span className="mr-1 text-xl font-bold text-black">{0}</span>
@@ -57,9 +54,14 @@ const UserDetailsPage: React.FC = () => {
           </div>
         </section>
         <section className="my-1">
-          <div className="grid grid-cols-3">
+          <div className="grid lg:grid-cols-3 grid-cols-1">
             {recipes.map((recipe, index) => (
-              <RecipeCard id={1} title={recipe.title} cooking_time={30} />
+              <RecipeCard
+                key={index}
+                id={1}
+                title={recipe.title}
+                cooking_time={30}
+              />
             ))}
           </div>
         </section>

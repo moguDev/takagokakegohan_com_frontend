@@ -2,13 +2,13 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import { useCallback } from "react";
 import { atom, useRecoilState } from "recoil";
 import Cookies from "js-cookie";
-import { headers } from "next/headers";
 
 type TypeAuth = {
   isAuthenticated: boolean;
   user_id: number;
   name: string;
-  avatar: File | null;
+  nickname: string;
+  avatar: string;
 };
 
 const authState = atom<TypeAuth>({
@@ -17,7 +17,8 @@ const authState = atom<TypeAuth>({
     isAuthenticated: false,
     user_id: -1,
     name: "",
-    avatar: null,
+    nickname: "",
+    avatar: "",
   },
 });
 
@@ -47,7 +48,10 @@ export const useAuth = () => {
         isAuthenticated: true,
         user_id: res.data.data.id,
         name: res.data.data.name,
-        avatar: res.data.data.avatar.url,
+        nickname: res.data.data.nickname,
+        avatar: res.data.data.avatar.url
+          ? `http://localhost:3000${res.data.data.avatar.url}`
+          : "",
       });
     } catch (error) {
       console.error("認証情報の取得に失敗しました");
@@ -61,7 +65,8 @@ export const useAuth = () => {
       email: string,
       password: string,
       passwordConfirmation: string,
-      name: string
+      name: string,
+      nickname: string
     ) => {
       setLoading(true);
       try {
@@ -70,6 +75,7 @@ export const useAuth = () => {
           password,
           password_confirmation: passwordConfirmation,
           name,
+          nickname,
         });
         const { "access-token": accessToken, client, uid } = res.headers;
         if (accessToken && client && uid) {
@@ -78,7 +84,10 @@ export const useAuth = () => {
             isAuthenticated: true,
             user_id: res.data.id,
             name: res.data.name,
-            avatar: res.data.image,
+            nickname: res.data.data.nickname,
+            avatar: res.data.data.avatar.url
+              ? `http://localhost:3000${res.data.data.avatar.url}`
+              : "",
           });
         }
       } catch (error) {
@@ -105,7 +114,10 @@ export const useAuth = () => {
             isAuthenticated: true,
             user_id: res.data.data.id,
             name: res.data.data.name,
-            avatar: res.data.data.avatar.url,
+            nickname: res.data.data.nickname,
+            avatar: res.data.data.avatar.url
+              ? `http://localhost:3000${res.data.data.avatar.url}`
+              : "",
           });
         }
         setAuth((prev) => ({ ...prev, isAuthenticated: true }));
@@ -125,7 +137,13 @@ export const useAuth = () => {
       Cookies.remove("access-token");
       Cookies.remove("client");
       Cookies.remove("uid");
-      setAuth({ isAuthenticated: false, user_id: -1, name: "", avatar: null });
+      setAuth({
+        isAuthenticated: false,
+        user_id: -1,
+        name: "",
+        nickname: "",
+        avatar: "",
+      });
     } catch (error) {
       throw new Error("ログアウトに失敗しました。");
     } finally {
@@ -134,7 +152,12 @@ export const useAuth = () => {
   }, [setAuth, setLoading]);
 
   const updateProfile = useCallback(
-    async (avatar: File | null, name: string, introduction?: string) => {
+    async (
+      avatar: File | null,
+      name: string,
+      nickname: string,
+      introduction?: string
+    ) => {
       setLoading(true);
       try {
         const res = await axiosInstance.put(
@@ -142,6 +165,7 @@ export const useAuth = () => {
           {
             avatar,
             name,
+            nickname,
           },
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -150,9 +174,12 @@ export const useAuth = () => {
           setCookies(accessToken, client, uid);
           setAuth({
             isAuthenticated: true,
-            user_id: res.data.id,
-            name: res.data.name,
-            avatar: res.data.image,
+            user_id: res.data.data.id,
+            name: res.data.data.name,
+            nickname: res.data.data.nickname,
+            avatar: res.data.data.avatar.url
+              ? `http://localhost:3000${res.data.data.avatar.url}`
+              : "",
           });
         }
       } catch (error) {

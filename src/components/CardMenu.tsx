@@ -1,7 +1,8 @@
 "use client";
-
 import { useAuth } from "@/hooks/useAuth";
+import Image from "next/image";
 import Link from "next/link";
+import defaultImage from "/public/images/default_avatar.png";
 
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
@@ -14,7 +15,17 @@ export const CardMenu: React.FC = () => {
         {auth.isAuthenticated ? (
           <>
             <div className="mb-5 flex flex-col items-center">
-              <p className="text-3xl font-bold py-3 select-none">{auth.name}</p>
+              <div className="border-2 border-white border-opacity-50 shadow rounded-full h-20 w-20 relative">
+                <Image
+                  src={auth.avatar === "" ? defaultImage : auth.avatar}
+                  alt="アイコン"
+                  className="object-cover rounded-full"
+                  fill
+                />
+              </div>
+              <p className="text-3xl font-bold pt-1 select-none pb-3">
+                {auth.nickname}
+              </p>
               <p className="text-xs bg-gradient text-white rounded-full ml-2 px-6 py-0.5 shadow select-none">
                 {"三つ星 ★★★"}
               </p>
@@ -43,7 +54,7 @@ export const CardMenu: React.FC = () => {
             <ul className="mb-1 divide-y divide-gray-300">
               <li className="py-1 my-btn">
                 <Link
-                  href={`/users/${auth.user_id}`}
+                  href={`/${auth.name}`}
                   className="relative hover:text-blue-500 select-none"
                 >
                   <span className="material-icons">person</span>
