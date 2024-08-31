@@ -6,11 +6,14 @@ import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
+import { useEffect } from "react";
+import { useUserDetails } from "@/hooks/useUserDetails";
 
 const UserDetailsPage: React.FC = () => {
   const { auth } = useAuth();
   const { recipes } = useRecipes();
   const { name } = useParams();
+  const { userDetails } = useUserDetails(name as string);
 
   return (
     <div className="max-w-4xl mx-auto pt-20">
@@ -19,7 +22,11 @@ const UserDetailsPage: React.FC = () => {
           <div className="flex items-start justify-between">
             <div className="h-20 w-20 rounded-full border-2 border-white shadow relative">
               <Image
-                src={auth.avatar === "" ? defaultImage : auth.avatar}
+                src={
+                  userDetails?.avatar === ""
+                    ? defaultImage
+                    : userDetails?.avatar
+                }
                 alt="アイコン"
                 className="object-cover rounded-full"
                 fill
@@ -37,9 +44,9 @@ const UserDetailsPage: React.FC = () => {
           </div>
           <div className="flex items-center w-full my-1 pb-2 border-b border-gray-200">
             <h2 className="text-2xl mr-2 font-bold">
-              {auth.nickname}
+              {userDetails?.nickname}
               <span className="text-gray-400 font-normal text-sm ml-1">
-                @{auth.name}
+                @{name}
               </span>
             </h2>
             <p className="text-xs bg-gradient text-white rounded-full ml-1 px-6 py-0.5 shadow select-none">
