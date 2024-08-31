@@ -3,22 +3,37 @@ import { EditProfileModal } from "@/components/EditProfileModal";
 import { RecipeCard } from "@/components/RecipeCard";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecipes } from "@/hooks/useRecipes";
+import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const UserDetailsPage: React.FC = () => {
   const { auth } = useAuth();
   const { recipes } = useRecipes();
   const { id } = useParams();
+  const [imageURL, setImageURL] = useState("");
+
+  useEffect(() => {
+    auth.avatar && setImageURL(`http://localhost:3000${auth.avatar}`);
+  }, [auth]);
+
   return (
     <div className="max-w-4xl mx-auto pt-20">
       <div className="">
         <section className="m-1 p-5 bg-gradient-single rounded-md shadow">
           <div className="flex items-start justify-between">
-            <span className="material-icons">account_circle</span>
-            {auth.user_id.toString() === id[0] && (
+            <div className="h-20 w-20 relative">
+              <Image
+                src={imageURL}
+                alt="アイコン"
+                className="object-cover rounded-full"
+                fill
+              />
+            </div>
+            {auth.user_id && auth.user_id.toString() === id[0] && (
               <label
                 htmlFor="edit-profile-modal"
-                className="flex items-center text-gray-700 font-semibold text-sm py-0.5 px-3 opacity-80 my-btn"
+                className="flex items-center text-gray-700 font-semibold text-sm py-0.5 px-3 opacity-80 my-btn rounded-full border border-gray-700 cursor-pointer my-btn"
               >
                 <span className="material-icons scale-75">edit</span>
                 編集
@@ -26,7 +41,7 @@ const UserDetailsPage: React.FC = () => {
             )}
           </div>
           <div className="flex items-center w-full border-b border-gray-200">
-            <h2 className="text-3xl pb-2 mr-2 font-bold">{auth.name}</h2>
+            <h2 className="text-2xl pb-2 mr-2 font-bold">{auth.name}</h2>
             <p className="text-xs bg-gradient text-white rounded-full ml-2 px-6 py-0.5 shadow select-none">
               {"三つ星 ★★★"}
             </p>

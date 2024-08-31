@@ -2,12 +2,13 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import { useCallback } from "react";
 import { atom, useRecoilState } from "recoil";
 import Cookies from "js-cookie";
+import { headers } from "next/headers";
 
 type TypeAuth = {
   isAuthenticated: boolean;
   user_id: number;
   name: string;
-  image: File | null;
+  avatar: File | null;
 };
 
 const authState = atom<TypeAuth>({
@@ -16,7 +17,7 @@ const authState = atom<TypeAuth>({
     isAuthenticated: false,
     user_id: -1,
     name: "",
-    image: null,
+    avatar: null,
   },
 });
 
@@ -46,7 +47,7 @@ export const useAuth = () => {
         isAuthenticated: true,
         user_id: res.data.data.id,
         name: res.data.data.name,
-        image: res.data.data.image,
+        avatar: res.data.data.avatar.url,
       });
     } catch (error) {
       console.error("認証情報の取得に失敗しました");
@@ -77,7 +78,7 @@ export const useAuth = () => {
             isAuthenticated: true,
             user_id: res.data.id,
             name: res.data.name,
-            image: res.data.image,
+            avatar: res.data.image,
           });
         }
       } catch (error) {
@@ -104,7 +105,7 @@ export const useAuth = () => {
             isAuthenticated: true,
             user_id: res.data.data.id,
             name: res.data.data.name,
-            image: res.data.data.image,
+            avatar: res.data.data.avatar.url,
           });
         }
         setAuth((prev) => ({ ...prev, isAuthenticated: true }));
@@ -124,13 +125,44 @@ export const useAuth = () => {
       Cookies.remove("access-token");
       Cookies.remove("client");
       Cookies.remove("uid");
-      setAuth({ isAuthenticated: false, user_id: -1, name: "", image: null });
+      setAuth({ isAuthenticated: false, user_id: -1, name: "", avatar: null });
     } catch (error) {
       throw new Error("ログアウトに失敗しました。");
     } finally {
       setLoading(false);
     }
   }, [setAuth, setLoading]);
+
+  const updateProfile = useCallback(
+    async (avatar: File | null, name: string, introduction?: string) => {
+      setLoading(true);
+      try {
+        const res = await axiosInstance.put(
+          "/auth",
+          {
+            avatar,
+            name,
+          },
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        const { "access-token": accessToken, client, uid } = res.headers;
+        if (accessToken && client && uid) {
+          setCookies(accessToken, client, uid);
+          setAuth({
+            isAuthenticated: true,
+            user_id: res.data.id,
+            name: res.data.name,
+            avatar: res.data.image,
+          });
+        }
+      } catch (error) {
+        throw new Error("プロフィールの更新に失敗しました");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setAuth]
+  );
 
   return {
     auth,
@@ -139,5 +171,6 @@ export const useAuth = () => {
     signup,
     login,
     logout,
+    updateProfile,
   };
 };
