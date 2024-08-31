@@ -37,7 +37,15 @@ export const LoginModal = () => {
       <input type="checkbox" id="login-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box bg-white rounded shadow-xl">
-          <h3 className="font-bold text-xl py-3 text-yellow-950">ログイン</h3>
+          <div className="flex items-center justify-between pb-5">
+            <h3 className="font-bold text-xl text-yellow-950">ログイン</h3>
+            <label
+              htmlFor="login-modal"
+              className="material-icons mr-1 cursor-pointer my-btn"
+            >
+              close
+            </label>
+          </div>
           <div className="relative">
             {loading && (
               <div className="absolute flex items-center justify-center top-0 h-full w-full bg-white opacity-50">

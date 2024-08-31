@@ -61,17 +61,15 @@ export const EditProfileModal = () => {
       <div className="modal">
         <div className="modal-box bg-white rounded shadow-xl">
           <div className="flex items-center justify-between pb-5">
-            <div className="flex items-center">
-              <label
-                htmlFor="edit-profile-modal"
-                className="material-icons mr-1 cursor-pointer my-btn"
-              >
-                close
-              </label>
-              <h3 className="font-bold text-xl text-yellow-950">
-                プロフィールの編集
-              </h3>
-            </div>
+            <h3 className="font-bold text-xl text-yellow-950">
+              プロフィールの編集
+            </h3>
+            <label
+              htmlFor="edit-profile-modal"
+              className="material-icons mr-1 cursor-pointer my-btn"
+            >
+              close
+            </label>
           </div>
           <form method="put" onSubmit={handleSubmit(onsubmit)}>
             <button
