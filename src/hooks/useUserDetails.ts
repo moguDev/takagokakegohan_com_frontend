@@ -23,7 +23,7 @@ export const useUserDetails = (name: string) => {
         ...res.data,
         avatar:
           res.data.avatar.url === null
-            ? ""
+            ? null
             : `http://localhost:3000${res.data.avatar.url}`,
       });
     } catch (err) {

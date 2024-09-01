@@ -82,8 +82,8 @@ export const useAuth = () => {
           setCookies(accessToken, client, uid);
           setAuth({
             isAuthenticated: true,
-            user_id: res.data.id,
-            name: res.data.name,
+            user_id: res.data.data.id,
+            name: res.data.data.name,
             nickname: res.data.data.nickname,
             avatar: res.data.data.avatar.url
               ? `http://localhost:3000${res.data.data.avatar.url}`

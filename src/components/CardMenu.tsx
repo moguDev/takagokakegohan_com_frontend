@@ -23,7 +23,7 @@ export const CardMenu: React.FC = () => {
                   fill
                 />
               </div>
-              <p className="text-3xl font-bold pt-1 select-none pb-3">
+              <p className="text-2xl font-bold pt-1 select-none pb-3">
                 {auth.nickname}
               </p>
               <p className="text-xs bg-gradient text-white rounded-full ml-2 px-6 py-0.5 shadow select-none">

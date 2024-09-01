@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
-import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
 import { LoginModal } from "@/components/LoginModal";
-
-const font = Zen_Kaku_Gothic_New({
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "900"],
-});
 
 export const metadata: Metadata = {
   title: "たまごかけごはん.com",
@@ -29,7 +23,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={`${font.className} bg-yellow-50`}>
+      <body className="bg-yellow-50">
         <RecoilRootWrapper>
           <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />

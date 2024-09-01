@@ -67,12 +67,7 @@ const UserDetailsPage: React.FC = () => {
         <section className="my-1">
           <div className="grid lg:grid-cols-3 grid-cols-1">
             {recipes.map((recipe, index) => (
-              <RecipeCard
-                key={index}
-                id={1}
-                title={recipe.title}
-                cooking_time={30}
-              />
+              <RecipeCard key={index} recipe={recipe} />
             ))}
           </div>
         </section>
