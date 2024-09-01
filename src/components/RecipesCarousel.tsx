@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { RecipeCard } from "./RecipeCard";
-import { Recipe } from "@/hooks/useRecipes";
+import { Recipe } from "@/types";
 
 export const RecipesCarousel = ({ recipes }: { recipes: Recipe[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);

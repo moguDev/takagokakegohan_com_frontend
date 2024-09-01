@@ -2,10 +2,10 @@
 import { useAuth } from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 
-type FormData = {
+interface FormData {
   email: string;
   password: string;
-};
+}
 
 export const LoginModal = () => {
   const { loading, login } = useAuth();

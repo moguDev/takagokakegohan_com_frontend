@@ -1,31 +1,27 @@
 "use client";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { useCallback, useState } from "react";
-
-export interface Recipe {
-  id: number;
-  user_id: number;
-  title: string;
-  body: string;
-  cooking_time: number;
-  image: string;
-}
+import { Recipe } from "@/types";
+import { useCallback, useEffect, useState } from "react";
 
 export const useRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchRecipes = useCallback(async () => {
+  const fetch = useCallback(async () => {
     setLoading(true);
     try {
       const res = await axiosInstance.get("/recipes");
       setRecipes(res.data);
     } catch (error) {
-      throw new Error();
+      throw new Error("レシピの取得に失敗しました。");
     } finally {
       setLoading(false);
     }
   }, []);
 
-  return { recipes, fetchRecipes };
+  useEffect(() => {
+    fetch();
+  }, []);
+
+  return { recipes, loading };
 };

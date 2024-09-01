@@ -1,14 +1,9 @@
 import { axiosInstance } from "@/lib/axiosInstance";
-import { useState, useEffect } from "react";
+import { UserProfiles } from "@/types";
+import { useState, useEffect, useCallback } from "react";
 
-interface UserDetails {
-  name: string;
-  nickname: string;
-  avatar: string | null;
-}
-
-export const useUserDetails = (name: string) => {
-  const [userDetails, setUserDetails] = useState<UserDetails>({
+export const useUserProfiles = (name: string) => {
+  const [userProfiles, setUserDetails] = useState<UserProfiles>({
     name: "",
     nickname: "",
     avatar: null,
@@ -16,7 +11,7 @@ export const useUserDetails = (name: string) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUserDetails = async () => {
+  const fetch = useCallback(async () => {
     try {
       const res = await axiosInstance.get(`/users/${name}`);
       setUserDetails({
@@ -31,11 +26,11 @@ export const useUserDetails = (name: string) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [setUserDetails]);
 
   useEffect(() => {
-    fetchUserDetails();
+    fetch();
   }, [name]);
 
-  return { userDetails, loading, error, fetchUserDetails };
+  return { userProfiles, loading, error };
 };

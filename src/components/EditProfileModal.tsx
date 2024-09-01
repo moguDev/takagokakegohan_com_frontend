@@ -22,6 +22,7 @@ export const EditProfileModal = () => {
     nickname: auth.nickname,
     introduction: "",
   };
+
   const {
     register,
     handleSubmit,
@@ -73,6 +74,7 @@ export const EditProfileModal = () => {
           </div>
           <form method="put" onSubmit={handleSubmit(onsubmit)}>
             <button
+              type="button"
               onClick={() => {
                 fileInputRef.current?.click();
               }}

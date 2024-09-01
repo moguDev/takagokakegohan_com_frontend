@@ -41,7 +41,7 @@ export const CardMenu: React.FC = () => {
               </div>
             </div>
             <Link
-              href="/recipes/edit"
+              href="/recipes/new"
               className={`
                 flex items-center justify-center mx-3 py-3 mb-5
                 rounded bg-yellow-600 shadow my-btn cursor-pointer
@@ -64,14 +64,14 @@ export const CardMenu: React.FC = () => {
                   </span>
                 </Link>
               </li>
-              <li className="py-1 my-btn">
-                <Link href="#" className="relative hover:text-blue-500">
+              <li className="py-1">
+                <label className="relative hover:text-blue-500 my-btn">
                   <span className="material-icons">bookmark</span>
                   ブックマーク
                   <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
                     navigate_next
                   </span>
-                </Link>
+                </label>
               </li>
               <li className="py-1 my-btn">
                 <button

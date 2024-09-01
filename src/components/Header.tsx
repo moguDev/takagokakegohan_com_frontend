@@ -36,7 +36,9 @@ export const Header = () => {
               <div
                 tabIndex={0}
                 role="button"
-                className="border border-white border-opacity-50 rounded-full h-10 w-10 relative m-1"
+                className={`
+                  border border-white border-opacity-50 rounded-full h-10 w-10 relative m-1
+                  transition-all duration-200 hover:scale-105`}
               >
                 <Image
                   src={auth.avatar === "" ? defaultImage : auth.avatar}
