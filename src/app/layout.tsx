@@ -29,7 +29,7 @@ export default function RootLayout({
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               <Header />
-              <main className="flex">
+              <main className="flex" style={{ minHeight: "91vh" }}>
                 <div className="w-full">{children}</div>
               </main>
               <Footer />

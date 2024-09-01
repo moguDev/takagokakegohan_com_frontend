@@ -44,7 +44,9 @@ export default function Home() {
         className={`pt-5 ${sawarabiMincho.className} divide-y divide-black divide-opacity-10`}
       >
         <div className="py-5">
-          <h2 className={`mx-5 my-1 flex items-center text-2xl font-bold`}>
+          <h2
+            className={`mx-5 my-1 flex items-center text-black text-2xl font-bold`}
+          >
             <span className="material-icons text-yellow-600 mr-2">
               new_releases
             </span>
@@ -53,7 +55,9 @@ export default function Home() {
           <RecipesCarousel recipes={recipes} />
         </div>
         <div className="py-5">
-          <h2 className={`mx-5 my-1 flex items-center text-2xl font-bold`}>
+          <h2
+            className={`mx-5 my-1 flex items-center text-black text-2xl font-bold`}
+          >
             <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
               NEW
             </span>

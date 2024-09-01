@@ -35,7 +35,7 @@ export const RecipesCarousel = ({ recipes }: { recipes: Recipe[] }) => {
         {recipes.map((recipe, index) => (
           <div
             key={index}
-            className={`carousel-item lg:w-96 w-3/4 transition-transform duration-500 ease-in-out`}
+            className={`carousel-item transition-transform duration-500 ease-in-out`}
             style={{
               transform: `translateX(-${
                 (currentIndex * 384) / recipes.length

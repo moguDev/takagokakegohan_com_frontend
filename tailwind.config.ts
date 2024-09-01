@@ -18,6 +18,9 @@ const config: Config = {
           "100%": { opacity: "0" },
         },
       },
+      textColor: {
+        black: "#111",
+      },
       animation: {
         "fade-up-2s": "fade-up 2s ease-out",
         "fade-in-2s": "fade-in 2s ease-out",
