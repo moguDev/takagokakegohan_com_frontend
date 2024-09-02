@@ -1,5 +1,4 @@
 import { Hero } from "@/components/Hero";
-import { TopContents } from "./TopContents";
 import { SearchBar } from "@/components/SearchBar";
 
 export default function Home() {
@@ -7,7 +6,6 @@ export default function Home() {
     <main>
       <Hero />
       <SearchBar />
-      <TopContents />
     </main>
   );
 }

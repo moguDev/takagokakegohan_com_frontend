@@ -188,7 +188,7 @@ export const useAuth = () => {
         setLoading(false);
       }
     },
-    [setAuth]
+    [setAuth, setLoading]
   );
 
   return {

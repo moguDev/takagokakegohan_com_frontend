@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "localhost",
-        pathname: "/uploads/user/avatar/**",
+        pathname: "/uploads/**",
       },
     ],
   },

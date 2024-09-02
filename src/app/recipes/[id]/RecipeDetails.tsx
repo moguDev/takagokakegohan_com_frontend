@@ -1,14 +1,8 @@
 "use client";
 import Image from "next/image";
-import { Sawarabi_Mincho } from "next/font/google";
 import { useEffect, useState } from "react";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
 import { useParams } from "next/navigation";
-
-const sawarabiMincho = Sawarabi_Mincho({
-  subsets: ["latin"],
-  weight: ["400"],
-});
 
 export const RecipeDetails = () => {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
@@ -24,29 +18,27 @@ export const RecipeDetails = () => {
   };
 
   return (
-    <div
-      className={`max-w-7xl mx-auto pt-24 lg:pb-5 lg:pr-1 px-5 ${sawarabiMincho.className}`}
-    >
-      <section className="bg-white p-5 shadow lg:flex w-full h-full">
-        <div className="min-w-80 min-h-96 w-80 h-96 relative">
+    <div className="max-w-7xl mx-auto">
+      <section className="lg:flex w-full h-full">
+        <div className="p-3 w-full h-96 relative">
           {recipe?.image.url ? (
             <Image
-              src={recipe.image.url}
+              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`}
               alt="sample"
-              className="object-cover"
+              className="object-cover p-1 rounded-lg"
               fill
             />
           ) : (
-            <div className="bg-gray-100 rounded text-gray-300 w-full h-full flex flex-col items-center justify-center">
+            <div className="bg-gray-100 text-gray-300 w-full h-full flex flex-col items-center justify-center rounded">
               <span className="material-icons">hide_image</span>
               <p className="text-xs">レシピの画像がありません</p>
             </div>
           )}
         </div>
-        <div className="lg:px-5 w-full h-auto flex flex-col justify-between">
+        <div className="px-3 w-full h-auto flex flex-col justify-between">
           <section>
             <div className="mb-4">
-              <h1 className="lg:text-4xl text-2xl pt-2">{recipe?.title}</h1>
+              <h1 className="text-2xl font-bold pt-2">{recipe?.title}</h1>
               <div className="flex items-end justify-between">
                 <p className="p-1">{recipe?.user_id}</p>
                 <p className="text-xs">
@@ -57,26 +49,13 @@ export const RecipeDetails = () => {
                   秒
                 </p>
               </div>
-              <div className="flex items-center p-1">
-                {4.1}
-                <div className="rating">
-                  <input className="mask mask-star-2 bg-orange-400" />
-                  <input className="mask mask-star-2 bg-orange-400" />
-                  <input className="mask mask-star-2 bg-orange-400" />
-                  <input
-                    className="mask mask-star-2 bg-orange-400"
-                    defaultChecked
-                  />
-                  <input className="mask mask-star-2 bg-orange-400" />
-                </div>
-              </div>
               <p className="p-1 text-sm">{recipe?.body}</p>
             </div>
             <div className="bg-gray-50 rounded p-2 w-full">
               <h2 className="text-xl text-gray-600 font-semibold">
                 材料<span className="text-sm">（1人前）</span>
               </h2>
-              <div className="p-1 divide-y divide-gray-200">
+              <div className="p-1 divide-y divide-gray-200 divide-dashed">
                 {recipe?.ingredients &&
                   recipe?.ingredients.map((item, index) => (
                     <p key={index} className="my-auto py-2">
@@ -115,11 +94,10 @@ export const RecipeDetails = () => {
           </div>
         </div>
       </section>
-      <section className="mt-2 p-5 bg-white shadow">
-        <div className="flex items-end justify-between pb-2 border-b border-black">
-          <h2 className="lg:text-2xl text-xl">作り方</h2>
-          <p className="text-sm">{recipe?.cooking_time}秒</p>
-        </div>
+      <section className="mt-2 p-5">
+        <h2 className="lg:text-2xl text-xl pb-2 border-b border-black">
+          作り方
+        </h2>
         <section className="divide-y divide-gray-200">
           <div className="flex items-start py-3 text-sm">
             <p className="pr-2">{1}.</p>
@@ -138,33 +116,6 @@ export const RecipeDetails = () => {
             <p>{"できあがり。"}</p>
           </div>
         </section>
-      </section>
-      <section>
-        <h2 className="mt-8 mb-2 p-1 text-sm border-b border-black">
-          レビュー
-        </h2>
-        <div className="grid lg:grid-cols-3">
-          <div className="bg-white shadow p-5">
-            <div className="flex items-center justify-between border-b border-black py-2">
-              <p className="flex items-center mr-0.5">
-                <span className="material-icons">account_circle</span>
-                {"なまえ"}
-              </p>
-              <div className="rating scale-75">
-                <input className="mask mask-star-2 bg-orange-400" />
-                <input className="mask mask-star-2 bg-orange-400" />
-                <input className="mask mask-star-2 bg-orange-400" />
-                <input
-                  className="mask mask-star-2 bg-orange-400"
-                  defaultChecked
-                />
-                <input className="mask mask-star-2 bg-orange-400" />
-              </div>
-            </div>
-            <p className="py-2 text-sm">美味しかったです。</p>
-            <p className="text-right text-gray-400 text-xs">2024年8月28日</p>
-          </div>
-        </div>
       </section>
     </div>
   );

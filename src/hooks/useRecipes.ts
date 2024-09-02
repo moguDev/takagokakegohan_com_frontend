@@ -21,7 +21,7 @@ export const useRecipes = () => {
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [fetch]);
 
   return { recipes, loading };
 };

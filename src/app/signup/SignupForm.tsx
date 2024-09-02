@@ -58,10 +58,7 @@ export const SignupForm = () => {
 
   return (
     <div className="p-2">
-      <div className="max-w-4xl mx-auto mt-32 bg-white p-10 shadow">
-        <h1 className={`text-3xl font-semibold ${shipporiMincho.className}`}>
-          アカウントの作成
-        </h1>
+      <div className="max-w-4xl mx-auto p-5">
         <form onSubmit={handleSubmit(onsubmit)} method="post">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="text-sm text-gray-400 p-1">
@@ -72,7 +69,7 @@ export const SignupForm = () => {
               <input
                 type="text"
                 className="w-full rounded-lg outline-none"
-                placeholder={`半角英数字 , '_' , '-' のみ使用可能`}
+                placeholder={`英数 , '_' , '-' のみ使用可能`}
                 {...register("name", {
                   required: "ユーザIDを入力してください。",
                   maxLength: {
@@ -81,8 +78,7 @@ export const SignupForm = () => {
                   },
                   pattern: {
                     value: /^[a-zA-Z0-9_-]+$/,
-                    message:
-                      "ユーザIDには`半角英数字 , '_' , '-' のみ使用できます。",
+                    message: "ユーザIDには`英数 , '_' , '-' のみ使用できます。",
                   },
                 })}
               />
@@ -186,30 +182,15 @@ export const SignupForm = () => {
               {errors.passwordConfirmation?.message}
             </div>
           </div>
-          <div className="lg:flex flex-row-reverse items-center justify-between">
-            <button
-              type="submit"
-              className={`
-          bg-yellow-600 px-6 py-4 rounded mx-1
-          transition-all duration-300 active:scale-95 w-full`}
-            >
-              <p className="text-white font-semibold flex items-center justify-center">
-                <span className="material-icons mr-1">person_add</span>
-                アカウントの作成
-              </p>
-            </button>
-            <Link
-              href="/"
-              className={`
-          bg-opacity-0 py-3 rounded-lg mx-1 text-sm
-          transition-all duration-300 active:scale-95 w-full`}
-            >
-              <p className="text-gray-600 font-bold flex items-center">
-                <span className="material-icons mr-1">arrow_back</span>
-                もどる
-              </p>
-            </Link>
-          </div>
+          <button
+            type="submit"
+            className="bg-yellow-600 px-6 py-4 rounded mx-1transition-all duration-300 active:scale-95 w-full"
+          >
+            <p className="text-white font-semibold flex items-center justify-center">
+              <span className="material-icons mr-1">person_add</span>
+              アカウントの作成
+            </p>
+          </button>
         </form>
       </div>
     </div>

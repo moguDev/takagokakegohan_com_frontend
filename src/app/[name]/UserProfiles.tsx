@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
 import { useUserProfiles } from "@/hooks/useUserDetails";
-import { RecipesCarousel } from "@/components/RecipesCarousel";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
@@ -36,7 +35,7 @@ export const UserProfiles: React.FC = async () => {
               className="flex items-center text-gray-700 font-semibold text-xs py-0.5 px-2 opacity-60 my-btn rounded-full border border-gray-700 cursor-pointer my-btn"
             >
               <span className="material-icons scale-75">edit</span>
-              プロフィールを編集
+              編集
             </label>
           )}
         </div>
@@ -51,15 +50,19 @@ export const UserProfiles: React.FC = async () => {
             {"三つ星 ★★★"}
           </p>
         </div>
-        <div className="pt-2 flex items-end text-gray-500">
-          <span className="mr-1 text-xl font-bold text-black">{0}</span>
-          フォロー中
-          <span className="mr-1 ml-3 text-xl font-bold text-black">{0}</span>
+        <div className="pt-1 flex items-end text-gray-500 text-sm">
+          <span className="mr-1 font-bold text-base text-black">{0}</span>
+          フォロー
+          <span className="mr-1 ml-3 text-base font-bold text-black">{0}</span>
           フォロワー
         </div>
       </section>
       <section className="my-1">
-        <RecipesCarousel recipes={recipes} />
+        <div className="grid lg:grid-cols-3 grid-cols-2 p-2">
+          {recipes.map((recipe, index) => (
+            <RecipeCard key={index} recipe={recipe} />
+          ))}
+        </div>
       </section>
     </>
   );

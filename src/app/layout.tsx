@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
-import { LoginModal } from "@/components/LoginModal";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
+import { TabNavigation } from "@/components/TabNavigation";
+import { Sawarabi_Mincho } from "next/font/google";
 
-const font = Zen_Kaku_Gothic_New({
+export const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
+});
+
+export const font2 = Sawarabi_Mincho({
+  subsets: ["latin"],
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -29,19 +34,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={`${font.className} bg-yellow-50`}>
+      <body className={font.className}>
         <RecoilRootWrapper>
-          <div className="drawer drawer-end">
-            <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
-              <Header />
-              <main className="flex" style={{ minHeight: "91vh" }}>
-                <div className="w-full">{children}</div>
-              </main>
-              <Footer />
-            </div>
-          </div>
-          <LoginModal />
+          <Header />
+          <main className="py-16 w-full">
+            <div className="w-full">{children}</div>
+          </main>
+          <TabNavigation />
         </RecoilRootWrapper>
       </body>
     </html>

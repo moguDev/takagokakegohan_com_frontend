@@ -24,7 +24,7 @@ export const Hero: React.FC = () => {
           <div
             className={`md:text-7xl text-3xl font-black select-none animate-fade-up-2s`}
           >
-            <h1 className="text-center text-white py-2">
+            <h1 className={`text-center text-white py-2`}>
               たまごかけごはん
               <span className="md:text-4xl text-xl">
                 <span className="text-yellow-500">.</span>com
@@ -39,12 +39,12 @@ export const Hero: React.FC = () => {
           </div>
           <div className="flex items-center">
             <Link
-              href="#"
+              href="/recipes"
               className={`
               bg-gradient rounded-full m-1
               lg:h-40 lg:w-40 h-20 w-20 flex items-center justify-center shadow
               transition-all duration-500 cursor-pointer
-              hover:-translate-y-1 active:scale-95 animate-fade-in-2s`}
+              active:scale-95 animate-fade-in-2s`}
             >
               <p className="text-white lg:text-2xl text-xs font-semibold select-none">
                 Get started
