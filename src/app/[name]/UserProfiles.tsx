@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { RecipeCard } from "@/components/RecipeCard";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecipes } from "@/hooks/useRecipes";
@@ -9,12 +9,13 @@ import defaultImage from "/public/images/default_avatar.png";
 import { useUserProfiles } from "@/hooks/useUserDetails";
 
 export const UserProfiles: React.FC = async () => {
-  const { auth } = useAuth();
+  const { auth, checkAuth } = useAuth();
   const { recipes } = useRecipes();
   const { name } = useParams();
   const { userProfiles, loading, error } = useUserProfiles(name as string);
+
   return (
-    <>
+    <div>
       <section className="mx-2 p-5 bg-gradient-single rounded-md shadow">
         <div className="flex items-start justify-between">
           <div className="h-20 w-20 rounded-full border-2 border-white shadow relative">
@@ -58,12 +59,12 @@ export const UserProfiles: React.FC = async () => {
         </div>
       </section>
       <section className="my-1">
-        <div className="grid lg:grid-cols-3 grid-cols-2 p-2">
+        <div className="grid lg:grid-cols-4 grid-cols-2 p-2">
           {recipes.map((recipe, index) => (
             <RecipeCard key={index} recipe={recipe} />
           ))}
         </div>
       </section>
-    </>
+    </div>
   );
 };

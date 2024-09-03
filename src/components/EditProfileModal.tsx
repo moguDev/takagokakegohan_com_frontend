@@ -29,7 +29,7 @@ export const EditProfileModal = () => {
     watch,
     formState: { errors },
   } = useForm<FormData>({ defaultValues });
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const imageFile = watch("avatar");
   const [imageSource, setImageSource] = useState("");
 

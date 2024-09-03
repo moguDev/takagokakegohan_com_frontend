@@ -169,6 +169,7 @@ export const useAuth = () => {
           },
           { headers: { "Content-Type": "multipart/form-data" } }
         );
+        console.log(res.data.data.nickname);
         const { "access-token": accessToken, client, uid } = res.headers;
         if (accessToken && client && uid) {
           setCookies(accessToken, client, uid);
@@ -178,7 +179,7 @@ export const useAuth = () => {
             name: res.data.data.name,
             nickname: res.data.data.nickname,
             avatar: res.data.data.avatar.url
-              ? `http://localhost:3000${res.data.data.avatar.url}`
+              ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`
               : "",
           });
         }

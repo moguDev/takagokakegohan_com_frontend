@@ -7,7 +7,7 @@ export const DiscoverRecipes = () => {
   return (
     <div className="w-full">
       <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-100">
-        <div className="bg-gray-50 rounded-full border border-gray-100 flex items-center p-2 w-full">
+        <div className="bg-gray-50 rounded-full border border-gray-100 flex items-center p-2 max-w-7xl mx-auto">
           <span className="material-icons text-gray-300">search</span>
           <input
             type="text"
@@ -16,7 +16,7 @@ export const DiscoverRecipes = () => {
           />
         </div>
       </div>
-      <section className="pt-16 w-full">
+      <section className="pt-16 max-w-7xl mx-auto">
         <h2 className={`mx-2 flex items-center text-black text-base font-bold`}>
           <span className="material-icons text-yellow-600 mr-2">
             new_releases

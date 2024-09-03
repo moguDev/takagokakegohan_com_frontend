@@ -46,7 +46,6 @@ const LoginButton = ({ hidden = false }: { hidden?: boolean }) => {
 export const Header = () => {
   const { auth, loading, checkAuth } = useAuth();
   const pathName = usePathname();
-  const router = useRouter();
   const [headerText, setHeaderText] = useState<string>("たまごかけごはん.com");
 
   useEffect(() => {
@@ -54,21 +53,27 @@ export const Header = () => {
   }, [checkAuth]);
 
   useEffect(() => {
-    switch (pathName) {
-      case "/recipes/new":
+    switch (true) {
+      case pathName === "/recipes/new":
         setHeaderText("レシピを書く");
         break;
-      case "/recipes":
+      case pathName === "/recipes":
         setHeaderText("みつける");
         break;
-      case "/signin":
+      case pathName === "/signin":
         setHeaderText("ログイン");
         break;
-      case "/signup":
+      case pathName === "/signup":
         setHeaderText("アカウントを作成");
         break;
-      case `/${auth.name}`:
+      case pathName === `/${auth.name}`:
         setHeaderText("プロフィール");
+        break;
+      case /^\/recipes\/\d+$/.test(pathName):
+        setHeaderText("レシピの詳細");
+        break;
+      default:
+        setHeaderText("たまごかけごはん.com");
         break;
     }
   }, [pathName]);
@@ -76,22 +81,14 @@ export const Header = () => {
   return (
     <header
       className={`
-        bg-white fixed top-0 h-16 w-full md:px-5 lg:px-10 px-5 py-2 font-Zen_Kaku_Gothic_New z-40`}
+        bg-white fixed top-0 h-16 w-full md:px-5 lg:px-10 px-5 py-2 font-Zen_Kaku_Gothic_New z-40 ${
+          pathName === "/" ? "hidden" : ""
+        }`}
     >
       <div className="flex items-center justify-between h-full">
-        <div className="flex items-center">
-          <button
-            onClick={() => router.back()}
-            className={`material-icons mr-1 hidden ${
-              pathName === "/recipes/new" ? "block" : "hidden"
-            }`}
-          >
-            arrow_back
-          </button>
-          <h1 className="text-black text-xl font-black select-none">
-            {headerText}
-          </h1>
-        </div>
+        <h1 className="text-black text-xl font-black select-none">
+          {headerText}
+        </h1>
         <div className="items-center flex">
           {loading ? (
             <div className="flex items-center text-white">

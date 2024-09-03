@@ -1,7 +1,7 @@
 "use client";
 import { axiosInstance } from "@/lib/axiosInstance";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -26,7 +26,7 @@ interface Step {
 }
 
 const RecipesEditPage: React.FC = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const defaultValues: RecipeData = {
     title: "",
     body: "",
@@ -78,12 +78,13 @@ const RecipesEditPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto">
+    <div className="w-full">
       <form
         method="post"
         onSubmit={handleSubmit((recipe: RecipeData) => {
           postRecipe(recipe);
         })}
+        className="max-w-4xl mx-auto"
       >
         <section className="lg:flex p-3 mb-1 w-full">
           <button
@@ -117,7 +118,7 @@ const RecipesEditPage: React.FC = () => {
               hidden
             />
           </button>
-          <div className="w-full">
+          <div className="lg:w-2/3 w-full">
             <input
               type="text"
               className="w-full bg-gray-50 rounded text-xl outline-none my-1 p-2"
@@ -251,30 +252,45 @@ const RecipesEditPage: React.FC = () => {
             </div>
           </section>
         </div>
-        <div className="fixed bottom-0 bg-white bg-opacity-60 backdrop-blur-sm border-t border-gray-200 w-full px-3 py-2 flex justify-end">
-          <button
-            type="button"
-            className="material-icons p-2 m-1 bg-red-400 text-white rounded my-btn"
-            onClick={() => []}
-          >
-            delete
-          </button>
-          <button
-            type="button"
-            className="material-icons p-2 m-1 border border-gray-500 text-gray-500 rounded my-btn"
-            onClick={() => []}
-          >
-            <p className="text-sm">下書き保存</p>
-          </button>
-          <button
-            type="submit"
-            className="material-icons p-2 m-1 px-5 bg-yellow-600 text-white rounded my-btn"
-            onClick={() => []}
-          >
-            <p className="text-sm font-bold">公開する</p>
-          </button>
-        </div>
       </form>
+      <div className="max-w-4xl mx-auto">
+        <div
+          className={`
+        fixed bottom-0 bg-white bg-opacity-60 backdrop-blur-sm lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl w-full
+        lg:mb-2 p-2 flex justify-between`}
+        >
+          <button
+            onClick={() => router.back()}
+            className="mr-1 flex items-center scale-75"
+          >
+            <span className="material-icons">arrow_back</span>
+            もどる
+          </button>
+          <div className="flex items-center">
+            <button
+              type="button"
+              className="material-icons p-2 m-1 bg-red-400 text-white rounded my-btn"
+              onClick={() => []}
+            >
+              delete
+            </button>
+            <button
+              type="button"
+              className="material-icons p-2 m-1 border border-gray-500 text-gray-500 rounded my-btn"
+              onClick={() => []}
+            >
+              <p className="text-sm">下書き保存</p>
+            </button>
+            <button
+              type="submit"
+              className="material-icons p-2 m-1 px-5 bg-yellow-600 text-white rounded my-btn"
+              onClick={() => []}
+            >
+              <p className="text-sm font-bold">公開する</p>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

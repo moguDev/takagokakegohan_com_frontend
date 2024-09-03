@@ -37,7 +37,7 @@ export default function RootLayout({
       <body className={font.className}>
         <RecoilRootWrapper>
           <Header />
-          <main className="py-16 w-full">
+          <main className="py-16 w-screen">
             <div className="w-full">{children}</div>
           </main>
           <TabNavigation />
