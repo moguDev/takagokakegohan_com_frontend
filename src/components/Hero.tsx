@@ -21,15 +21,15 @@ export const Hero = () => {
           }`}
         >
           <div className="h-1/2" />
-          <div className="flex flex-col items-center justify-center translate-y-10">
-            <h1 className="text-black font-black lg:text-8xl text-4xl scale-110">
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-black font-black lg:text-7xl text-4xl scale-110">
               <span>たまごかけごはん</span>
               <span className="lg:text-4xl text-xl">
                 <span className="text-yellow-600">.</span>com
               </span>
             </h1>
             <div
-              className={`lg:text-3xl text-base font-thin text-gray-800 text-center pt-3 lg:pt-6 pb-6 lg:pb-12`}
+              className={`lg:text-3xl text-base font-thin text-gray-800 text-center pt-2 lg:pt-6 pb-6 lg:pb-12`}
             >
               <p>The Most Simple Breakfast Solution.</p>
               <p>Keep Your Days Awesome.</p>
@@ -49,7 +49,7 @@ export const Hero = () => {
             <Image
               src={riceImage}
               alt="rice"
-              className="lg:-translate-y-64 lg:scale-125 -translate-y-56 opacity-60"
+              className="lg:-translate-y-64 lg:scale-125 scale-110 -translate-y-52 opacity-60"
             />
           </div>
         </div>
