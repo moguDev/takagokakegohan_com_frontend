@@ -102,7 +102,7 @@ const RecipesEditPage: React.FC = () => {
                 fill
               />
             ) : (
-              <div className="text-gray-400 flex items-center">
+              <div className="text-gray-300 flex items-center">
                 <span className="material-icons mr-2">add_a_photo</span>
                 <p className="text-sm font-bold">レシピの画像を選択</p>
               </div>
@@ -252,12 +252,10 @@ const RecipesEditPage: React.FC = () => {
             </div>
           </section>
         </div>
-      </form>
-      <div className="max-w-4xl mx-auto">
         <div
           className={`
-        fixed bottom-0 bg-white bg-opacity-60 backdrop-blur-sm lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl w-full
-        lg:mb-2 p-2 flex justify-between`}
+        fixed bottom-0 bg-white bg-opacity-75 backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl w-full
+        lg:mb-2 px-2 py-1 pb-2 flex justify-between z-10`}
         >
           <button
             onClick={() => router.back()}
@@ -290,7 +288,7 @@ const RecipesEditPage: React.FC = () => {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

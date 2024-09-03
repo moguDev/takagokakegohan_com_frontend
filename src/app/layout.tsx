@@ -2,18 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
-import { Zen_Kaku_Gothic_New } from "next/font/google";
 import { TabNavigation } from "@/components/TabNavigation";
-import { Sawarabi_Mincho } from "next/font/google";
+import { Zen_Kaku_Gothic_New } from "next/font/google";
 
 export const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
-});
-
-export const font2 = Sawarabi_Mincho({
-  subsets: ["latin"],
-  weight: ["400"],
 });
 
 export const metadata: Metadata = {

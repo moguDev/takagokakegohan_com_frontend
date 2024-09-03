@@ -2,7 +2,7 @@
 import { axiosInstance } from "@/lib/axiosInstance";
 import { useCallback, useState } from "react";
 
-export const seCheckName = () => {
+export const useCheckName = () => {
   const [isUnique, setIsUnique] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
 

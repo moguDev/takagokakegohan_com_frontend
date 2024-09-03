@@ -2,9 +2,9 @@
 import { useAuth } from "@/hooks/useAuth";
 import { CardMenu } from "./CardMenu";
 import { useEffect, useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import defaultImage from "/public/images/default_avatar.png";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
@@ -82,11 +82,11 @@ export const Header = () => {
     <header
       className={`
         bg-white fixed top-0 h-16 w-full md:px-5 lg:px-10 px-5 py-2 font-Zen_Kaku_Gothic_New z-40 ${
-          pathName === "/" ? "hidden" : ""
+          pathName === "/" && "hidden"
         }`}
     >
-      <div className="flex items-center justify-between h-full">
-        <h1 className="text-black text-xl font-black select-none">
+      <div className="flex items-center justify-between w-full h-full">
+        <h1 className="text-black text-xl font-bold select-none">
           {headerText}
         </h1>
         <div className="items-center flex">

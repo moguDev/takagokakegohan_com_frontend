@@ -7,24 +7,20 @@ import { useEffect, useState } from "react";
 export const TabNavigation = () => {
   const { auth } = useAuth();
   const pathName = usePathname();
-  const [isHidden, setIsHidden] = useState<boolean>(false);
-
-  useEffect(
-    () =>
-      setIsHidden(
-        pathName === "/" ||
-          pathName === "/recipes/new" ||
-          /^\/recipes\/\d+$/.test(pathName)
-      ),
-    [pathName]
-  );
 
   return (
-    <div className="max-w-2xl mx-auto" hidden={isHidden}>
+    <div
+      className={`max-w-2xl mx-auto pb-2 ${
+        (pathName === "/" ||
+          pathName === "/recipes/new" ||
+          /^\/recipes\/\d+$/.test(pathName)) &&
+        "hidden"
+      }`}
+    >
       <div
         className={`
         flex items-center justify-between md:rounded-full shadow
-        text-gray-400 bg-white bg-opacity-80 backdrop-blur-xl
+        text-gray-400 bg-white bg-opacity-75 backdrop-blur-xl
         md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-3
         fixed bottom-0 z-40`}
       >
