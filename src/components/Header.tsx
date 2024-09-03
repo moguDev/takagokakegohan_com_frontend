@@ -30,12 +30,13 @@ const AccountCircle = ({ image }: { image: StaticImport | string }) => {
   );
 };
 
-const LoginButton = ({ hidden = false }: { hidden?: boolean }) => {
+const LoginButton = ({ hidden }: { hidden: boolean }) => {
   return (
     <Link
       href="/signin"
-      className="flex items-center rounded mx-1 px-3 py-2 bg-yellow-600 text-sm text-white active:scale-95 transition-all duration-300"
-      hidden={hidden}
+      className={`flex items-center rounded mx-1 px-3 py-2 bg-yellow-600 text-sm text-white active:scale-95 transition-all duration-300 ${
+        hidden && "hidden"
+      }`}
     >
       <span className="material-icons pr-1">login</span>
       <p className="outline-none w-full font-bold">ログイン</p>
@@ -50,7 +51,7 @@ export const Header = () => {
 
   useEffect(() => {
     checkAuth();
-  }, [checkAuth]);
+  }, []);
 
   useEffect(() => {
     switch (true) {

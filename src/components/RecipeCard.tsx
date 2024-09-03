@@ -15,7 +15,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
               fill
             />
           ) : (
-            <div className="bg-gray-100 rounded text-gray-300 w-full h-full flex flex-col items-center justify-center">
+            <div className="bg-gray-200 bg-opacity-50 rounded text-gray-300 w-full h-full flex flex-col items-center justify-center">
               <span className="material-icons">hide_image</span>
               <p className="text-xs font-semibold">画像がありません</p>
             </div>

@@ -8,10 +8,6 @@ h3 {
   user-select: none;
 }
 
-body {
-  color: #333333;
-}
-
 .my-btn {
   transition: all 0.3s ease;
   transform: scale(1);

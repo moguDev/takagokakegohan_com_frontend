@@ -6,12 +6,12 @@ export const DiscoverRecipes = () => {
   const { recipes } = useRecipes();
   return (
     <div className="w-full">
-      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-100">
-        <div className="bg-gray-50 rounded-full border border-gray-100 flex items-center p-2 max-w-7xl mx-auto">
+      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-200">
+        <div className="bg-gray-100 rounded-full border border-gray-200 flex items-center p-2 max-w-7xl mx-auto">
           <span className="material-icons text-gray-300">search</span>
           <input
             type="text"
-            className="bg-gray-50 w-full outline-none"
+            className="bg-gray-100 w-full outline-none"
             placeholder="食材や調味料で検索"
           />
         </div>

@@ -2,8 +2,8 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="mt-5 px-2 py-5 border-t border-theme border-opacity-5">
-      <div className="lg:flex items-center justify-between">
+    <footer className="fixed bottom-0 mt-5 p-2">
+      <div className="lg:flex items-center">
         <div>
           <Link
             href="/terms"

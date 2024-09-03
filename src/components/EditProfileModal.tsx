@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import defaultImage from "/public/images/default_avatar.png";
 import { useRouter } from "next/navigation";
+import { useCheckName } from "@/hooks/useCheckName";
 
 interface FormData {
   avatar: FileList | null;
@@ -16,22 +17,30 @@ interface FormData {
 export const EditProfileModal = () => {
   const router = useRouter();
   const { auth, updateProfile } = useAuth();
+  const { isUnique, checkName } = useCheckName();
   const defaultValues: FormData = {
     avatar: null,
     name: auth.name,
     nickname: auth.nickname,
     introduction: "",
   };
-
   const {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({ defaultValues });
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const imageFile = watch("avatar");
   const [imageSource, setImageSource] = useState("");
+  const name = watch("name");
+
+  useEffect(() => {
+    setValue("name", auth.name);
+    setValue("nickname", auth.nickname);
+    setValue("introduction", "");
+  }, [auth, setValue]);
 
   useEffect(() => {
     if (imageFile && imageFile[0]) {
@@ -42,6 +51,10 @@ export const EditProfileModal = () => {
       fileReader.readAsDataURL(imageFile[0]);
     }
   }, [imageFile]);
+
+  useEffect(() => {
+    checkName(name);
+  }, [name]);
 
   const onsubmit = async (data: FormData) => {
     try {
@@ -57,9 +70,9 @@ export const EditProfileModal = () => {
   };
 
   return (
-    <div>
+    <>
       <input type="checkbox" id="edit-profile-modal" className="modal-toggle" />
-      <div className="modal">
+      <div className="modal" role="dialog">
         <div className="modal-box bg-white rounded shadow-xl">
           <div className="flex items-center justify-between pb-5">
             <h3 className="font-bold text-xl text-yellow-950">
@@ -118,11 +131,11 @@ export const EditProfileModal = () => {
               <label htmlFor="nickname" className="text-xs my-1">
                 ユーザID<span className="text-red-500">【必須】</span>
               </label>
-              <div className="bg-white flex items-center border-b border-gray-200 p-1">
+              <div className="bg-white flex items-center border-b border-gray-300 p-1">
                 <span className="font-bold mr-0.5">@</span>
                 <input
                   type="text"
-                  className="w-full rounded-lg outline-none"
+                  className="bg-white w-full rounded-lg outline-none"
                   placeholder={`半角英数字、"_"、"-"のみ使用可能`}
                   {...register("name", {
                     required: "ユーザIDを入力してください。",
@@ -131,12 +144,24 @@ export const EditProfileModal = () => {
                       message: "ユーザIDは32文字以内にしてください。",
                     },
                     pattern: {
-                      value: /^[a-zA-Z0-9_-]+$/,
+                      value: /^(?=.*[a-zA-Z])[a-zA-Z0-9_-]+$/,
                       message:
-                        "ユーザIDには半角英数字、'_'、'-'のみ使用できます。",
+                        "1字以上の英字および、'_' , '-' のみ使用できます。",
                     },
                   })}
                 />
+                {name && name !== auth.name && (
+                  <p
+                    className={`flex items-center text-xs font-bold w-48 scale-80 ${
+                      isUnique ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    <span className="material-icons scale-75">
+                      {isUnique ? "check" : "close"}
+                    </span>
+                    {isUnique ? "使用できます" : "使用できません"}
+                  </p>
+                )}
               </div>
               <div className="text-red-500 text-xs p-1">
                 {errors.name?.message}
@@ -149,7 +174,7 @@ export const EditProfileModal = () => {
               <input
                 id="nickname"
                 type="text"
-                className="my-1 p-1 border-b border-black outline-none"
+                className="bg-white my-1 p-1 border-b border-gray-300 outline-none"
                 placeholder="アカウント名"
                 {...register("nickname", {
                   required: "アカウント名を入力してください。",
@@ -169,7 +194,7 @@ export const EditProfileModal = () => {
               </label>
               <input
                 type="text"
-                className="my-1 p-1 border-b border-black outline-none"
+                className="bg-white my-1 p-1 border-b border-gray-300 outline-none"
                 {...register("introduction", {
                   maxLength: {
                     value: 64,
@@ -189,6 +214,6 @@ export const EditProfileModal = () => {
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };

@@ -32,7 +32,7 @@ export const RecipeDetails = () => {
                 fill
               />
             ) : (
-              <div className="bg-gray-100 text-gray-300 w-full h-full flex flex-col items-center justify-center rounded">
+              <div className="bg-gray-200 bg-opa text-gray-300 w-full h-full flex flex-col items-center justify-center rounded">
                 <span className="material-icons select-none">hide_image</span>
                 <p className="text-xs select-none">レシピの画像がありません</p>
               </div>
@@ -54,9 +54,9 @@ export const RecipeDetails = () => {
                 </div>
                 <p className="p-1 text-sm">{recipe?.body}</p>
               </div>
-              <div className="bg-gray-50 rounded p-2 w-full">
-                <h2 className="text-xl text-gray-600 font-semibold">
-                  材料<span className="text-sm">（1人前）</span>
+              <div className="bg-gray-100 rounded p-2 w-full">
+                <h2 className="text-lg font-semibold">
+                  材料<span className="text-xs">（1人前）</span>
                 </h2>
                 <div className="p-1 divide-y divide-gray-200 divide-dashed">
                   {recipe?.ingredients &&
@@ -72,7 +72,7 @@ export const RecipeDetails = () => {
           </div>
         </section>
         <section className="mt-2 p-5">
-          <h2 className="lg:text-2xl text-xl pb-2 border-b border-black">
+          <h2 className="lg:text-2xl text-lg font-semibold pb-2 border-b border-black">
             作り方
           </h2>
           <section className="divide-y divide-gray-200">
