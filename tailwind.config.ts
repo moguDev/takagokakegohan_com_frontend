@@ -39,12 +39,13 @@ const config: Config = {
         },
       },
       textColor: {
+        white: "#F9F9F9",
         black: "#333333",
       },
       animation: {
         "fade-up-2s": "fade-up 2s ease-out",
         "fade-in-2s": "fade-in 2s ease-out",
-        drop: "drop 1.5s ease forwards",
+        drop: "drop 0.8s ease forwards",
         expand: "expand 3s ease forwards",
       },
       height: {
@@ -54,6 +55,8 @@ const config: Config = {
         theme: "#1B191A",
         primary: "#1B191A",
         secondary: "#C5A797",
+        white: "#f9f9f9",
+        black: "#333333",
       },
       borderColor: {
         theme: "#1B191A",

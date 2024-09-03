@@ -28,7 +28,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={font.className}>
+      <body className={`${font.className} text-black bg-white`}>
         <RecoilRootWrapper>
           <Header />
           <main className="py-16 w-screen">

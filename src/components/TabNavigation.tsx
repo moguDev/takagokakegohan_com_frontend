@@ -12,6 +12,7 @@ export const TabNavigation = () => {
     <div
       className={`max-w-2xl mx-auto pb-2 ${
         (pathName === "/" ||
+          pathName === "/signup" ||
           pathName === "/recipes/new" ||
           /^\/recipes\/\d+$/.test(pathName)) &&
         "hidden"
@@ -52,7 +53,7 @@ export const TabNavigation = () => {
 
         <Link
           href={auth.isAuthenticated ? `/${auth.name}` : `/signin`}
-          className={`material-icons w-1/2 text-center transition-all duration-300 ${
+          className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
             pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
               ? "text-black font-semibold scale-100"
               : "scale-90"

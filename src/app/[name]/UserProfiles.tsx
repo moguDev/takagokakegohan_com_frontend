@@ -5,7 +5,8 @@ import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
-import { useUserProfiles } from "@/hooks/useUserDetails";
+import { useUserProfiles } from "@/hooks/useUserProfiles";
+import { useEffect } from "react";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
@@ -21,7 +22,7 @@ export const UserProfiles: React.FC = async () => {
             htmlFor="edit-profile-modal"
             className="font-bold opacity-60 cursor-pointer flex justify-end"
           >
-            <p className="text-gray-800 w-max border rounded-full border-gray-800 text-xs px-5 py-1 my-btn">
+            <p className="text-gray-600 w-max border rounded-full border-gray-600 text-xs px-3 py-1 my-btn">
               編集
             </p>
           </label>
