@@ -60,6 +60,7 @@ const config: Config = {
       },
       borderColor: {
         theme: "#1B191A",
+        eggline: "#90835F",
       },
     },
   },
