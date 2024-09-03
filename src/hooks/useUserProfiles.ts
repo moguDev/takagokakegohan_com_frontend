@@ -28,9 +28,13 @@ export const useUserProfiles = (name: string) => {
     }
   }, [setUserDetails]);
 
+  const reload = useCallback(() => {
+    fetch();
+  }, [setUserDetails]);
+
   useEffect(() => {
     fetch();
   }, [name]);
 
-  return { userProfiles, loading, error };
+  return { userProfiles, reload, loading, error };
 };

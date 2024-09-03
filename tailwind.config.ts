@@ -45,7 +45,7 @@ const config: Config = {
       animation: {
         "fade-up-2s": "fade-up 2s ease-out",
         "fade-in-2s": "fade-in 2s ease-out",
-        drop: "drop 0.8s ease forwards",
+        drop: "drop 1s ease forwards",
         expand: "expand 3s ease forwards",
       },
       height: {

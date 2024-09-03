@@ -12,7 +12,13 @@ export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
   const { recipes } = useRecipes();
   const { name } = useParams();
-  const { userProfiles, loading, error } = useUserProfiles(name as string);
+  const { userProfiles, reload, loading, error } = useUserProfiles(
+    name as string
+  );
+
+  useEffect(() => {
+    reload();
+  }, [auth]);
 
   return (
     <div>
@@ -46,7 +52,7 @@ export const UserProfiles: React.FC = async () => {
               fill
             />
           </div>
-          <h2 className="text-3xl font-bold my-1">{userProfiles?.nickname}</h2>
+          <h2 className="text-3xl font-bold mt-1">{userProfiles?.nickname}</h2>
           <p className="text-gray-400 font-normal text-sm">
             @{userProfiles.name}
           </p>

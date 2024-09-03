@@ -70,9 +70,9 @@ export const EditProfileModal = () => {
   };
 
   return (
-    <div>
+    <>
       <input type="checkbox" id="edit-profile-modal" className="modal-toggle" />
-      <div className="modal">
+      <div className="modal" role="dialog">
         <div className="modal-box bg-white rounded shadow-xl">
           <div className="flex items-center justify-between pb-5">
             <h3 className="font-bold text-xl text-yellow-950">
@@ -214,6 +214,6 @@ export const EditProfileModal = () => {
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
