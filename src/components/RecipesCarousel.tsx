@@ -1,11 +1,9 @@
+"use client";
 import { useEffect, useState } from "react";
 import { RecipeCard } from "./RecipeCard";
+import { Recipe } from "@/types";
 
-type RecipesCarouselProps = {
-  recipes: { title: string }[];
-};
-
-export const RecipesCarousel = ({ recipes }: RecipesCarouselProps) => {
+export const RecipesCarousel = ({ recipes }: { recipes: Recipe[] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const handlePrev = () => {
     if (currentIndex <= 0) {
@@ -37,29 +35,17 @@ export const RecipesCarousel = ({ recipes }: RecipesCarouselProps) => {
         {recipes.map((recipe, index) => (
           <div
             key={index}
-            className={`carousel-item lg:w-96 w-3/4 transition-transform duration-500 ease-in-out`}
+            className={`carousel-item transition-transform duration-500 ease-in-out`}
             style={{
               transform: `translateX(-${
                 (currentIndex * 384) / recipes.length
               }%)`,
             }}
           >
-            <RecipeCard id={1} title={recipe.title} cooking_time={60} />
+            <RecipeCard recipe={recipe} />
           </div>
         ))}
       </div>
-      <button
-        className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow"
-        onClick={handlePrev}
-      >
-        &#9664;
-      </button>
-      <button
-        className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow"
-        onClick={handleNext}
-      >
-        &#9654;
-      </button>
     </div>
   );
 };

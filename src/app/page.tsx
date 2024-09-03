@@ -1,100 +1,50 @@
 "use client";
-import { Hero } from "@/components/Hero";
-import { Sawarabi_Mincho } from "next/font/google";
-import { LoginModal } from "@/components/LoginModal";
-import sampleImage from "/public/images/bg_photo_tkg.png";
-import { RecipesCarousel } from "@/components/RecipesCarousel";
-import useAuth from "@/hooks/useAuth";
-
-const sawarabiMincho = Sawarabi_Mincho({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
-const recipes = [
-  {
-    thumbnail: sampleImage,
-    name: "たまごかけごはん1",
-  },
-  {
-    thumbnail: sampleImage,
-    name: "たまごかけごはん2",
-  },
-  {
-    thumbnail: sampleImage,
-    name: "たまごかけごはん3",
-  },
-  {
-    thumbnail: sampleImage,
-    name: "たまごかけごはん4",
-  },
-  {
-    thumbnail: sampleImage,
-    name: "たまごかけごはん5",
-  },
-];
-
-const SearchBar: React.FC = () => {
-  return (
-    <div className="relative">
-      <div className="absolute flex items-center justify-center bottom-0 -mb-6 z-40 w-full">
-        <div className="flex items-center bg-white rounded border-2 border-theme lg:w-1/2 w-full mx-2">
-          <span className="material-icons opacity-30 pl-3 pr-1">search</span>
-          <input
-            type="text"
-            placeholder="レシピ名や調味料で検索"
-            className="outline-none py-3 w-full"
-          />
-          <button className="bg-yellow-600 h-full w-28 text-white rounded px-3 py-2 m-0.5 active:scale-95 transition-all duration-300">
-            検索
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
+import { AnimatedCircle } from "@/components/AnimatedCircle";
+import Link from "next/link";
+import { useState } from "react";
 
 export default function Home() {
-  const { isAuthenticated, login, signup } = useAuth();
-  const recipes = [
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-    { title: "たまごかけごはん" },
-  ];
+  const [displayAppTitle, setDisplayAppTitle] = useState<boolean>(false);
+
+  const handleDisplayApptitle = () => setDisplayAppTitle(true);
 
   return (
-    <div>
-      <Hero />
-      <SearchBar />
-      <div
-        className={`pt-5 p-3 ${sawarabiMincho.className} divide-y divide-black divide-opacity-20`}
-      >
-        <div className="py-5">
-          <h2
-            className={`mx-3 my-1 flex items-center text-2xl font-bold ${sawarabiMincho.className}`}
-          >
-            <span className="material-icons text-yellow-600 mr-2">
-              new_releases
+    <main>
+      <AnimatedCircle onAnimationEnd={handleDisplayApptitle} />
+      <div className="fixed top-0 w-screen">
+        <div
+          className={`flex flex-col items-center justify-center max-w-7xl mx-auto h-screen transition-all duration-1000 ${
+            displayAppTitle ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <h1 className="text-black font-black lg:text-8xl text-4xl">
+            <span>たまごかけごはん</span>
+            <span className="lg:text-4xl text-xl">
+              <span className="text-yellow-600">.</span>com
             </span>
-            注目のレシピ
-          </h2>
-          <RecipesCarousel recipes={recipes} />
-        </div>
-        <div className="py-5">
-          <h2
-            className={`mx-3 my-1 flex items-center text-2xl font-bold ${sawarabiMincho.className}`}
+          </h1>
+          <div
+            className={`lg:text-2xl text-base font-semibold opacity-50 text-center py-3`}
           >
-            <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
-              NEW
-            </span>
-            新着のレシピ
-          </h2>
-          <RecipesCarousel recipes={recipes} />
+            <p>The Most Simple Breakfast Solution.</p>
+            <p>Keep Your Days Awesome.</p>
+          </div>
+          <div className="flex items-center">
+            <Link
+              href="/recipes"
+              className={`
+              bg-gradient rounded-full m-1
+              lg:h-52 lg:w-52 h-32 w-32 flex items-center justify-center shadow
+              transition-all duration-500 cursor-pointer
+              active:scale-95 animate-fade-in-2s`}
+            >
+              <p className="text-white lg:text-3xl text-lg font-semibold select-none">
+                Get started
+              </p>
+            </Link>
+          </div>
         </div>
       </div>
-      <LoginModal handleLogin={login} />
-    </div>
+    </main>
   );
 }

@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Zen_Kaku_Gothic_New } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
+import { TabNavigation } from "@/components/TabNavigation";
+import { Zen_Kaku_Gothic_New } from "next/font/google";
 
-const font = Zen_Kaku_Gothic_New({
+export const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
 });
@@ -28,13 +28,13 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
       </head>
-      <body className={`${font.className} bg-yellow-50`}>
+      <body className={font.className}>
         <RecoilRootWrapper>
           <Header />
-          <main className="flex">
+          <main className="py-16 w-screen">
             <div className="w-full">{children}</div>
           </main>
-          <Footer />
+          <TabNavigation />
         </RecoilRootWrapper>
       </body>
     </html>

@@ -1,49 +1,69 @@
 "use client";
+import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useRouter } from "next/router";
-import path from "path";
-import { ReactNode, use, useEffect, useState } from "react";
-
-type NavLinkProps = {
-  href: string;
-  iconName: string;
-};
-
-const NavLink: React.FC<NavLinkProps> = (props: NavLinkProps) => {
-  const pathName: string = usePathname();
-  const [isSeleceted, setIsSelected] = useState<boolean>(false);
-  useEffect(
-    () => setIsSelected(pathName === props.href),
-    [pathName, props.href]
-  );
-  return (
-    <Link
-      href={props.href}
-      className={`material-icons w-full ${
-        isSeleceted ? "text-opacity-100" : "text-opacity-30"
-      }`}
-    >
-      <p
-        className={`w-max mx-auto px-10 py-3 rounded-3xl bg-gray-200 transition-all duration-300 ${
-          isSeleceted ? "opacity-100 bg-opacity-50" : "opacity-30 bg-opacity-0"
-        }`}
-      >
-        {props.iconName}
-      </p>
-    </Link>
-  );
-};
+import { useEffect, useState } from "react";
 
 export const TabNavigation = () => {
+  const { auth } = useAuth();
   const pathName = usePathname();
 
   return (
     <div
-      className={`fixed bottom-0 flex items-center h-16 w-screen bg-white bg-opacity-50 border-t border-gray-100`}
+      className={`max-w-2xl mx-auto pb-2 ${
+        (pathName === "/" ||
+          pathName === "/recipes/new" ||
+          /^\/recipes\/\d+$/.test(pathName)) &&
+        "hidden"
+      }`}
     >
-      <NavLink href="/" iconName="home" />
-      <NavLink href="/login" iconName="person" />
+      <div
+        className={`
+        flex items-center justify-between md:rounded-full shadow
+        text-gray-400 bg-white bg-opacity-75 backdrop-blur-xl
+        md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-3
+        fixed bottom-0 z-40`}
+      >
+        <Link
+          href="/recipes"
+          className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
+            pathName.includes("/recipes")
+              ? "text-yellow-950 font-semibold scale-100"
+              : "scale-90"
+          }`}
+        >
+          search
+          <p className="text-xs font-bold">みつける</p>
+        </Link>
+
+        <div className="relative w-1/3 flex justify-center">
+          <Link
+            href="/recipes/new"
+            className="absolute flex flex-col items-center justify-center rounded-full h-24 w-24 bg-gradient shadow my-btn select-none -bottom-6"
+          >
+            <span className="material-icons text-white text-opacity-80 mb-1 scale-150 select-none">
+              edit_note
+            </span>
+            <p className="text-xs font-semibold text-white select-none">
+              レシピを書く
+            </p>
+          </Link>
+        </div>
+
+        <Link
+          href={auth.isAuthenticated ? `/${auth.name}` : `/signin`}
+          className={`material-icons w-1/2 text-center transition-all duration-300 ${
+            pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
+              ? "text-black font-semibold scale-100"
+              : "scale-90"
+          }`}
+        >
+          {pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
+            ? "person"
+            : "person_outline"}
+          <p className="text-xs font-bold">プロフィール</p>
+        </Link>
+      </div>
     </div>
   );
 };

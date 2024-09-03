@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+h1,
+h2,
+h3 {
+  user-select: none;
+}
+
+body {
+  color: #333333;
+}
+
 .my-btn {
   transition: all 0.3s ease;
   transform: scale(1);
@@ -9,15 +19,31 @@
 }
 
 .my-btn:active {
-  transform: scale(0.9);
+  transform: scale(0.95);
 }
 
 .bg-gradient {
   background-image: linear-gradient(to right, #f59e0b, #b45309);
 }
 
-.bg-gradient-02 {
-  background-image: linear-gradient(to right, #fef9c3, white);
+.bg-gradient-normal {
+  background-image: linear-gradient(to right, white, white);
+}
+
+.bg-gradient-single {
+  background-image: linear-gradient(to right, white, #fef3c7);
+}
+
+.bg-gradient-double {
+  background-image: linear-gradient(to right, #fef3c7, #fde68a);
+}
+
+.bg-gradient-triple {
+  background-image: linear-gradient(to right, #fef3c7, #fcd34d);
+}
+
+.bg-gradient-legend {
+  background-image: linear-gradient(to right, black, black);
 }
 
 .text-gradient-01 {
