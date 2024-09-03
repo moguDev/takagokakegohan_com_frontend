@@ -1,2 +1,4 @@
 import { RecipeDetails } from "./RecipeDetails";
-export default () => <RecipeDetails />;
+export default function RecipeDetailsPage() {
+  return <RecipeDetails />;
+}
