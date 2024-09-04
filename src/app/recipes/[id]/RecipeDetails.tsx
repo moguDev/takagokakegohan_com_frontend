@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
 
 export const RecipeDetails = () => {
@@ -74,7 +74,7 @@ export const RecipeDetails = () => {
                   </span>
                   材料<span className="text-xs">（1人前）</span>
                 </h2>
-                <div className="p-1 divide-y divide-gray-200 divide-dashed">
+                <div className="p-1 divide-y divide-gray-300 divide-dashed">
                   {recipe.ingredients &&
                     recipe?.ingredients.map((ingredient, index) => (
                       <p key={index} className="my-auto py-2">
@@ -95,11 +95,15 @@ export const RecipeDetails = () => {
             </span>
             <span className="text-gray-600">作り方</span>
           </h2>
-          <section className="divide-y divide-gray-200">
+          <section className="divide-y divide-gray-200 p-1">
             {recipe.steps &&
               recipe?.steps.map((step, index) => (
-                <div key={index} className="flex items-start py-3 text-sm">
-                  <p className="pr-2">{step.stemNumber}.</p>
+                <div key={index} className="flex items-start py-3">
+                  <div className="font-bold text-center mr-2 relative">
+                    <span className="z-10 text-gray-500 w-5">
+                      {step.stemNumber}.
+                    </span>
+                  </div>
                   <p>{step.instruction}</p>
                 </div>
               ))}

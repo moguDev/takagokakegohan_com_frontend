@@ -34,7 +34,7 @@ export const UserProfiles: React.FC = async () => {
           </label>
         ) : (
           <label className="font-bold opacity-60 cursor-pointer flex justify-end">
-            <p className="text-white bg-yellow-700 w-max border rounded text-xs px-3 py-1 my-btn">
+            <p className="text-white bg-yellow-700 w-max border rounded text-xs px-4 py-2 my-btn">
               フォロー
             </p>
           </label>

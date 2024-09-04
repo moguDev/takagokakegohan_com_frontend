@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Sawarabi_Mincho } from "next/font/google";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCheckName } from "@/hooks/useCheckName";
 
 type FormData = {

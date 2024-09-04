@@ -24,7 +24,7 @@ export type Ingredient = {
 export type Step = {
   stemNumber?: number;
   instruction: string;
-  image: FileList | null;
+  image?: FileList | null;
 };
 
 export type Category = "卵" | "米" | "調味料" | "食材";

@@ -45,6 +45,8 @@ export const DiscoverRecipes = () => {
               "#注目のレシピ",
               "#新着レシピ",
               "#爆速レシピ",
+              "#卵でさがす",
+              "#調味料でさがす",
               "#ブックマーク",
             ].map((item, index) => {
               const itemRef = useRef(null);
@@ -54,7 +56,7 @@ export const DiscoverRecipes = () => {
                   ref={itemRef}
                   href="#"
                   onClick={() => handleClick(itemRef, index)}
-                  className={`nav-item mx-1 px-4 py-1 text-sm rounded-full ${
+                  className={`nav-item mx-1 px-4 py-1 text-sm rounded-full transition-all duration-400 ${
                     index === selectIndex
                       ? "font-semibold text-white bg-yellow-600"
                       : "text-gray-600"
@@ -66,28 +68,34 @@ export const DiscoverRecipes = () => {
             })}
           </nav>
         </div>
-        <h2 className={`mx-2 flex items-center text-black text-base font-bold`}>
-          <span className="material-icons text-yellow-600 mr-2">
-            new_releases
-          </span>
-          注目のたまごかけごはん
-        </h2>
-        <div className="grid lg:grid-cols-6 grid-cols-2 p-2">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
-        </div>
-        <h2 className={`mx-2 flex items-center text-black text-base font-bold`}>
-          <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
-            NEW
-          </span>
-          新着のたまごかけごはん
-        </h2>
-        <div className="grid lg:grid-cols-6 grid-cols-2 p-2">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
-        </div>
+        <section className="px-1">
+          <h2
+            className={`mx-2 flex items-center text-black text-base font-bold`}
+          >
+            <span className="material-icons text-yellow-600 mr-2">
+              new_releases
+            </span>
+            注目のたまごかけごはん
+          </h2>
+          <div className="grid lg:grid-cols-6 grid-cols-2 p-2">
+            {recipes.map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
+          </div>
+          <h2
+            className={`mx-2 flex items-center text-black text-base font-bold`}
+          >
+            <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
+              NEW
+            </span>
+            新着のたまごかけごはん
+          </h2>
+          <div className="grid lg:grid-cols-6 grid-cols-2 p-2">
+            {recipes.map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
+          </div>
+        </section>
       </section>
     </div>
   );
