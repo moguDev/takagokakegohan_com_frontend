@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import defaultImage from "/public/images/default_avatar.png";
 
 export const RecipeDetails = () => {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
@@ -19,7 +20,7 @@ export const RecipeDetails = () => {
     navigator.clipboard.writeText(window.location.href);
   };
 
-  return (
+  return recipe ? (
     <div className="w-full">
       <div className="max-w-4xl mx-auto p-2">
         <section className="lg:flex w-full h-full">
@@ -27,14 +28,14 @@ export const RecipeDetails = () => {
             {recipe?.image.url ? (
               <Image
                 src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`}
-                alt="sample"
-                className="object-cover p-1 rounded-lg"
+                alt="sampleImage"
+                className="object-cover rounded"
                 fill
               />
             ) : (
-              <div className="bg-gray-200 bg-opa text-gray-300 w-full h-full flex flex-col items-center justify-center rounded">
-                <span className="material-icons select-none">hide_image</span>
-                <p className="text-xs select-none">レシピの画像がありません</p>
+              <div className="bg-gray-200 bg-opacity-50 rounded text-gray-300 w-full h-full flex flex-col items-center justify-center">
+                <span className="material-icons">hide_image</span>
+                <p className="text-xs font-semibold">画像がありません</p>
               </div>
             )}
           </div>
@@ -42,15 +43,28 @@ export const RecipeDetails = () => {
             <section>
               <div className="mb-4">
                 <h1 className="text-2xl font-bold pt-2">{recipe?.title}</h1>
-                <div className="flex items-end justify-between">
-                  <p className="p-1">{recipe?.user_id}</p>
-                  <p className="text-xs">
-                    調理時間{" "}
+                <div className="flex items-end justify-between text-xs mt-1 mb-2">
+                  <div className="flex items-center">
+                    <div className="rounded-full h-5 w-5 relative mr-0.5">
+                      <Image
+                        src={
+                          `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}` ||
+                          defaultImage
+                        }
+                        alt="アイコン"
+                        className="object-cover rounded-full"
+                        fill
+                      />
+                    </div>
+                    <p>{recipe?.user.nickname}</p>
+                  </div>
+                  <div className="text-xs">
+                    <span className="mr-1">調理時間</span>
                     <span className="text-lg font-semibold">
                       {recipe?.cooking_time}
-                    </span>{" "}
-                    秒
-                  </p>
+                    </span>
+                    <span className="ml-1">秒</span>
+                  </div>
                 </div>
                 <p className="p-1 text-sm">{recipe?.body}</p>
               </div>
@@ -62,7 +76,7 @@ export const RecipeDetails = () => {
                   {recipe?.ingredients &&
                     recipe?.ingredients.map((item, index) => (
                       <p key={index} className="my-auto py-2">
-                        <span className="font-semibold">{item.ingredient}</span>
+                        <span className="font-semibold">{item.name}</span>
                         <span className="ml-2">{item.amount}</span>
                       </p>
                     ))}
@@ -137,5 +151,7 @@ export const RecipeDetails = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <></>
   );
 };

@@ -8,7 +8,7 @@ type TypeAuth = {
   user_id: number;
   name: string;
   nickname: string;
-  avatar: string;
+  avatar: { url: string | null };
 };
 
 const authState = atom<TypeAuth>({
@@ -18,7 +18,7 @@ const authState = atom<TypeAuth>({
     user_id: -1,
     name: "",
     nickname: "",
-    avatar: "",
+    avatar: { url: null },
   },
 });
 
@@ -49,9 +49,11 @@ export const useAuth = () => {
         user_id: res.data.data.id,
         name: res.data.data.name,
         nickname: res.data.data.nickname,
-        avatar: res.data.data.avatar.url
-          ? `http://localhost:3000${res.data.data.avatar.url}`
-          : "",
+        avatar: {
+          url:
+            res.data.data.avatar.url &&
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+        },
       });
     } catch (error) {
       console.error("認証情報の取得に失敗しました");
@@ -85,9 +87,11 @@ export const useAuth = () => {
             user_id: res.data.data.id,
             name: res.data.data.name,
             nickname: res.data.data.nickname,
-            avatar: res.data.data.avatar.url
-              ? `http://localhost:3000${res.data.data.avatar.url}`
-              : "",
+            avatar: {
+              url:
+                res.data.data.avatar.url &&
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+            },
           });
         }
       } catch (error) {
@@ -115,9 +119,11 @@ export const useAuth = () => {
             user_id: res.data.data.id,
             name: res.data.data.name,
             nickname: res.data.data.nickname,
-            avatar: res.data.data.avatar.url
-              ? `http://localhost:3000${res.data.data.avatar.url}`
-              : "",
+            avatar: {
+              url:
+                res.data.data.avatar.url &&
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+            },
           });
         }
         setAuth((prev) => ({ ...prev, isAuthenticated: true }));
@@ -142,7 +148,7 @@ export const useAuth = () => {
         user_id: -1,
         name: "",
         nickname: "",
-        avatar: "",
+        avatar: { url: null },
       });
     } catch (error) {
       throw new Error("ログアウトに失敗しました。");
@@ -178,9 +184,11 @@ export const useAuth = () => {
             user_id: res.data.data.id,
             name: res.data.data.name,
             nickname: res.data.data.nickname,
-            avatar: res.data.data.avatar.url
-              ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`
-              : "",
+            avatar: {
+              url:
+                res.data.data.avatar.url &&
+                `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+            },
           });
         }
       } catch (error) {

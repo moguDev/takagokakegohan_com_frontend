@@ -17,7 +17,7 @@ export const CardMenu: React.FC = () => {
             <div className="mb-5 flex flex-col items-center">
               <div className="border-2 border-white border-opacity-50 shadow rounded-full h-20 w-20 relative">
                 <Image
-                  src={auth.avatar === "" ? defaultImage : auth.avatar}
+                  src={auth.avatar.url || defaultImage}
                   alt="アイコン"
                   className="object-cover rounded-full"
                   fill

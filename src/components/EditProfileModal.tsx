@@ -106,9 +106,7 @@ export const EditProfileModal = () => {
                 src={
                   imageSource !== ""
                     ? imageSource
-                    : auth.avatar === ""
-                    ? defaultImage
-                    : auth.avatar
+                    : auth.avatar.url || defaultImage
                 }
                 alt="アイコン"
                 className="object-cover rounded-full"

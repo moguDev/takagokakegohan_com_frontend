@@ -6,7 +6,7 @@ export const useUserProfiles = (name: string) => {
   const [userProfiles, setUserDetails] = useState<UserProfiles>({
     name: "",
     nickname: "",
-    avatar: null,
+    avatar: { url: null },
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,10 +16,11 @@ export const useUserProfiles = (name: string) => {
       const res = await axiosInstance.get(`/users/${name}`);
       setUserDetails({
         ...res.data,
-        avatar:
-          res.data.avatar.url === null
-            ? null
-            : `http://localhost:3000${res.data.avatar.url}`,
+        avatar: {
+          url: res.data.avatar.url
+            ? `http://localhost:3000${res.data.avatar.url}`
+            : null,
+        },
       });
     } catch (err) {
       setError("ユーザ情報の取得に失敗しました。");

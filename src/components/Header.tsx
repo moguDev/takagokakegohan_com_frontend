@@ -97,9 +97,7 @@ export const Header = () => {
               Loading...
             </div>
           ) : auth.isAuthenticated ? (
-            <AccountCircle
-              image={auth.avatar === "" ? defaultImage : auth.avatar}
-            />
+            <AccountCircle image={auth.avatar.url || defaultImage} />
           ) : (
             <LoginButton hidden={pathName === "/signin"} />
           )}

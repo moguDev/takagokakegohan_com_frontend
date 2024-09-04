@@ -59,7 +59,7 @@ export const SigninForm = () => {
               <span className="material-icons opacity-20 p-2">email</span>
               <input
                 type="email"
-                className="w-full rounded-lg outline-none"
+                className="bg-white w-full rounded-lg outline-none"
                 placeholder="メールアドレス"
                 {...register("email", {
                   required: "メールアドレスを入力してください。",
@@ -82,7 +82,7 @@ export const SigninForm = () => {
               <span className="material-icons opacity-20 p-2">password</span>
               <input
                 type="password"
-                className="h-full w-full rounded-lg outline-none"
+                className="bg-white h-full w-full rounded-lg outline-none"
                 placeholder="パスワード"
                 {...register("password", {
                   required: "パスワードを入力してください。",

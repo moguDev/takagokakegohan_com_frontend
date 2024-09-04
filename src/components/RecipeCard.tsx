@@ -26,7 +26,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             {recipe.title}
           </p>
           <div className="flex items-center justify-between text-gray-500 pb-1">
-            <p className="text-sm">{recipe.user_id}</p>
+            <p className="text-sm">{recipe.user.name}</p>
             <p className="text-xs flex items-center text-yellow-500">
               <span>★</span>
               {4.5}
