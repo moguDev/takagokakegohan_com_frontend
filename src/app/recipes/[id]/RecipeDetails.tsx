@@ -10,7 +10,6 @@ export const RecipeDetails = () => {
   const { id } = useParams();
   const { recipe } = useRecipeDetails(Number(id));
   const router = useRouter();
-  const pathName = usePathname();
 
   useEffect(() => {
     console.log(recipe);
@@ -43,7 +42,7 @@ export const RecipeDetails = () => {
             <section>
               <div className="mb-4">
                 <h1 className="text-2xl font-bold pt-2">{recipe?.title}</h1>
-                <div className="flex items-end justify-between text-xs mt-1 mb-2">
+                <div className="flex items-end justify-between text-sm mt-1 mb-2">
                   <div className="flex items-center">
                     <div className="rounded-full h-5 w-5 relative mr-0.5">
                       <Image
@@ -56,7 +55,7 @@ export const RecipeDetails = () => {
                         fill
                       />
                     </div>
-                    <p>{recipe?.user.nickname}</p>
+                    <p className="font-semibold">{recipe?.user.nickname}</p>
                   </div>
                   <div className="text-xs">
                     <span className="mr-1">調理時間</span>
@@ -68,16 +67,20 @@ export const RecipeDetails = () => {
                 </div>
                 <p className="p-1 text-sm">{recipe?.body}</p>
               </div>
-              <div className="bg-gray-100 rounded p-2 w-full">
-                <h2 className="text-lg font-semibold">
+              <div className="bg-gray-100 rounded px-1 py-2 w-full">
+                <h2 className="flex items-center text-base text-gray-600 font-semibold">
+                  <span className="material-icons text-yellow-600 mr-1">
+                    egg
+                  </span>
                   材料<span className="text-xs">（1人前）</span>
                 </h2>
                 <div className="p-1 divide-y divide-gray-200 divide-dashed">
-                  {recipe?.ingredients &&
-                    recipe?.ingredients.map((item, index) => (
+                  {recipe.ingredients &&
+                    recipe?.ingredients.map((ingredient, index) => (
                       <p key={index} className="my-auto py-2">
-                        <span className="font-semibold">{item.name}</span>
-                        <span className="ml-2">{item.amount}</span>
+                        <span className="font-black text-yellow-600">・</span>
+                        <span className="font-semibold">{ingredient.name}</span>
+                        <span className="ml-2">{ingredient.amount}</span>
                       </p>
                     ))}
                 </div>
@@ -85,27 +88,21 @@ export const RecipeDetails = () => {
             </section>
           </div>
         </section>
-        <section className="mt-2 p-5">
-          <h2 className="lg:text-2xl text-lg font-semibold pb-2 border-b border-black">
-            作り方
+        <section className="mt-2 px-4 py-2">
+          <h2 className="flex items-center lg:text-2xl text-lg font-semibold pb-2 border-b border-gray-400">
+            <span className="material-icons text-yellow-600 text-base mr-1">
+              restaurant
+            </span>
+            <span className="text-gray-600">作り方</span>
           </h2>
           <section className="divide-y divide-gray-200">
-            <div className="flex items-start py-3 text-sm">
-              <p className="pr-2">{1}.</p>
-              <p>{"適当な器に卵を割り入れます。"}</p>
-            </div>
-            <div className="flex items-start py-3 text-sm">
-              <p className="pr-2">{2}.</p>
-              <p>{"めんつゆを加え、よく混ぜます。"}</p>
-            </div>
-            <div className="flex items-start py-3 text-sm">
-              <p className="pr-2">{3}.</p>
-              <p>{"溢れないように白ごはんに流し入れ、よく混ぜます。"}</p>
-            </div>
-            <div className="flex items-start py-3 text-sm">
-              <p className="pr-2">{4}.</p>
-              <p>{"できあがり。"}</p>
-            </div>
+            {recipe.steps &&
+              recipe?.steps.map((step, index) => (
+                <div key={index} className="flex items-start py-3 text-sm">
+                  <p className="pr-2">{step.stemNumber}.</p>
+                  <p>{step.instruction}</p>
+                </div>
+              ))}
           </section>
         </section>
       </div>

@@ -213,7 +213,7 @@ export const RecipesEditForm: React.FC = () => {
                   調味料・食材
                 </h2>
                 {ingredientField.map((field, index) => (
-                  <div className="flex items-center">
+                  <div key={index} className="flex items-center">
                     <span className="font-black text-yellow-600">・</span>
                     <input
                       type="text"
@@ -277,7 +277,7 @@ export const RecipesEditForm: React.FC = () => {
                 作り方
               </h2>
               {stepFields.map((field, index) => (
-                <div className="border-b border-gray-200 mb-3">
+                <div key={index} className="border-b border-gray-200 mb-3">
                   <div className="flex items-center">
                     <p className="inline">{index + 1}. </p>
                     <input

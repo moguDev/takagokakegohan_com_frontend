@@ -63,7 +63,9 @@ export const SignupForm = () => {
               ユーザID
             </label>
             <div className="bg-white flex items-center border-b border-gray-200 p-1">
-              <span className="text-gray-400 font-bold px-3">@</span>
+              <span className="material-icons opacity-20 p-2">
+                alternate_email
+              </span>
               <input
                 type="text"
                 className="bg-white w-full outline-none"
