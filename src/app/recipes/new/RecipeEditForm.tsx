@@ -177,9 +177,9 @@ export const RecipesEditForm: React.FC = () => {
           </div>
         </section>
         <div className="lg:flex">
-          <section className="lg:w-1/3 w-full">
+          <section className="lg:w-1/2 w-full">
             <div className="p-5 mb-1">
-              <section className="border-b border-gray-200 mb-3">
+              <section className="border-b border-gray-400 mb-3">
                 <h2 className="text-sm text-gray-400 font-semibold pb-2 flex items-center">
                   <span className="material-icons scale-75 text-yellow-500">
                     timer
@@ -189,7 +189,7 @@ export const RecipesEditForm: React.FC = () => {
                 <div className="flex items-center">
                   <input
                     type="number"
-                    className="w-20 text-center bg-gray-50 rounded outline-none my-1 mr-1 p-2"
+                    className="text-center bg-gray-100 rounded outline-none my-1 mr-1 p-1.5"
                     placeholder="30"
                     {...register("cooking_time", {
                       required: "調理時間を入力してください",
@@ -205,15 +205,18 @@ export const RecipesEditForm: React.FC = () => {
                   {errors.cooking_time?.message}
                 </div>
               </section>
-              <section className="border-b border-gray-200">
-                <h2 className="text-sm text-gray-400 font-semibold pb-2 flex items-center">
+              <section className="border-b border-gray-400">
+                <h2 className="text-sm text-gray-400 font-semibold pt-3 pb-2 flex items-center">
                   <span className="material-icons scale-75 text-yellow-500">
                     egg
                   </span>
                   調味料・食材
                 </h2>
                 {ingredientField.map((field, index) => (
-                  <div key={index} className="flex items-center">
+                  <div
+                    key={index}
+                    className="flex items-center border-b border-gray-300 border-dashed my-2"
+                  >
                     <span className="font-black text-yellow-600">・</span>
                     <input
                       type="text"
@@ -255,29 +258,32 @@ export const RecipesEditForm: React.FC = () => {
                 ))}
                 <button
                   type="button"
-                  className="my-btn flex items-center justify-center w-full py-2 opacity-60 bg-gray-100 text-gray-400 rounded-lg mb-2"
+                  className="my-btn flex items-center justify-center w-full py-2 opacity-80 bg-blue-50 text-blue-400 rounded mb-2"
                   onClick={() =>
                     appendIngredient({ name: "", amount: "", category: "食材" })
-                  } // フィールドを追加
+                  }
                 >
                   <span className="material-icons scale-75">add</span>
-                  <span className="font-semibold text-sm">
+                  <span className="font-medium text-sm">
                     調味料・食材を追加
                   </span>
                 </button>
               </section>
             </div>
           </section>
-          <section className="lg:w-2/3 w-full lg:ml-1">
+          <section className="lg:w-1/2 w-full lg:ml-1">
             <div className="p-5 h-max">
-              <h2 className="text-sm text-gray-400 font-semibold pb-2 flex items-center">
+              <h2 className="text-sm text-gray-400 font-semibold pb-1 flex items-center">
                 <span className="material-icons scale-75 text-yellow-500">
                   restaurant
                 </span>
                 作り方
               </h2>
               {stepFields.map((field, index) => (
-                <div key={index} className="border-b border-gray-200 mb-3">
+                <div
+                  key={index}
+                  className="border-b border-gray-300 border-dashed my-2"
+                >
                   <div className="flex items-center">
                     <p className="inline">{index + 1}. </p>
                     <input
@@ -300,11 +306,11 @@ export const RecipesEditForm: React.FC = () => {
               ))}
               <button
                 type="button"
-                className="my-btn flex items-center justify-center w-full py-2 opacity-60 bg-gray-100 text-gray-400 rounded-lg mb-2"
+                className="my-btn flex items-center justify-center w-full py-2 opacity-80 bg-blue-50 text-blue-400 rounded mb-2"
                 onClick={() => appendStep({ instruction: "", image: null })}
               >
                 <span className="material-icons scale-75">add</span>
-                <span className="font-semibold text-sm">工程を追加</span>
+                <span className="font-medium text-sm">作り方を追加</span>
               </button>
             </div>
           </section>

@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
 import { useUserProfiles } from "@/hooks/useUserProfiles";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
@@ -20,7 +20,20 @@ export const UserProfiles: React.FC = async () => {
     reload();
   }, [auth]);
 
-  return (
+  return error === "404" ? (
+    <div className="fixed inset-0 flex flex-col items-center justify-center h-screen w-screen">
+      <div className="h-20 w-20 rounded-full relative">
+        <Image
+          src={defaultImage}
+          alt="アイコン"
+          className="object-cover rounded-full"
+          fill
+        />
+      </div>
+      <p className="text-gray-500 text-2xl font-bold pt-2 pb-5">@{name}</p>
+      <p className="text-gray-500">このアカウントは存在しません。</p>
+    </div>
+  ) : (
     <div>
       <section className="mx-2 p-5 bg-gradient-single rounded-md shadow">
         {auth.name === name ? (

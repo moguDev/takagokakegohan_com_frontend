@@ -31,8 +31,9 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
               <div className="rounded-full h-4 w-4 relative mr-0.5">
                 <Image
                   src={
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}` ||
-                    defaultImage
+                    recipe?.user.avatar.url
+                      ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}`
+                      : defaultImage
                   }
                   alt="アイコン"
                   className="object-cover rounded-full"

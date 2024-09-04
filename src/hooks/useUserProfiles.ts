@@ -1,5 +1,6 @@
 import { axiosInstance } from "@/lib/axiosInstance";
 import { UserProfiles } from "@/types";
+import { AxiosError } from "axios";
 import { useState, useEffect, useCallback } from "react";
 
 export const useUserProfiles = (name: string) => {
@@ -23,7 +24,11 @@ export const useUserProfiles = (name: string) => {
         },
       });
     } catch (err) {
-      setError("ユーザ情報の取得に失敗しました。");
+      if ((err as AxiosError).response?.status === 404) {
+        setError("404");
+      } else {
+        setError("ユーザ情報の取得に失敗しました。");
+      }
     } finally {
       setLoading(false);
     }

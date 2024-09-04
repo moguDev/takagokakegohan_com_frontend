@@ -6,7 +6,7 @@ import riceImage from "/public/images/rice.png";
 import Image from "next/image";
 import { Footer } from "./Footer";
 
-export const Hero = () => {
+export const TopAnimation = () => {
   const [displayAppTitle, setDisplayAppTitle] = useState<boolean>(false);
 
   const handleDisplayApptitle = () => setDisplayAppTitle(true);

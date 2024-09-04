@@ -47,8 +47,9 @@ export const RecipeDetails = () => {
                     <div className="rounded-full h-5 w-5 relative mr-0.5">
                       <Image
                         src={
-                          `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}` ||
-                          defaultImage
+                          recipe?.user.avatar.url
+                            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}`
+                            : defaultImage
                         }
                         alt="アイコン"
                         className="object-cover rounded-full"
@@ -67,7 +68,7 @@ export const RecipeDetails = () => {
                 </div>
                 <p className="p-1 text-sm">{recipe?.body}</p>
               </div>
-              <div className="bg-gray-100 rounded px-1 py-2 w-full">
+              <div className="bg-gray-100 rounded-lg px-2 py-3 w-full">
                 <h2 className="flex items-center text-base text-gray-600 font-semibold">
                   <span className="material-icons text-yellow-600 mr-1">
                     egg
@@ -95,7 +96,7 @@ export const RecipeDetails = () => {
             </span>
             <span className="text-gray-600">作り方</span>
           </h2>
-          <section className="divide-y divide-gray-200 p-1">
+          <section className="divide-y divide-gray-300 divide-dashed p-1">
             {recipe.steps &&
               recipe?.steps.map((step, index) => (
                 <div key={index} className="flex items-start py-3">
@@ -114,7 +115,7 @@ export const RecipeDetails = () => {
         <div
           className={`
         fixed bottom-0 bg-white bg-opacity-75 backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl w-full
-        lg:mb-2 px-2 py-1 flex justify-between`}
+        lg:mb-2 px-2 py-1 flex justify-between shadow-xl`}
         >
           <button
             onClick={() => router.back()}
