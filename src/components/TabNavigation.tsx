@@ -28,7 +28,7 @@ export const TabNavigation = () => {
         className={`
         flex items-center justify-between md:rounded-full shadow
         text-gray-400 bg-white bg-opacity-75 backdrop-blur-xl
-        md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-3
+        md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-4
         fixed bottom-0 z-40`}
       >
         <Link

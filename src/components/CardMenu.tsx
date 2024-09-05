@@ -3,9 +3,12 @@ import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
 import defaultImage from "/public/images/default_avatar.png";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "./Toast";
 
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
+  const setMessage = useSetRecoilState(toastState);
   return (
     <div
       tabIndex={0}
@@ -67,6 +70,7 @@ export const CardMenu: React.FC = () => {
                   className="relative hover:text-blue-500"
                   onClick={() => {
                     logout();
+                    setMessage("ログアウトしました");
                   }}
                 >
                   <span className="material-icons">logout</span>

@@ -143,8 +143,8 @@ export const RecipeDetailsPage = () => {
       <div className="max-w-4xl mx-auto">
         <div
           className={`
-        fixed bottom-0 bg-white bg-opacity-75 backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl w-full
-        lg:mb-2 px-2 py-1 flex justify-between shadow-xl`}
+        fixed bottom-0 bg-white bg-opacity-75 backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl h-16 w-full
+        lg:mb-2 px-2 py-2 flex justify-between shadow-xl`}
         >
           <button
             onClick={() => router.back()}

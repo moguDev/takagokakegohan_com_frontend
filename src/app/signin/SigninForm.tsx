@@ -2,8 +2,9 @@
 import { useForm } from "react-hook-form";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Link from "next/link";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "@/components/Toast";
 
 type FormData = {
   email: string;
@@ -12,6 +13,7 @@ type FormData = {
 
 export const SigninForm = () => {
   const { login } = useAuth();
+  const setMessage = useSetRecoilState(toastState);
   const router = useRouter();
   const defaultValues = {
     email: "",
@@ -27,6 +29,7 @@ export const SigninForm = () => {
     try {
       await login(data.email, data.password);
       router.back();
+      setMessage("ログインしました");
     } catch (error) {
       console.error(error);
     }

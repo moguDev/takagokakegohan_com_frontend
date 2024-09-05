@@ -10,6 +10,8 @@ import { Ingredient, RecipeStatus, Step } from "@/types";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
 import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Loading from "@/app/loading";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "@/components/Toast";
 
 interface FormData {
   title: string;
@@ -21,6 +23,7 @@ interface FormData {
 }
 
 export const RecipesEditForm: React.FC = () => {
+  const setMessage = useSetRecoilState(toastState);
   const { id } = useParams();
   const router = useRouter();
   const { auth } = useAuth();
@@ -98,7 +101,12 @@ export const RecipesEditForm: React.FC = () => {
         },
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      status === "published" && router.replace(`/recipes/${id}`);
+      if (status === "published") {
+        router.replace(`/recipes/${id}`);
+        setMessage("レシピを公開しました！");
+      } else {
+        setMessage("下書きを保存しました。");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -337,8 +345,9 @@ export const RecipesEditForm: React.FC = () => {
         </div>
         <div
           className={`
-        fixed bottom-0 bg-white bg-opacity-75 backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl w-full
-        lg:mb-2 px-2 py-1 pb-2 flex justify-between z-10`}
+        fixed bottom-0 bg-white bg-opacity-75 backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl
+        h-16 w-full
+        lg:mb-2 p-2 flex justify-between z-10`}
         >
           <button
             type="button"
@@ -374,7 +383,6 @@ export const RecipesEditForm: React.FC = () => {
             <button
               type="submit"
               className="material-icons p-2 m-1 px-5 bg-yellow-600 text-white rounded my-btn"
-              onClick={() => []}
             >
               <p className="text-sm font-bold">公開する</p>
             </button>
@@ -406,6 +414,7 @@ export const RecipesEditForm: React.FC = () => {
                 try {
                   await axiosInstance.delete(`/recipes/${id}`);
                   router.back();
+                  setMessage("レシピを削除しました。");
                 } catch (error) {
                   console.error(error);
                 }
