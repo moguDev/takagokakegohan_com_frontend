@@ -31,8 +31,8 @@ export const SignupForm = () => {
     watch,
     formState: { errors },
   } = useForm({ defaultValues });
-  const name = watch("name");
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const name = watch("name");
 
   useEffect(() => {
     checkName(name);
@@ -40,14 +40,8 @@ export const SignupForm = () => {
 
   const onsubmit = async (data: FormData) => {
     try {
-      await signup(
-        data.email,
-        data.password,
-        data.passwordConfirmation,
-        data.name,
-        data.nickname
-      );
-      router.push("/");
+      await signup(data);
+      router.replace(`/${data.name}`);
     } catch (error) {
       console.error(error);
     }

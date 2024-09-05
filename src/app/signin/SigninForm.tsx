@@ -1,6 +1,5 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { Sawarabi_Mincho } from "next/font/google";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -11,37 +10,23 @@ type FormData = {
   password: string;
 };
 
-const shipporiMincho = Sawarabi_Mincho({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
 export const SigninForm = () => {
-  const { auth, loading, login } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
   const defaultValues = {
     email: "",
     password: "",
-    passwordConfirmation: "",
-    name: "",
-    nickname: "",
   };
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({ defaultValues });
-  const name = watch("name");
-
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
 
   const onsubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password);
-      router.push(`/recipes`);
+      router.back();
     } catch (error) {
       console.error(error);
     }

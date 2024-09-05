@@ -13,6 +13,7 @@ export type Recipe = {
   ingredients: Ingredient[];
   steps: Step[];
   user: UserProfiles;
+  status: RecipeStatus;
 };
 
 export type Ingredient = {
@@ -28,3 +29,5 @@ export type Step = {
 };
 
 export type Category = "卵" | "米" | "調味料" | "食材";
+
+export type RecipeStatus = "draft" | "published";

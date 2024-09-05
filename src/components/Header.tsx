@@ -55,8 +55,8 @@ export const Header = () => {
 
   useEffect(() => {
     switch (true) {
-      case pathName === "/recipes/new":
-        setHeaderText("レシピを書く");
+      case /^\/recipes\/(\d+)\/edit$/.test(pathName):
+        setHeaderText("レシピの編集");
         break;
       case pathName === "/recipes":
         setHeaderText("みつける");

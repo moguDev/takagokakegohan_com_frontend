@@ -41,9 +41,34 @@ export const useRecipeDetails = (id: number) => {
     }
   }, [setRecipe]);
 
+  const update = useCallback(
+    async (recipe: Recipe) => {
+      setLoading(true);
+      try {
+        const res = await axiosInstance.put(
+          `/recipes/${id}`,
+          {
+            recipe: recipe,
+          },
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        setRecipe({
+          ...res.data,
+          ingredients: adaptIngredients(res.data.recipe_ingredients),
+          steps: adaptSteps(res.data.steps),
+        });
+      } catch (error) {
+        throw Error("レシピの更新に失敗しました。");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setRecipe]
+  );
+
   useEffect(() => {
     fetch();
   }, []);
 
-  return { recipe, loading };
+  return { recipe, loading, update };
 };

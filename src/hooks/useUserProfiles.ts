@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/lib/axiosInstance";
-import { UserProfiles } from "@/types";
+import { Recipe, UserProfiles } from "@/types";
 import { AxiosError } from "axios";
 import { useState, useEffect, useCallback } from "react";
 
@@ -9,10 +9,11 @@ export const useUserProfiles = (name: string) => {
     nickname: "",
     avatar: { url: null },
   });
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetch = useCallback(async () => {
+  const fetchProfile = useCallback(async () => {
     try {
       const res = await axiosInstance.get(`/users/${name}`);
       setUserDetails({
@@ -34,13 +35,24 @@ export const useUserProfiles = (name: string) => {
     }
   }, [setUserDetails]);
 
+  const fetchRecipes = useCallback(async () => {
+    try {
+      const res = await axiosInstance.get(`/users/${name}/recipes`);
+      console.log(res.data);
+      setRecipes(res.data);
+    } catch (error) {
+      new Error("レシピの取得に失敗しました。");
+    }
+  }, []);
+
   const reload = useCallback(() => {
-    fetch();
+    fetchProfile();
   }, [setUserDetails]);
 
   useEffect(() => {
-    fetch();
+    fetchProfile();
+    fetchRecipes();
   }, [name]);
 
-  return { userProfiles, reload, loading, error };
+  return { userProfiles, recipes, reload, loading, error };
 };

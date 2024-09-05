@@ -63,13 +63,19 @@ export const useAuth = () => {
   }, [setAuth, setLoading]);
 
   const signup = useCallback(
-    async (
-      email: string,
-      password: string,
-      passwordConfirmation: string,
-      name: string,
-      nickname: string
-    ) => {
+    async ({
+      email,
+      password,
+      passwordConfirmation,
+      name,
+      nickname,
+    }: {
+      email: string;
+      password: string;
+      passwordConfirmation: string;
+      name: string;
+      nickname: string;
+    }) => {
       setLoading(true);
       try {
         const res = await axiosInstance.post("/auth", {

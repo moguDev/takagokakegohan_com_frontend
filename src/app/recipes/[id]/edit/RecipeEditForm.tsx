@@ -2,11 +2,14 @@
 import { useAuth } from "@/hooks/useAuth";
 import { axiosInstance } from "@/lib/axiosInstance";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
 import defaultImage from "/public/images/default_avatar.png";
-import { Ingredient, Step } from "@/types";
+import { Ingredient, RecipeStatus, Step } from "@/types";
+import { useRecipeDetails } from "@/hooks/useRecipeDetails";
+import { useEditRecipe } from "@/hooks/useEditRecipe";
+import Loading from "@/app/loading";
 
 interface FormData {
   title: string;
@@ -18,33 +21,32 @@ interface FormData {
 }
 
 export const RecipesEditForm: React.FC = () => {
+  const { id } = useParams();
   const router = useRouter();
   const { auth } = useAuth();
+  const { update } = useEditRecipe();
+  const { recipe, loading } = useRecipeDetails(Number(id));
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const defaultValues: FormData = {
     title: "",
     body: "",
-    cooking_time: 30,
+    cooking_time: 0,
     image: null,
-    ingredients: [
-      { name: "生卵", amount: "1個", category: "卵" },
-      { name: "白ごはん", amount: "茶碗1杯", category: "米" },
-      { name: "", amount: "", category: "調味料" },
-    ],
-    steps: [
-      { instruction: "", image: null },
-      { instruction: "", image: null },
-    ],
+    ingredients: [{ name: "生卵", amount: "1個", category: "卵" }],
+    steps: [],
   };
   const {
     register,
     control,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm({ defaultValues });
   const imageFile = watch("image");
   const [imageSource, setImageSource] = useState("");
+
+  // 食材・調味料の動的フォーム
   const {
     fields: ingredientField,
     append: appendIngredient,
@@ -53,11 +55,24 @@ export const RecipesEditForm: React.FC = () => {
     control,
     name: "ingredients",
   });
+
+  // 作り方の動的フォーム
   const {
     fields: stepFields,
     append: appendStep,
     remove: removeStep,
   } = useFieldArray({ control, name: "steps" });
+
+  useEffect(() => {
+    console.log(recipe);
+    if (recipe) {
+      setValue("title", recipe.title);
+      setValue("body", recipe.body);
+      setValue("cooking_time", recipe.cooking_time);
+      setValue("ingredients", recipe.ingredients || [{ name: "", amount: "" }]);
+      setValue("steps", recipe.steps || [{ instruction: "", image: null }]);
+    }
+  }, [recipe]);
 
   useEffect(() => {
     if (imageFile && imageFile[0]) {
@@ -70,35 +85,30 @@ export const RecipesEditForm: React.FC = () => {
     imageFile && console.log(imageFile[0]);
   }, [imageFile]);
 
-  const postRecipe = async (recipe: FormData) => {
-    console.log({
-      ...recipe,
-      image: recipe.image ? recipe.image[0] : null,
-    });
+  const updateRecipe = async (recipe: FormData, status: RecipeStatus) => {
     try {
-      const res = await axiosInstance.post(
-        "/recipes",
+      const res = await axiosInstance.put(
+        `/recipes/${id}`,
         {
           recipe: {
             ...recipe,
             image: recipe.image ? recipe.image[0] : null,
+            status: status,
           },
         },
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      router.push(`/recipes/${res.data.id}`);
+      status === "published" && router.replace(`/recipes/${id}`);
     } catch (error) {
       console.error(error);
-    } finally {
     }
   };
-
-  return (
+  return recipe?.user.name === auth.name ? (
     <div className="w-full">
       <form
         method="post"
-        onSubmit={handleSubmit((recipe: FormData) => {
-          postRecipe(recipe);
+        onSubmit={handleSubmit((data: FormData) => {
+          updateRecipe(data, "published");
         })}
         className="max-w-4xl mx-auto"
       >
@@ -110,10 +120,14 @@ export const RecipesEditForm: React.FC = () => {
               fileInputRef.current?.click();
             }}
           >
-            {imageSource ? (
+            {recipe?.image.url || imageSource ? (
               <Image
-                src={imageSource}
-                alt="アイコン"
+                src={
+                  imageSource
+                    ? imageSource
+                    : `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.image.url}`
+                }
+                alt="レシピの画像"
                 className="object-cover rounded"
                 fill
               />
@@ -126,7 +140,9 @@ export const RecipesEditForm: React.FC = () => {
             <input
               type="file"
               accept="image/*"
-              {...register("image")}
+              {...register("image", {
+                onChange: () => {},
+              })}
               ref={(e: HTMLInputElement) => {
                 register("image").ref(e);
                 fileInputRef.current = e;
@@ -137,7 +153,7 @@ export const RecipesEditForm: React.FC = () => {
           <div className="lg:w-2/3 w-full">
             <input
               type="text"
-              className="w-full bg-gray-50 rounded text-xl font-semibold outline-none my-1 p-2"
+              className="w-full bg-gray-100 text-xl font-semibold outline-none my-1 p-2 rounded-lg"
               placeholder="たまごかけごはんの名前"
               {...register("title", {
                 required: "たまごかけごはんの名前を入力してください。",
@@ -260,7 +276,11 @@ export const RecipesEditForm: React.FC = () => {
                   type="button"
                   className="my-btn flex items-center justify-center w-full py-2 opacity-80 bg-blue-50 text-blue-400 rounded mb-2"
                   onClick={() =>
-                    appendIngredient({ name: "", amount: "", category: "食材" })
+                    appendIngredient({
+                      name: "",
+                      amount: "",
+                      category: "食材",
+                    })
                   }
                 >
                   <span className="material-icons scale-75">add</span>
@@ -321,6 +341,7 @@ export const RecipesEditForm: React.FC = () => {
         lg:mb-2 px-2 py-1 pb-2 flex justify-between z-10`}
         >
           <button
+            type="button"
             onClick={() => router.back()}
             className="mr-1 flex items-center scale-75"
             tabIndex={-1}
@@ -332,7 +353,11 @@ export const RecipesEditForm: React.FC = () => {
             <button
               type="button"
               className="material-icons p-2 m-1 bg-red-400 text-white rounded my-btn"
-              onClick={() => []}
+              onClick={() =>
+                (
+                  document.getElementById("delete_modal") as HTMLDialogElement
+                ).showModal()
+              }
               tabIndex={-1}
             >
               delete
@@ -340,7 +365,9 @@ export const RecipesEditForm: React.FC = () => {
             <button
               type="button"
               className="material-icons p-2 m-1 border border-gray-500 text-gray-500 rounded my-btn"
-              onClick={() => []}
+              onClick={handleSubmit((data: FormData) => {
+                updateRecipe(data, "draft");
+              })}
             >
               <p className="text-sm">下書き保存</p>
             </button>
@@ -354,6 +381,46 @@ export const RecipesEditForm: React.FC = () => {
           </div>
         </div>
       </form>
+      <dialog id="delete_modal" className="modal">
+        <div className="modal-box bg-white rounded">
+          <h3 className="font-bold text-lg">レシピを削除しますか？</h3>
+          <p className="flex items-center py-4 text-red-500 text-sm font-semibold">
+            ※削除したレシピは元に戻すことはできません。
+          </p>
+          <div className="flex items-center justify-end">
+            <button
+              type="button"
+              className="py-1 px-5 rounded m-1 my-btn"
+              onClick={() => {
+                (
+                  document.getElementById("delete_modal") as HTMLDialogElement
+                ).close();
+              }}
+            >
+              キャンセル
+            </button>
+            <button
+              type="button"
+              className="bg-red-500 text-white font-semibold py-1 px-5 rounded m-1 my-btn"
+              onClick={async () => {
+                try {
+                  await axiosInstance.delete(`/recipes/${id}`);
+                  router.back();
+                } catch (error) {
+                  console.error(error);
+                }
+              }}
+            >
+              削除
+            </button>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
+  ) : (
+    <Loading />
   );
 };

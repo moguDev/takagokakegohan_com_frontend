@@ -4,21 +4,22 @@ import { useRecipes } from "@/hooks/useRecipes";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-export const DiscoverRecipes = () => {
+export const RecipesPage = () => {
   const { recipes } = useRecipes();
   const navContainerRef = useRef<HTMLDivElement | null>(null);
   const [selectIndex, setSelectIndex] = useState(0);
-  const handleClick = (
-    ref: React.RefObject<HTMLAnchorElement>,
-    index: number
-  ) => {
+  const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  const handleClick = (index: number) => {
     setSelectIndex(index);
-    ref.current &&
-      ref.current.scrollIntoView({
+    const ref = itemRefs.current[index];
+    if (ref) {
+      ref.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
         inline: "center",
       });
+    }
   };
 
   return (
@@ -40,32 +41,31 @@ export const DiscoverRecipes = () => {
         >
           <nav className="flex">
             {[
-              "#ランキング",
-              "#フォロー中",
-              "#注目のレシピ",
               "#新着レシピ",
+              "#注目のレシピ",
               "#爆速レシピ",
+              "#殿堂入りレシピ",
+              "#フォロー中",
               "#卵でさがす",
               "#調味料でさがす",
               "#ブックマーク",
-            ].map((item, index) => {
-              const itemRef = useRef(null);
-              return (
-                <Link
-                  key={index}
-                  ref={itemRef}
-                  href="#"
-                  onClick={() => handleClick(itemRef, index)}
-                  className={`nav-item mx-1 px-4 py-1 text-sm rounded-full transition-all duration-400 ${
-                    index === selectIndex
-                      ? "font-semibold text-white bg-yellow-600"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {item}
-                </Link>
-              );
-            })}
+            ].map((item, index) => (
+              <Link
+                key={index}
+                href="#"
+                ref={(el) => {
+                  itemRefs.current[index] = el;
+                }}
+                onClick={() => handleClick(index)}
+                className={`nav-item mx-1 px-4 py-1 text-sm rounded-full transition-all duration-400 ${
+                  index === selectIndex
+                    ? "font-semibold text-white bg-yellow-600"
+                    : "text-gray-600"
+                }`}
+              >
+                {item}
+              </Link>
+            ))}
           </nav>
         </div>
         <section className="px-1">

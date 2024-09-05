@@ -40,18 +40,7 @@ export const CardMenu: React.FC = () => {
                 </p>
               </div>
             </div>
-            <Link
-              href="/recipes/new"
-              className={`
-                flex items-center justify-center mx-3 py-3 mb-5
-                rounded bg-yellow-600 shadow my-btn cursor-pointer
-                font-bold text-white
-                transition-all duration-300 hover:brightness-110`}
-            >
-              <span className="material-icons">create</span>
-              レシピを投稿する
-            </Link>
-            <ul className="mb-1 divide-y divide-gray-300">
+            <ul className="mx-2 mb-1 divide-y divide-gray-300">
               <li className="py-1 my-btn">
                 <Link
                   href={`/${auth.name}`}

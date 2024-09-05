@@ -24,7 +24,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         </div>
         <section className="p-1">
           <p className="text-sm select-none font-semibold text-black">
-            {recipe.title}
+            {recipe.title || "無題"}
           </p>
           <div className="flex items-center justify-between text-gray-500 my-1">
             <div className="flex items-center">

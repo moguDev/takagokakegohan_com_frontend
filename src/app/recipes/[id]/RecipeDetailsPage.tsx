@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
 import { useParams, useRouter } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
+import { useAuth } from "@/hooks/useAuth";
+import Link from "next/link";
+import Loading from "@/app/loading";
 
-export const RecipeDetails = () => {
+export const RecipeDetailsPage = () => {
   const [bookmarked, setBookmarked] = useState<boolean>(false);
+  const { auth } = useAuth();
   const { id } = useParams();
   const { recipe } = useRecipeDetails(Number(id));
   const router = useRouter();
@@ -22,6 +26,29 @@ export const RecipeDetails = () => {
   return recipe ? (
     <div className="w-full">
       <div className="max-w-4xl mx-auto p-2">
+        {auth.name === recipe.user.name && (
+          <div className="flex justify-between p-2">
+            <div>
+              {recipe.status === "published" ? (
+                <div className="rounded-full text-sm font-semibold text-blue-600 border-2 border-blue-200 bg-blue-50 px-6 py-1">
+                  公開中
+                </div>
+              ) : (
+                <div className="rounded-full text-sm font-semibold text-red-600 border-2 border-red-200 bg-red-50 px-6 py-1">
+                  下書き
+                </div>
+              )}
+            </div>
+            <Link
+              href={`/recipes/${id}/edit`}
+              className="flex items-center rounded-full text-xs text-gray-600 border border-gray-200 bg-gray-100 px-4 py-0.5 my-btn"
+              replace
+            >
+              <span className="material-icons ">edit</span>
+              レシピを編集
+            </Link>
+          </div>
+        )}
         <section className="lg:flex w-full h-full">
           <div className="p-3 w-full h-96 relative">
             {recipe?.image.url ? (
@@ -41,7 +68,9 @@ export const RecipeDetails = () => {
           <div className="px-3 w-full h-auto flex flex-col justify-between">
             <section>
               <div className="mb-4">
-                <h1 className="text-2xl font-bold pt-2">{recipe?.title}</h1>
+                <h1 className="text-2xl font-bold pt-2">
+                  {recipe?.title || "無題"}
+                </h1>
                 <div className="flex items-end justify-between text-sm mt-1 mb-2">
                   <div className="flex items-center">
                     <div className="rounded-full h-5 w-5 relative mr-0.5">
@@ -154,6 +183,6 @@ export const RecipeDetails = () => {
       </div>
     </div>
   ) : (
-    <></>
+    <Loading />
   );
 };

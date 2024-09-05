@@ -1,7 +1,5 @@
 import { RecipesEditForm } from "./RecipeEditForm";
 
-const RecipesEditPage: React.FC = () => {
+export default function RecipeEditPage() {
   return <RecipesEditForm />;
-};
-
-export default RecipesEditPage;
+}

@@ -10,9 +10,8 @@ import { useEffect } from "react";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
-  const { recipes } = useRecipes();
   const { name } = useParams();
-  const { userProfiles, reload, loading, error } = useUserProfiles(
+  const { userProfiles, recipes, reload, loading, error } = useUserProfiles(
     name as string
   );
 
@@ -81,34 +80,31 @@ export const UserProfiles: React.FC = async () => {
       <section className="my-5 p-2">
         <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
           <h2 className="font-semibold text-lg">投稿したレシピ</h2>
-          <p>{recipes.length}件</p>
+          <p>
+            {recipes.filter((recipe) => recipe.status === "published").length}件
+          </p>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-2">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
+          {recipes
+            .filter((recipe) => recipe.status === "published")
+            .map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
         </div>
       </section>
       <section className="my-5 p-2">
         <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
           <h2 className="font-semibold text-lg">下書き</h2>
-          <p>{recipes.length}件</p>
+          <p>
+            {recipes.filter((recipe) => recipe.status === "draft").length}件
+          </p>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-2">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
-        </div>
-      </section>
-      <section className="my-5 p-2">
-        <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
-          <h2 className="font-semibold text-lg">ブックマーク</h2>
-          <p>{recipes.length}件</p>
-        </div>
-        <div className="grid lg:grid-cols-4 grid-cols-2">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
+          {recipes
+            .filter((recipe) => recipe.status === "draft")
+            .map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
         </div>
       </section>
     </div>
