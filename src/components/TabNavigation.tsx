@@ -1,12 +1,17 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
+import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export const TabNavigation = () => {
   const { auth } = useAuth();
   const pathName = usePathname();
+  const { create } = useEditRecipe();
+
+  const handleCreateRecipe = () => {
+    create();
+  };
 
   return (
     <div
@@ -14,6 +19,7 @@ export const TabNavigation = () => {
         (pathName === "/" ||
           pathName === "/signup" ||
           pathName === "/recipes/new" ||
+          /^\/recipes\/(\d+)\/edit$/.test(pathName) ||
           /^\/recipes\/\d+$/.test(pathName)) &&
         "hidden"
       }`}
@@ -22,7 +28,7 @@ export const TabNavigation = () => {
         className={`
         flex items-center justify-between md:rounded-full shadow
         text-gray-400 bg-white bg-opacity-75 backdrop-blur-xl
-        md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-3
+        md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-4
         fixed bottom-0 z-40`}
       >
         <Link
@@ -38,8 +44,8 @@ export const TabNavigation = () => {
         </Link>
 
         <div className="relative w-1/3 flex justify-center">
-          <Link
-            href="/recipes/new"
+          <button
+            onClick={handleCreateRecipe}
             className="absolute flex flex-col items-center justify-center rounded-full h-24 w-24 bg-gradient shadow my-btn select-none -bottom-6"
           >
             <span className="material-icons text-white text-opacity-80 mb-1 scale-150 select-none">
@@ -48,7 +54,7 @@ export const TabNavigation = () => {
             <p className="text-xs font-semibold text-white select-none">
               レシピを書く
             </p>
-          </Link>
+          </button>
         </div>
 
         <Link

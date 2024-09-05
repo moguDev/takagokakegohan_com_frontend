@@ -10,9 +10,8 @@ import { useEffect } from "react";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
-  const { recipes } = useRecipes();
   const { name } = useParams();
-  const { userProfiles, reload, loading, error } = useUserProfiles(
+  const { userProfiles, recipes, reload, loading, error } = useUserProfiles(
     name as string
   );
 
@@ -20,7 +19,20 @@ export const UserProfiles: React.FC = async () => {
     reload();
   }, [auth]);
 
-  return (
+  return error === "404" ? (
+    <div className="fixed inset-0 flex flex-col items-center justify-center h-screen w-screen">
+      <div className="h-20 w-20 rounded-full relative">
+        <Image
+          src={defaultImage}
+          alt="アイコン"
+          className="object-cover rounded-full"
+          fill
+        />
+      </div>
+      <p className="text-gray-500 text-2xl font-bold pt-2 pb-5">@{name}</p>
+      <p className="text-gray-500">このアカウントは存在しません。</p>
+    </div>
+  ) : (
     <div>
       <section className="mx-2 p-5 bg-gradient-single rounded-md shadow">
         {auth.name === name ? (
@@ -28,13 +40,13 @@ export const UserProfiles: React.FC = async () => {
             htmlFor="edit-profile-modal"
             className="font-bold opacity-60 cursor-pointer flex justify-end"
           >
-            <p className="text-gray-600 w-max border rounded-full border-gray-600 text-xs px-3 py-1 my-btn">
+            <p className="text-gray-600 w-max border rounded border-gray-600 text-xs px-3 py-1 my-btn">
               編集
             </p>
           </label>
         ) : (
           <label className="font-bold opacity-60 cursor-pointer flex justify-end">
-            <p className="text-white bg-yellow-700 w-max border rounded-full text-xs px-3 py-1 my-btn">
+            <p className="text-white bg-yellow-700 w-max border rounded text-xs px-4 py-2 my-btn">
               フォロー
             </p>
           </label>
@@ -42,11 +54,7 @@ export const UserProfiles: React.FC = async () => {
         <div className="flex flex-col justify-center items-center">
           <div className="h-20 w-20 rounded-full border-2 border-white shadow relative">
             <Image
-              src={
-                userProfiles.avatar === null
-                  ? defaultImage
-                  : userProfiles.avatar
-              }
+              src={userProfiles.avatar.url || defaultImage}
               alt="アイコン"
               className="object-cover rounded-full"
               fill
@@ -71,18 +79,32 @@ export const UserProfiles: React.FC = async () => {
       </section>
       <section className="my-5 p-2">
         <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
-          <h2 className="font-semibold text-xl">
-            {auth.name == userProfiles.name
-              ? "マイ"
-              : `${userProfiles.nickname}の`}
-            レシピ
-          </h2>
-          <p>{recipes.length}件</p>
+          <h2 className="font-semibold text-lg">投稿したレシピ</h2>
+          <p>
+            {recipes.filter((recipe) => recipe.status === "published").length}件
+          </p>
         </div>
         <div className="grid lg:grid-cols-4 grid-cols-2">
-          {recipes.map((recipe, index) => (
-            <RecipeCard key={index} recipe={recipe} />
-          ))}
+          {recipes
+            .filter((recipe) => recipe.status === "published")
+            .map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
+        </div>
+      </section>
+      <section className="my-5 p-2">
+        <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
+          <h2 className="font-semibold text-lg">下書き</h2>
+          <p>
+            {recipes.filter((recipe) => recipe.status === "draft").length}件
+          </p>
+        </div>
+        <div className="grid lg:grid-cols-4 grid-cols-2">
+          {recipes
+            .filter((recipe) => recipe.status === "draft")
+            .map((recipe, index) => (
+              <RecipeCard key={index} recipe={recipe} />
+            ))}
         </div>
       </section>
     </div>

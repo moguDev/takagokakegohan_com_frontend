@@ -55,8 +55,8 @@ export const Header = () => {
 
   useEffect(() => {
     switch (true) {
-      case pathName === "/recipes/new":
-        setHeaderText("レシピを書く");
+      case /^\/recipes\/(\d+)\/edit$/.test(pathName):
+        setHeaderText("レシピの編集");
         break;
       case pathName === "/recipes":
         setHeaderText("みつける");
@@ -97,9 +97,7 @@ export const Header = () => {
               Loading...
             </div>
           ) : auth.isAuthenticated ? (
-            <AccountCircle
-              image={auth.avatar === "" ? defaultImage : auth.avatar}
-            />
+            <AccountCircle image={auth.avatar.url || defaultImage} />
           ) : (
             <LoginButton hidden={pathName === "/signin"} />
           )}

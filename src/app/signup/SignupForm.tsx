@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { Sawarabi_Mincho } from "next/font/google";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCheckName } from "@/hooks/useCheckName";
 
 type FormData = {
@@ -32,8 +31,8 @@ export const SignupForm = () => {
     watch,
     formState: { errors },
   } = useForm({ defaultValues });
-  const name = watch("name");
   const [isChecked, setIsChecked] = useState<boolean>(false);
+  const name = watch("name");
 
   useEffect(() => {
     checkName(name);
@@ -41,14 +40,8 @@ export const SignupForm = () => {
 
   const onsubmit = async (data: FormData) => {
     try {
-      await signup(
-        data.email,
-        data.password,
-        data.passwordConfirmation,
-        data.name,
-        data.nickname
-      );
-      router.push("/");
+      await signup(data);
+      router.replace(`/${data.name}`);
     } catch (error) {
       console.error(error);
     }
@@ -63,7 +56,9 @@ export const SignupForm = () => {
               ユーザID
             </label>
             <div className="bg-white flex items-center border-b border-gray-200 p-1">
-              <span className="text-gray-400 font-bold px-3">@</span>
+              <span className="material-icons opacity-20 p-2">
+                alternate_email
+              </span>
               <input
                 type="text"
                 className="bg-white w-full outline-none"

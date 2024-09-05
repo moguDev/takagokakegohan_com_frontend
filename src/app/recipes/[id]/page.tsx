@@ -1,4 +1,4 @@
-import { RecipeDetails } from "./RecipeDetails";
-export default function RecipeDetailsPage() {
-  return <RecipeDetails />;
+import { RecipeDetailsPage } from "./RecipeDetailsPage";
+export default function Page() {
+  return <RecipeDetailsPage />;
 }

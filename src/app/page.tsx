@@ -1,5 +1,5 @@
-import { Hero } from "@/components/Hero";
+import { TopAnimation } from "@/components/TopAnimation";
 
 export default function Home() {
-  return <Hero />;
+  return <TopAnimation />;
 }

@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import defaultImage from "/public/images/default_avatar.png";
 import { useRouter } from "next/navigation";
 import { useCheckName } from "@/hooks/useCheckName";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "./Toast";
 
 interface FormData {
   avatar: FileList | null;
@@ -15,6 +17,7 @@ interface FormData {
 }
 
 export const EditProfileModal = () => {
+  const setMessage = useSetRecoilState(toastState);
   const router = useRouter();
   const { auth, updateProfile } = useAuth();
   const { isUnique, checkName } = useCheckName();
@@ -64,6 +67,7 @@ export const EditProfileModal = () => {
         data.nickname
       );
       router.push(`/${data.name}`);
+      setMessage("プロフィールを更新しました。");
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -106,9 +110,7 @@ export const EditProfileModal = () => {
                 src={
                   imageSource !== ""
                     ? imageSource
-                    : auth.avatar === ""
-                    ? defaultImage
-                    : auth.avatar
+                    : auth.avatar.url || defaultImage
                 }
                 alt="アイコン"
                 className="object-cover rounded-full"

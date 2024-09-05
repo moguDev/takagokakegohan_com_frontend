@@ -3,9 +3,12 @@ import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 import Link from "next/link";
 import defaultImage from "/public/images/default_avatar.png";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "./Toast";
 
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
+  const setMessage = useSetRecoilState(toastState);
   return (
     <div
       tabIndex={0}
@@ -17,7 +20,7 @@ export const CardMenu: React.FC = () => {
             <div className="mb-5 flex flex-col items-center">
               <div className="border-2 border-white border-opacity-50 shadow rounded-full h-20 w-20 relative">
                 <Image
-                  src={auth.avatar === "" ? defaultImage : auth.avatar}
+                  src={auth.avatar.url || defaultImage}
                   alt="アイコン"
                   className="object-cover rounded-full"
                   fill
@@ -40,18 +43,7 @@ export const CardMenu: React.FC = () => {
                 </p>
               </div>
             </div>
-            <Link
-              href="/recipes/new"
-              className={`
-                flex items-center justify-center mx-3 py-3 mb-5
-                rounded bg-yellow-600 shadow my-btn cursor-pointer
-                font-bold text-white
-                transition-all duration-300 hover:brightness-110`}
-            >
-              <span className="material-icons">create</span>
-              レシピを投稿する
-            </Link>
-            <ul className="mb-1 divide-y divide-gray-300">
+            <ul className="mx-2 mb-1 divide-y divide-gray-300">
               <li className="py-1 my-btn">
                 <Link
                   href={`/${auth.name}`}
@@ -78,6 +70,7 @@ export const CardMenu: React.FC = () => {
                   className="relative hover:text-blue-500"
                   onClick={() => {
                     logout();
+                    setMessage("ログアウトしました");
                   }}
                 >
                   <span className="material-icons">logout</span>

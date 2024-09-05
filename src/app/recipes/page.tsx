@@ -1,3 +1,4 @@
-import { DiscoverRecipes } from "./DiscoverRecipes";
-const Page = () => <DiscoverRecipes />;
-export default Page;
+import { RecipesPage } from "./RecipesPage";
+export default function Page() {
+  return <RecipesPage />;
+}

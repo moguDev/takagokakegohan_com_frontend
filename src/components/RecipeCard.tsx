@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Recipe } from "@/types";
+import defaultImage from "/public/images/default_avatar.png";
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
@@ -23,10 +24,24 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
         </div>
         <section className="p-1">
           <p className="text-sm select-none font-semibold text-black">
-            {recipe.title}
+            {recipe.title || "無題"}
           </p>
-          <div className="flex items-center justify-between text-gray-500 pb-1">
-            <p className="text-sm">{recipe.user_id}</p>
+          <div className="flex items-center justify-between text-gray-500 my-1">
+            <div className="flex items-center">
+              <div className="rounded-full h-4 w-4 relative mr-0.5">
+                <Image
+                  src={
+                    recipe?.user.avatar.url
+                      ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}`
+                      : defaultImage
+                  }
+                  alt="アイコン"
+                  className="object-cover rounded-full"
+                  fill
+                />
+              </div>
+              <p className="text-xs">{recipe.user.nickname}</p>
+            </div>
             <p className="text-xs flex items-center text-yellow-500">
               <span>★</span>
               {4.5}

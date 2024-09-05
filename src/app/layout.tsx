@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
 import { TabNavigation } from "@/components/TabNavigation";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
+import { Toast } from "@/components/Toast";
 
 export const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -27,6 +28,10 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
         />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
       </head>
       <body className={`${font.className} text-black bg-white`}>
         <RecoilRootWrapper>
@@ -35,6 +40,7 @@ export default function RootLayout({
             <div className="w-full">{children}</div>
           </main>
           <TabNavigation />
+          <Toast />
         </RecoilRootWrapper>
       </body>
     </html>

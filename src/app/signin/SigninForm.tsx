@@ -1,47 +1,35 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { Sawarabi_Mincho } from "next/font/google";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Link from "next/link";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "@/components/Toast";
 
 type FormData = {
   email: string;
   password: string;
 };
 
-const shipporiMincho = Sawarabi_Mincho({
-  subsets: ["latin"],
-  weight: ["400"],
-});
-
 export const SigninForm = () => {
-  const { auth, loading, login } = useAuth();
+  const { login } = useAuth();
+  const setMessage = useSetRecoilState(toastState);
   const router = useRouter();
   const defaultValues = {
     email: "",
     password: "",
-    passwordConfirmation: "",
-    name: "",
-    nickname: "",
   };
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm({ defaultValues });
-  const name = watch("name");
-
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
 
   const onsubmit = async (data: FormData) => {
     try {
       await login(data.email, data.password);
-      router.push(`/recipes`);
+      router.back();
+      setMessage("ログインしました");
     } catch (error) {
       console.error(error);
     }
@@ -59,7 +47,7 @@ export const SigninForm = () => {
               <span className="material-icons opacity-20 p-2">email</span>
               <input
                 type="email"
-                className="w-full rounded-lg outline-none"
+                className="bg-white w-full rounded-lg outline-none"
                 placeholder="メールアドレス"
                 {...register("email", {
                   required: "メールアドレスを入力してください。",
@@ -82,7 +70,7 @@ export const SigninForm = () => {
               <span className="material-icons opacity-20 p-2">password</span>
               <input
                 type="password"
-                className="h-full w-full rounded-lg outline-none"
+                className="bg-white h-full w-full rounded-lg outline-none"
                 placeholder="パスワード"
                 {...register("password", {
                   required: "パスワードを入力してください。",

@@ -4,8 +4,19 @@
 
 h1,
 h2,
-h3 {
+h3,
+p,
+label {
   user-select: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
 }
 
 .my-btn {

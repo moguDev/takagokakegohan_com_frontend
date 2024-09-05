@@ -1,15 +1,30 @@
 export type UserProfiles = {
   name: string;
   nickname: string;
-  avatar: string | null;
+  avatar: { url: string | null };
 };
 
 export type Recipe = {
   id: number;
-  user_id: number;
   title: string;
   body: string;
   cooking_time: number;
   image: { url: string | null };
-  ingredients: { ingredient: string; amount: string; category: string }[];
+  ingredients: Ingredient[];
+  steps: Step[];
+  user: UserProfiles;
+  status: RecipeStatus;
 };
+
+export type Ingredient = {
+  name: string;
+  amount: string;
+};
+
+export type Step = {
+  stemNumber?: number;
+  instruction: string;
+  image?: FileList | null;
+};
+
+export type RecipeStatus = "draft" | "published";
