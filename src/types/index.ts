@@ -19,7 +19,6 @@ export type Recipe = {
 export type Ingredient = {
   name: string;
   amount: string;
-  category?: Category;
 };
 
 export type Step = {
@@ -27,7 +26,5 @@ export type Step = {
   instruction: string;
   image?: FileList | null;
 };
-
-export type Category = "卵" | "米" | "調味料" | "食材";
 
 export type RecipeStatus = "draft" | "published";

@@ -35,7 +35,7 @@ export const RecipesEditForm: React.FC = () => {
     body: "",
     cooking_time: 0,
     image: null,
-    ingredients: [{ name: "生卵", amount: "1個", category: "卵" }],
+    ingredients: [{ name: "生卵", amount: "1個" }],
     steps: [],
   };
   const {
@@ -258,18 +258,6 @@ export const RecipesEditForm: React.FC = () => {
                         required: "分量を入力してください。",
                       })}
                     />
-                    <select
-                      id="category"
-                      className="bg-gray-100 rounded p-1 text-xs"
-                      {...register(`ingredients.${index}.category`, {
-                        required: true,
-                      })}
-                    >
-                      <option value="卵">卵</option>
-                      <option value="米">米</option>
-                      <option value="調味料">調味料</option>
-                      <option value="食材">食材</option>
-                    </select>
                     <button
                       type="button"
                       className="material-icons text-gray-400 scale-75 ml-2 select-none focus:outline-none"
@@ -287,7 +275,6 @@ export const RecipesEditForm: React.FC = () => {
                     appendIngredient({
                       name: "",
                       amount: "",
-                      category: "食材",
                     })
                   }
                 >
