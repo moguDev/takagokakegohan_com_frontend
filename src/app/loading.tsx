@@ -1,6 +1,7 @@
 import Image from "next/image";
 import riceImage from "/public/images/rice.png";
 export default function Loading() {
+  console.log("called");
   return (
     <div className="fixed top-0 flex flex-col justify-center items-center h-screen w-screen text-gray-600">
       <span className="loading loading-ball loading-lg shadow-xl text-yellow-600 scale-150 z-10" />

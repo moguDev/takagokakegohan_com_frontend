@@ -13,7 +13,20 @@ export const useEditRecipe = () => {
     setLoading(true);
     try {
       const res = await axiosInstance.post("/recipes", {
-        recipe: { cooking_time: 30, status: "draft" },
+        recipe: {
+          cooking_time: 30,
+          status: "draft",
+          ingredients: {
+            0: { name: "生卵", amount: "1個" },
+            1: { name: "白ごはん", amount: "茶碗1杯" },
+          },
+          steps: {
+            0: {
+              step_number: "1",
+              instruction: "適当な器に生卵を割り入れ、よくかき混ぜます。",
+            },
+          },
+        },
       });
       console.log(res);
       router.push(`/recipes/${res.data.id}/edit`);

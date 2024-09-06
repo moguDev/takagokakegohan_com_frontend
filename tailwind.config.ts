@@ -21,6 +21,14 @@ const config: Config = {
           "0%": { top: "-500px", transform: "translateX(-50%)" },
           "100%": { top: "50%", transform: "translate(-50%, -50%)" },
         },
+        slidein: {
+          "0%": {
+            transform: "translateX(100%)" /* 画面の右側からスタート */,
+          },
+          "100%": {
+            transform: "translateX(0)" /* 元の位置に戻る */,
+          },
+        },
         expand: {
           "0%": {
             width: "128px",
@@ -46,6 +54,7 @@ const config: Config = {
         "fade-up-2s": "fade-up 2s ease-out",
         "fade-in-2s": "fade-in 2s ease-out",
         drop: "drop 1s ease forwards",
+        slidein: "slidein 1s ease forwards",
         expand: "expand 3s ease forwards",
       },
       height: {

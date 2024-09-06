@@ -1,12 +1,12 @@
 "use client";
 import { RecipeCard } from "@/components/RecipeCard";
 import { useAuth } from "@/hooks/useAuth";
-import { useRecipes } from "@/hooks/useRecipes";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
 import { useUserProfiles } from "@/hooks/useUserProfiles";
 import { useEffect } from "react";
+import { showEditProfileModal } from "@/components/EditProfileModal";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
@@ -36,14 +36,14 @@ export const UserProfiles: React.FC = async () => {
     <div>
       <section className="mx-2 p-5 bg-gradient-single rounded-md shadow">
         {auth.name === name ? (
-          <label
-            htmlFor="edit-profile-modal"
+          <button
             className="font-bold opacity-60 cursor-pointer flex justify-end"
+            onClick={showEditProfileModal}
           >
             <p className="text-gray-600 w-max border rounded border-gray-600 text-xs px-3 py-1 my-btn">
               編集
             </p>
-          </label>
+          </button>
         ) : (
           <label className="font-bold opacity-60 cursor-pointer flex justify-end">
             <p className="text-white bg-yellow-700 w-max border rounded text-xs px-4 py-2 my-btn">

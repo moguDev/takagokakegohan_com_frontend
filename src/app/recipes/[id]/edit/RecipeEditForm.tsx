@@ -213,7 +213,7 @@ export const RecipesEditForm: React.FC = () => {
                 <div className="flex items-center">
                   <input
                     type="number"
-                    className="text-center bg-gray-100 rounded outline-none my-1 mr-1 p-1.5"
+                    className="text-center bg-gray-50 rounded outline-none my-1 mr-1 p-1.5"
                     placeholder="30"
                     {...register("cooking_time", {
                       required: "調理時間を入力してください",
