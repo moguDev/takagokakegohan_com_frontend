@@ -29,7 +29,7 @@ export const SigninForm = () => {
     try {
       await login(data.email, data.password);
       router.back();
-      setMessage("ログインしました");
+      setMessage("ログインしました。");
     } catch (error) {
       console.error(error);
     }

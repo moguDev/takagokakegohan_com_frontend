@@ -36,7 +36,7 @@ export const SignupForm = () => {
 
   useEffect(() => {
     checkName(name);
-  }, [name]);
+  }, [name, checkName]);
 
   const onsubmit = async (data: FormData) => {
     try {

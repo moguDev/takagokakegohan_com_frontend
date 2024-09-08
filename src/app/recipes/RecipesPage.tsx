@@ -2,13 +2,44 @@
 import { RecipeCard } from "@/components/RecipeCard";
 import { useRecipes } from "@/hooks/useRecipes";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const items: string[] = [
+  "#新着レシピ",
+  "#注目のレシピ",
+  "#爆速レシピ",
+  "#殿堂入りレシピ",
+  "#フォロー中",
+];
+
+const heads = [
+  <>
+    <span className="rounded bg-red-600 text-white text-xs p-1 mr-1">NEW</span>
+    新着のたまごかけごはん
+  </>,
+  <>
+    <span className="material-icons text-yellow-600 mr-1">new_releases</span>
+    注目のたまごかけごはん
+  </>,
+  <>
+    <span className="material-icons text-yellow-600 mr-1">flash_on</span>
+    爆速たまごかけごはん
+  </>,
+  <>
+    <span className="material-icons text-yellow-600 mr-1">emoji_events</span>
+    殿堂入りたまごかけごはん
+  </>,
+  <>
+    <span className="material-icons text-yellow-600 mr-1">group</span>
+    フォロー中
+  </>,
+];
 
 export const RecipesPage = () => {
-  const { recipes } = useRecipes();
   const navContainerRef = useRef<HTMLDivElement | null>(null);
   const [selectIndex, setSelectIndex] = useState(0);
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const { recipes, fetch } = useRecipes();
 
   const handleClick = (index: number) => {
     setSelectIndex(index);
@@ -21,6 +52,23 @@ export const RecipesPage = () => {
       });
     }
   };
+
+  useEffect(() => {
+    switch (items[selectIndex]) {
+      case "#新着レシピ":
+        fetch("new");
+        break;
+      case "#注目のレシピ":
+        fetch("highlight");
+        break;
+      case "#爆速レシピ":
+      case "#殿堂入りレシピ":
+      case "#フォロー中":
+      default:
+        fetch();
+        break;
+    }
+  }, [selectIndex, fetch]);
 
   return (
     <div className="w-full">
@@ -40,16 +88,7 @@ export const RecipesPage = () => {
           className="overflow-x-auto whitespace-nowrap scrollbar-hide mb-3"
         >
           <nav className="flex">
-            {[
-              "#新着レシピ",
-              "#注目のレシピ",
-              "#爆速レシピ",
-              "#殿堂入りレシピ",
-              "#フォロー中",
-              "#卵でさがす",
-              "#調味料でさがす",
-              "#ブックマーク",
-            ].map((item, index) => (
+            {items.map((item, index) => (
               <Link
                 key={index}
                 href="#"
@@ -72,25 +111,9 @@ export const RecipesPage = () => {
       <section className="max-w-7xl mx-auto">
         <section className="px-1">
           <h2
-            className={`mx-2 flex items-center text-black text-base font-bold`}
+            className={`mx-2 flex items-center text-black text-base font-bold p-1`}
           >
-            <span className="material-icons text-yellow-600 mr-2">
-              new_releases
-            </span>
-            注目のたまごかけごはん
-          </h2>
-          <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 p-2">
-            {recipes.map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} />
-            ))}
-          </div>
-          <h2
-            className={`mx-2 flex items-center text-black text-base font-bold`}
-          >
-            <span className="rounded bg-red-600 text-white text-xs p-1 mr-2">
-              NEW
-            </span>
-            新着のたまごかけごはん
+            {heads[selectIndex]}
           </h2>
           <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 p-2">
             {recipes.map((recipe, index) => (

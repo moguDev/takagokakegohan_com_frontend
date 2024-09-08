@@ -1,6 +1,5 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import _ from "lodash";
 
 export const axiosInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1`,

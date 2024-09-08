@@ -9,7 +9,7 @@ type TypeAuth = {
   name: string;
   nickname: string;
   avatar: { url: string | null };
-  rank: string;
+  rank?: string;
 };
 
 const authState = atom<TypeAuth>({

@@ -15,6 +15,7 @@ export type Recipe = {
   steps: Step[];
   user: UserProfiles;
   status: RecipeStatus;
+  bookmarkCount: number;
 };
 
 export type Ingredient = {

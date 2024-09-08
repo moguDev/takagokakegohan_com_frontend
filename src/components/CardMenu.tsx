@@ -75,7 +75,8 @@ export const CardMenu: React.FC = () => {
                 </Link>
               </li>
               <li className="py-1">
-                <label
+                <Link
+                  href="/recipes/bookmark"
                   className="relative hover:text-blue-500 select-none"
                   onClick={() =>
                     document.getElementById("accout-circle")?.click()
@@ -86,7 +87,7 @@ export const CardMenu: React.FC = () => {
                   <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
                     navigate_next
                   </span>
-                </label>
+                </Link>
               </li>
               <li className="py-1 my-btn">
                 <button

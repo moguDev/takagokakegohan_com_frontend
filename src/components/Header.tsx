@@ -56,7 +56,7 @@ export const Header = () => {
 
   useEffect(() => {
     checkAuth();
-  }, []);
+  }, [checkAuth]);
 
   useEffect(() => {
     switch (true) {
@@ -82,12 +82,12 @@ export const Header = () => {
         setHeaderText("たまごかけごはん.com");
         break;
     }
-  }, [pathName]);
+  }, [auth.name, pathName]);
 
   return (
     <header
       className={`
-        bg-white fixed top-0 h-16 w-full px-5 lg:px-8 py-2 font-Zen_Kaku_Gothic_New z-40 ${
+        bg-white fixed top-0 h-16 w-full pl-5 pr-3 lg:px-8 py-2 font-Zen_Kaku_Gothic_New z-40 ${
           pathName === "/" && "hidden"
         } ${pathName !== "/recipes" && "border-b border-gray-200 shadow"}}`}
     >

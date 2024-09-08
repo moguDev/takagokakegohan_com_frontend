@@ -30,8 +30,8 @@ export const Toast = () => {
     >
       <p
         className={`
-          text-center md:text-sm text-sm font-bold p-4
-          bg-yellow-600 bg-opacity-80 backdrop-blur-sm text-white w-full
+          text-center md:text-sm text-xs font-bold py-2
+          bg-yellow-600 bg-opacity-60 backdrop-blur-sm text-white w-full
         `}
       >
         {message}

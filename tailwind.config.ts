@@ -65,6 +65,7 @@ const config: Config = {
         primary: "#1B191A",
         secondary: "#C5A797",
         white: "#fcfcf0",
+        haader: "#fcfce0",
         black: "#333333",
       },
       borderColor: {

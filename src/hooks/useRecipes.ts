@@ -7,10 +7,12 @@ export const useRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetch = useCallback(async () => {
+  const fetch = useCallback(async (filter?: string) => {
     setLoading(true);
     try {
-      const res = await axiosInstance.get("/recipes");
+      const res = await axiosInstance.get(
+        filter ? `/recipes?filter=${filter}` : "/recipes"
+      );
       setRecipes(res.data);
     } catch (error) {
       throw new Error("レシピの取得に失敗しました。");
@@ -20,8 +22,8 @@ export const useRecipes = () => {
   }, []);
 
   useEffect(() => {
-    fetch();
+    fetch("new");
   }, [fetch]);
 
-  return { recipes, loading };
+  return { recipes, loading, fetch };
 };

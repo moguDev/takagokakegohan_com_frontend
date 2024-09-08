@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
 import { useParams, useRouter } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
@@ -9,13 +8,19 @@ import Link from "next/link";
 import Loading from "@/app/loading";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
+import { useBookmark } from "@/hooks/useBookmark";
 
 export const RecipeDetailsPage = () => {
   const setMessage = useSetRecoilState(toastState);
-  const [bookmarked, setBookmarked] = useState<boolean>(false);
   const { auth } = useAuth();
   const { id } = useParams();
-  const { recipe } = useRecipeDetails(Number(id));
+  const {
+    isBookmarked,
+    loading: loadingBookmark,
+    bookmark,
+    unbookmark,
+  } = useBookmark(id as string);
+  const { recipe, fetch } = useRecipeDetails(Number(id));
   const router = useRouter();
 
   const handleCopyLink = () => {
@@ -176,21 +181,39 @@ export const RecipeDetailsPage = () => {
             >
               <span className="material-icons mr-0.5 my-auto">link</span>
             </button>
-            <button
-              className={"rounded p-1 flex items-center my-btn"}
-              onClick={() => setBookmarked((prev) => !prev)}
-            >
-              <p className="flex items-center">
-                <span
-                  className={`material-icons mr-0.5 my-auto ${
-                    bookmarked ? "text-yellow-600" : "text-black"
-                  }`}
-                >
-                  {`${bookmarked ? "bookmark" : "bookmark_outline"}`}
-                </span>
-                {0}
-              </p>
-            </button>
+            <div className="relative">
+              {loadingBookmark && (
+                <div className="absolute h-full w-full flex items-center justify-center bg-white opacity-90 z-10" />
+              )}
+              <button
+                className={`rounded p-1 flex items-center my-btn transition-all duration-1000 active:scale-125`}
+                onClick={async () => {
+                  if (auth.isAuthenticated) {
+                    isBookmarked ? await unbookmark() : await bookmark();
+                    fetch();
+                  } else {
+                    setMessage("ログインしてください。");
+                  }
+                }}
+              >
+                <p className="flex items-center">
+                  <span
+                    className={`material-icons mr-0.5 my-auto ${
+                      auth.isAuthenticated && isBookmarked
+                        ? "text-yellow-600"
+                        : "text-black"
+                    }`}
+                  >
+                    {`${
+                      auth.isAuthenticated && isBookmarked
+                        ? "bookmark"
+                        : "bookmark_outline"
+                    }`}
+                  </span>
+                  {recipe.bookmarkCount}
+                </p>
+              </button>
+            </div>
           </div>
         </div>
       </div>
