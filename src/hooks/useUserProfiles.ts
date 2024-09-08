@@ -8,6 +8,7 @@ export const useUserProfiles = (name: string) => {
     name: "",
     nickname: "",
     avatar: { url: null },
+    rank: "",
   });
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

@@ -64,7 +64,7 @@ const config: Config = {
         theme: "#1B191A",
         primary: "#1B191A",
         secondary: "#C5A797",
-        white: "#fcfafa",
+        white: "#fcfcf0",
         black: "#333333",
       },
       borderColor: {

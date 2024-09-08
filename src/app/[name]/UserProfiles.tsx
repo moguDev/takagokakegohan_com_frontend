@@ -36,23 +36,23 @@ export const UserProfiles: React.FC = async () => {
     <div>
       <section className="mx-2 p-5 bg-gradient-single rounded-md shadow">
         {auth.name === name ? (
-          <button
-            className="font-bold opacity-60 cursor-pointer flex justify-end"
+          <label
+            className="opacity-60 cursor-pointer flex justify-end mb-1"
             onClick={showEditProfileModal}
           >
-            <p className="text-gray-600 w-max border rounded border-gray-600 text-xs px-3 py-1 my-btn">
+            <p className="font-bold text-gray-600 w-max border rounded-full border-gray-300 bg-gray-100 text-xs px-5 py-1 my-btn">
               編集
             </p>
-          </button>
+          </label>
         ) : (
-          <label className="font-bold opacity-60 cursor-pointer flex justify-end">
-            <p className="text-white bg-yellow-700 w-max border rounded text-xs px-4 py-2 my-btn">
-              フォロー
+          <label className="font-bold cursor-pointer flex justify-end mb-1">
+            <p className="text-white bg-yellow-600 w-max border rounded-full text-xs px-4 py-2 my-btn">
+              フォローする
             </p>
           </label>
         )}
         <div className="flex flex-col justify-center items-center">
-          <div className="h-20 w-20 rounded-full border-2 border-white shadow relative">
+          <div className="h-32 w-32 rounded-full border-4 border-white border-opacity-50 shadow relative">
             <Image
               src={userProfiles.avatar.url || defaultImage}
               alt="アイコン"
@@ -60,20 +60,26 @@ export const UserProfiles: React.FC = async () => {
               fill
             />
           </div>
-          <h2 className="text-3xl font-bold mt-1">{userProfiles?.nickname}</h2>
-          <p className="text-gray-400 font-normal text-sm">
-            @{userProfiles.name}
+          <h2 className="text-2xl font-bold mt-2">{userProfiles?.nickname}</h2>
+          <p className="text-gray-500">@{userProfiles.name}</p>
+          <p className="font-bold bg-white rounded-full my-3 px-10 py-1 border border-white shadow-sm select-none">
+            <span className="text-black">{userProfiles.rank}料理人</span>
+            {false && <span className="text-yellow-100 ml-1">{"★★★"}</span>}
           </p>
-          <p className="text-xs bg-gradient text-white rounded-full my-3 px-6 py-0.5 shadow select-none">
-            {"三つ星 ★★★"}
-          </p>
-          <div className="pt-2 flex items-end justify-center text-gray-500 text-sm border-t border-gray-200 w-full">
-            <span className="mr-1 font-bold text-base text-black">{0}</span>
-            フォロー
-            <span className="mr-1 ml-3 text-base font-bold text-black">
-              {0}
-            </span>
-            フォロワー
+          <div className="w-full border-b mb-2" />
+          <div className="flex items-center justify-center w-full">
+            <p className="flex flex-col items-center select-none md:w-1/5 w-1/3 p-2 rounded-lg">
+              <span className="text-xs text-gray-600">フォロー中</span>
+              <span className="mr-1 font-black text-2xl text-blue-900">
+                {12}
+              </span>
+            </p>
+            <p className="flex flex-col items-center select-none md:w-1/5 w-1/3 p-2 rounded-lg">
+              <span className="text-xs text-gray-600">フォロワー</span>
+              <span className="mr-1 font-black text-2xl text-blue-900">
+                {34}
+              </span>
+            </p>
           </div>
         </div>
       </section>

@@ -1,10 +1,23 @@
 "use client";
 
+import { toastState } from "@/components/Toast";
 import { axiosInstance } from "@/lib/axiosInstance";
+import { Ingredient, RecipeStatus, Step } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import { useSetRecoilState } from "recoil";
+
+export interface RecipeFormData {
+  title: string;
+  body: string;
+  cooking_time: number;
+  image: FileList | null;
+  ingredients: Ingredient[];
+  steps: Step[];
+}
 
 export const useEditRecipe = () => {
+  const setMessage = useSetRecoilState(toastState);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -22,7 +35,6 @@ export const useEditRecipe = () => {
           },
           steps: {
             0: {
-              step_number: "1",
               instruction: "適当な器に生卵を割り入れ、よくかき混ぜます。",
             },
           },
@@ -38,28 +50,34 @@ export const useEditRecipe = () => {
   }, []);
 
   const update = useCallback(
-    async (
-      id: number,
-      title: string,
-      body: string,
-      cookingTime: number,
-      image: File | null
-    ) => {
-      setLoading(true);
+    async (id: number | string, data: RecipeFormData, status: RecipeStatus) => {
+      if (
+        status === "published" &&
+        (data.title === "" || data.title === null)
+      ) {
+        setMessage("レシピのタイトルを入力してください。");
+        return;
+      }
       try {
-        await axiosInstance.put(`/recipes/${id}`, {
-          recipe: {
-            title: title,
-            body: body,
-            cooking_time: cookingTime,
-            image: image,
-            status: "draft",
+        const res = await axiosInstance.put(
+          `/recipes/${id}`,
+          {
+            recipe: {
+              ...data,
+              image: data.image ? data.image[0] : null,
+              status: status,
+            },
           },
-        });
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        if (status === "published") {
+          router.replace(`/recipes/${id}`);
+          setMessage("レシピを公開しました！");
+        } else {
+          setMessage("下書きを保存しました。");
+        }
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     },
     []

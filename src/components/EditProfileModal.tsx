@@ -215,9 +215,9 @@ export const EditProfileModal = () => {
           <div className="modal-action">
             <button
               type="submit"
-              className="bg-yellow-600 text-white py-2 rounded text-sm my-btn w-full"
+              className="bg-yellow-600 text-white py-4 rounded font-bold my-btn w-full"
             >
-              保存
+              プロフィールを保存
             </button>
           </div>
         </form>

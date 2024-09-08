@@ -2,6 +2,7 @@ export type UserProfiles = {
   name: string;
   nickname: string;
   avatar: { url: string | null };
+  rank?: string;
 };
 
 export type Recipe = {

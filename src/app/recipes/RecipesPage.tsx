@@ -24,17 +24,17 @@ export const RecipesPage = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-200">
-        <div className="bg-gray-100 rounded-full border border-gray-200 flex items-center p-2 max-w-7xl mx-auto">
+      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-300">
+        <div className="bg-gray-50 rounded-full border border-gray-300 flex items-center p-2 max-w-7xl mx-auto">
           <span className="material-icons text-gray-300">search</span>
           <input
             type="text"
-            className="bg-gray-100 w-full outline-none"
+            className="bg-gray-50 w-full outline-none"
             placeholder="食材や調味料で検索"
           />
         </div>
       </div>
-      <section className="pt-16 max-w-7xl mx-auto">
+      <section className="pt-12 max-w-7xl mx-auto">
         <div
           ref={navContainerRef}
           className="overflow-x-auto whitespace-nowrap scrollbar-hide mb-3"
@@ -68,6 +68,8 @@ export const RecipesPage = () => {
             ))}
           </nav>
         </div>
+      </section>
+      <section className="max-w-7xl mx-auto">
         <section className="px-1">
           <h2
             className={`mx-2 flex items-center text-black text-base font-bold`}
@@ -77,7 +79,7 @@ export const RecipesPage = () => {
             </span>
             注目のたまごかけごはん
           </h2>
-          <div className="grid lg:grid-cols-6 grid-cols-2 p-2">
+          <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 p-2">
             {recipes.map((recipe, index) => (
               <RecipeCard key={index} recipe={recipe} />
             ))}
@@ -90,7 +92,7 @@ export const RecipesPage = () => {
             </span>
             新着のたまごかけごはん
           </h2>
-          <div className="grid lg:grid-cols-6 grid-cols-2 p-2">
+          <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 p-2">
             {recipes.map((recipe, index) => (
               <RecipeCard key={index} recipe={recipe} />
             ))}

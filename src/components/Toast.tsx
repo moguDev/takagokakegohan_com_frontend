@@ -2,6 +2,7 @@
 import { atom } from "recoil";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import { useParams, usePathname } from "next/navigation";
 
 export const toastState = atom<string | null>({
   key: "toastState",
@@ -10,6 +11,7 @@ export const toastState = atom<string | null>({
 
 export const Toast = () => {
   const [message, setMessage] = useRecoilState(toastState);
+  const pathName = usePathname();
 
   useEffect(() => {
     if (message) {
@@ -21,14 +23,15 @@ export const Toast = () => {
   if (!message) return null;
 
   return (
-    <div className="z-30 fixed bottom-5 left-1/2 transform -translate-x-1/2">
+    <div
+      className={`z-30 fixed w-full  ${
+        pathName === "/recipes" ? "top-[115px]" : "top-16"
+      } ${message ? "h-20" : "h-0"}`}
+    >
       <p
         className={`
-          text-center text-sm font-bold px-6 py-4 border-2 border-gray-200
-          bg-gray-100 bg-opacity-95 backdrop-blur-sm text-black rounded-lg shadow-lg transition-opacity duration-300
-          ${
-            message ? "-translate-y-24 opacity-100" : "translate-y-10 opacity-0"
-          }
+          text-center md:text-sm text-sm font-bold p-4
+          bg-yellow-600 bg-opacity-80 backdrop-blur-sm text-white w-full
         `}
       >
         {message}

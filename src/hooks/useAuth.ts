@@ -9,6 +9,7 @@ type TypeAuth = {
   name: string;
   nickname: string;
   avatar: { url: string | null };
+  rank: string;
 };
 
 const authState = atom<TypeAuth>({
@@ -19,6 +20,7 @@ const authState = atom<TypeAuth>({
     name: "",
     nickname: "",
     avatar: { url: null },
+    rank: "かけだし",
   },
 });
 
@@ -54,6 +56,7 @@ export const useAuth = () => {
             res.data.data.avatar.url &&
             `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
         },
+        rank: res.data.data.rank,
       });
     } catch (error) {
       console.error("認証情報の取得に失敗しました");

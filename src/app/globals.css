@@ -10,6 +10,15 @@ label {
   user-select: none;
 }
 
+body {
+  touch-action: pan-x pan-y;
+}
+
+.transition-height {
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
