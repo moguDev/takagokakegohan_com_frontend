@@ -11,7 +11,7 @@ export const useBookmarkRecipes = (userId: number | string) => {
     setLoading(true);
     try {
       const res = await axiosInstance.get(`/users/${userId}/bookmarks`);
-      console.log(res);
+      setRecipes(res.data);
     } catch (error) {
       console.error(error);
     } finally {

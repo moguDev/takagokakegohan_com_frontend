@@ -39,7 +39,7 @@ export default function RootLayout({
           content="http://localhost:3030/twitter-image"
         />
       </head>
-      <body className={`${font.className} text-black bg-white`}>
+      <body className={`${font.className} text-black bg-theme`}>
         <RecoilRootWrapper>
           <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -48,9 +48,12 @@ export default function RootLayout({
                 <Header />
                 <Toast />
                 <div className="flex w-screen">
-                  <div className="py-20 w-full">{children}</div>
+                  <div className="lg:py-24 py-20 w-full">{children}</div>
+                  <div className="my-16 mr-2 w-1/4 h-screen relative md:block hidden">
+                    <SideNavigation />
+                  </div>
                 </div>
-                <div className="w-full">
+                <div className="w-full md:hidden">
                   <TabNavigation />
                 </div>
               </main>

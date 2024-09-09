@@ -26,7 +26,7 @@ const FollowListModal = ({
   onClose: () => void;
 }) => {
   const { auth } = useAuth();
-  const { followings, check } = useRelationship(auth.name);
+  const { loading, followings, check } = useRelationship(auth.name);
 
   const follow = async (name: string) => {
     try {
@@ -80,28 +80,35 @@ const FollowListModal = ({
                     </p>
                   </div>
                 </Link>
-                {auth.name !== user.name &&
-                  (followings.some(
-                    (followUser) => followUser.name === user.name
-                  ) ? (
-                    <button
-                      className="text-xs rounded-full bg-opadicy-0 px-3 py-2 text-yellow-600 font-semibold border border-yellow-600 my-btn"
-                      onClick={() => {
-                        unfollow(user.name);
-                      }}
-                    >
-                      フォロー中
-                    </button>
-                  ) : (
-                    <button
-                      className="text-xs rounded-full bg-yellow-600 px-3 py-2 text-white font-semibold my-btn"
-                      onClick={() => {
-                        follow(user.name);
-                      }}
-                    >
-                      フォローする
-                    </button>
-                  ))}
+                <div className="relative">
+                  {loading && (
+                    <div className="absolute bg-white w-full h-full flex items-center justify-center z-10">
+                      <span className="loading loading-dots loading-xs text-yellow-600" />
+                    </div>
+                  )}
+                  {auth.name !== user.name &&
+                    (followings.some(
+                      (followUser) => followUser.name === user.name
+                    ) ? (
+                      <button
+                        className="text-xs rounded-full bg-opadicy-0 px-3 py-2 text-yellow-600 font-semibold border border-yellow-600 my-btn"
+                        onClick={() => {
+                          unfollow(user.name);
+                        }}
+                      >
+                        フォロー中
+                      </button>
+                    ) : (
+                      <button
+                        className="text-xs rounded-full bg-yellow-600 px-3 py-2 text-white font-semibold my-btn"
+                        onClick={() => {
+                          follow(user.name);
+                        }}
+                      >
+                        フォローする
+                      </button>
+                    ))}
+                </div>
               </li>
             ))
           ) : (
@@ -225,7 +232,7 @@ export const UserProfilesPage: React.FC = () => {
           </div>
         </div>
       </section>
-      <section className="my-5 p-2">
+      <section className="mx-2 my-5 p-2 py-3 bg-white rounded shadow">
         <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
           <h2 className="font-semibold text-lg">投稿したレシピ</h2>
           <p>
@@ -235,21 +242,6 @@ export const UserProfilesPage: React.FC = () => {
         <div className="grid md:grid-cols-4 grid-cols-2">
           {recipes
             .filter((recipe) => recipe.status === "published")
-            .map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} />
-            ))}
-        </div>
-      </section>
-      <section className="my-5 p-2">
-        <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
-          <h2 className="font-semibold text-lg">下書き</h2>
-          <p>
-            {recipes.filter((recipe) => recipe.status === "draft").length}件
-          </p>
-        </div>
-        <div className="grid lg:grid-cols-4 grid-cols-2">
-          {recipes
-            .filter((recipe) => recipe.status === "draft")
             .map((recipe, index) => (
               <RecipeCard key={index} recipe={recipe} />
             ))}

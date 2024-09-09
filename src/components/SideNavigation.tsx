@@ -12,66 +12,73 @@ export const SideNavigation = () => {
   const handleCreateRecipe = () => {
     create();
   };
+
   return (
-    <div className="relative h-screen">
-      <div className="fixed top-0 pt-32 border-l border-gray-200 h-screen w-80">
-        <ul className="text-gray-400">
-          <li>
-            <Link
-              href="/recipes"
-              className={`p-5 flex items-center text-center transition-all duration-300 select-none ${
-                pathName.includes("/recipes") &&
-                "text-blue-800 font-semibold bg-blue-50"
-              }`}
-            >
-              <span className="material-icons mr-1">search</span>みつける
-            </Link>
-          </li>
-          <li>
-            <Link
-              href={auth.isAuthenticated ? `/${auth.name}` : `/signin`}
-              className={`p-5 flex items-center text-center transition-all duration-300 select-none ${
-                pathName.includes(
-                  auth.isAuthenticated ? `/${auth.name}` : `/sign`
-                ) && "text-blue-800 font-semibold bg-blue-50"
-              }`}
-            >
-              <span className="material-icons mr-1">
-                {pathName.includes(
-                  auth.isAuthenticated ? `/${auth.name}` : `/sign`
-                )
-                  ? "person"
-                  : "person_outline"}
-              </span>
-              プロフィール
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/drafts"
-              className={`p-5 flex items-center text-center transition-all duration-300 select-none ${
-                pathName === "/drafts" &&
-                "text-blue-800 font-semibold bg-blue-50"
-              }`}
-            >
-              <span className="material-icons mr-1">edit</span>
-              下書きレシピ
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/bookmarks"
-              className={`p-5 flex items-center text-center transition-all duration-300 select-none ${
-                pathName === "/bookmarks" &&
-                "text-blue-800 font-semibold bg-blue-50"
-              }`}
-            >
-              <span className="material-icons mr-1">bookmark</span>
-              ブックマーク
-            </Link>
-          </li>
-        </ul>
-      </div>
+    <div className={`mt-16 w-full fixed md:block hidden`}>
+      <ul>
+        <li
+          className={`flex items-center my-2 p-5 bg-white rounded-l-lg transition-all duration-500 ${
+            pathName === "/recipes"
+              ? "text-yellow-600 font-bold text-xl shadow-md"
+              : "text-gray-400"
+          }`}
+        >
+          <Link href="/recipes" className="flex items-center">
+            <span className="material-icons mr-1">search</span>
+            みつける
+          </Link>
+        </li>
+        <li
+          className={`my-2 p-5 bg-white rounded-l-lg transition-all duration-500 ${
+            pathName === `/${auth.name}`
+              ? "text-yellow-600 font-bold text-xl shadow-md"
+              : "text-gray-400"
+          }`}
+        >
+          <Link href={`/${auth.name}`} className="flex items-center">
+            <span className="material-icons mr-1">
+              {pathName === `/${auth.name}` ? "person" : "person_outline"}
+            </span>
+            プロフィール
+          </Link>
+        </li>
+        <li
+          className={`my-2 p-5 bg-white rounded-l-lg transition-all duration-500 ${
+            pathName === "/recipes/bookmark"
+              ? "text-yellow-600 font-bold text-xl shadow-md"
+              : "text-gray-400"
+          }`}
+        >
+          <Link href="/recipes/bookmark" className="flex items-center">
+            <span className="material-icons mr-1">
+              {pathName === "/recipes/bookmark"
+                ? "bookmark"
+                : "bookmark_outline"}
+            </span>
+            ブックマーク
+          </Link>
+        </li>
+        <li
+          className={`my-2 p-5 bg-white rounded-l-lg transition-all duration-500 ${
+            pathName === "/recipes/drafts"
+              ? "text-yellow-600 font-bold text-xl shadow-md"
+              : "text-gray-400"
+          }`}
+        >
+          <Link href="/recipes/drafts" className="flex items-center">
+            <span className="material-icons mr-1">edit_note</span>
+            下書き
+          </Link>
+        </li>
+        <li
+          className={`my-5 p-6 bg-gradient text-lg text-white font-bold rounded-l-lg transition-all duration-500 shadow-md`}
+        >
+          <button className="flex items-center" onClick={handleCreateRecipe}>
+            <span className="material-icons mr-1">edit</span>
+            レシピを書く
+          </button>
+        </li>
+      </ul>
     </div>
   );
 };

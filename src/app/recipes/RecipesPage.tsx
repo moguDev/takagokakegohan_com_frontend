@@ -5,10 +5,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 const items: string[] = [
-  "#新着レシピ",
-  "#注目のレシピ",
-  "#爆速レシピ",
-  "#殿堂入りレシピ",
+  "#新着TKG",
+  "#注目TKG",
+  "#爆速TKG",
+  "#殿堂入りTKG",
   "#フォロー中",
 ];
 
@@ -55,14 +55,14 @@ export const RecipesPage = () => {
 
   useEffect(() => {
     switch (items[selectIndex]) {
-      case "#新着レシピ":
+      case "#新着TKG":
         fetch("new");
         break;
-      case "#注目のレシピ":
+      case "#注目のTKG":
         fetch("highlight");
         break;
-      case "#爆速レシピ":
-      case "#殿堂入りレシピ":
+      case "#爆速TKG":
+      case "#殿堂入りTKG":
       case "#フォロー中":
       default:
         fetch();
@@ -72,7 +72,7 @@ export const RecipesPage = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-300">
+      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 border-b border-gray-200">
         <div className="bg-gray-50 rounded-full border border-gray-300 flex items-center p-2 max-w-7xl mx-auto">
           <span className="material-icons text-gray-300">search</span>
           <input
@@ -82,10 +82,10 @@ export const RecipesPage = () => {
           />
         </div>
       </div>
-      <section className="pt-12 max-w-7xl mx-auto">
+      <section className="pt-12 md:mb-6 mb-3 max-w-7xl mx-auto">
         <div
           ref={navContainerRef}
-          className="overflow-x-auto whitespace-nowrap scrollbar-hide mb-3"
+          className="overflow-x-auto whitespace-nowrap scrollbar-hide"
         >
           <nav className="flex">
             {items.map((item, index) => (
@@ -96,7 +96,7 @@ export const RecipesPage = () => {
                   itemRefs.current[index] = el;
                 }}
                 onClick={() => handleClick(index)}
-                className={`nav-item mx-1 px-4 py-1 text-sm rounded-full transition-all duration-400 ${
+                className={`nav-item mx-1 px-4 py-1 md:text-base text-sm rounded-lg transition-all duration-400 ${
                   index === selectIndex
                     ? "font-semibold text-white bg-yellow-600"
                     : "text-gray-600"
@@ -108,20 +108,22 @@ export const RecipesPage = () => {
           </nav>
         </div>
       </section>
-      <section className="max-w-7xl mx-auto">
-        <section className="px-1">
-          <h2
-            className={`mx-2 flex items-center text-black text-base font-bold p-1`}
-          >
-            {heads[selectIndex]}
-          </h2>
-          <div className="grid lg:grid-cols-6 md:grid-cols-4 grid-cols-2 p-2">
-            {recipes.map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} />
-            ))}
-          </div>
+      <div className="md:px-4 px-2">
+        <section className="bg-white rounded-lg max-w-7xl mx-auto md:p-5 p-2">
+          <section>
+            <h2
+              className={`p-2 pb-3 flex items-center text-black md:text-xl text-base font-bold`}
+            >
+              {heads[selectIndex]}
+            </h2>
+            <div className="grid md:grid-cols-4 grid-cols-2">
+              {recipes.map((recipe, index) => (
+                <RecipeCard key={index} recipe={recipe} />
+              ))}
+            </div>
+          </section>
         </section>
-      </section>
+      </div>
     </div>
   );
 };

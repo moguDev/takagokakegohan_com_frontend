@@ -61,10 +61,10 @@ const config: Config = {
         hero: "580px",
       },
       backgroundColor: {
-        theme: "#1B191A",
+        theme: "#f7f7e9",
         primary: "#1B191A",
         secondary: "#C5A797",
-        white: "#fcfcf0",
+        white: "#fcfcf3",
         haader: "#fcfce0",
         black: "#333333",
       },
