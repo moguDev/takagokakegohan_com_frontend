@@ -17,11 +17,14 @@ export const useUserProfiles = (name: string) => {
   const fetchProfile = useCallback(async () => {
     try {
       const res = await axiosInstance.get(`/users/${name}`);
+      console.log(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.avatar.url}`
+      );
       setUserDetails({
         ...res.data,
         avatar: {
           url: res.data.avatar.url
-            ? `http://localhost:3000${res.data.avatar.url}`
+            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.avatar.url}`
             : null,
         },
       });

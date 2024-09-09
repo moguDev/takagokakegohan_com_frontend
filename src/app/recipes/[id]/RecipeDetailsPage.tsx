@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import defaultImage from "/public/images/default_avatar.png";
 import { useAuth } from "@/hooks/useAuth";
 import Link from "next/link";
@@ -14,14 +14,17 @@ export const RecipeDetailsPage = () => {
   const setMessage = useSetRecoilState(toastState);
   const { auth } = useAuth();
   const { id } = useParams();
+  const { recipe, fetch } = useRecipeDetails(Number(id));
   const {
     isBookmarked,
     loading: loadingBookmark,
     bookmark,
     unbookmark,
   } = useBookmark(id as string);
-  const { recipe, fetch } = useRecipeDetails(Number(id));
   const router = useRouter();
+  const pathName = usePathname();
+  const currentUrl = `https://たまごかけごはん.com${pathName}`;
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${recipe?.title}&url=${currentUrl}`;
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -172,9 +175,17 @@ export const RecipeDetailsPage = () => {
             もどる
           </button>
           <div className="flex items-center justify-end px-3 py-2">
-            <button className=" text-black rounded p-1 flex items-center mr-1 my-btn">
-              <span className="material-icons mr-1"></span>
-            </button>
+            {recipe.status === "published" && (
+              <a
+                href={twitterShareUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-black text-white text-sm rounded p-1 flex items-center mr-1 my-btn"
+              >
+                <span className="material-icons mr-1"></span>
+                Xでシェアする
+              </a>
+            )}
             <button
               className="text-black rounded p-2 flex items-center  my-btn"
               onClick={handleCopyLink}

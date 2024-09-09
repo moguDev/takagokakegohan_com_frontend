@@ -7,6 +7,7 @@ import defaultImage from "/public/images/default_avatar.png";
 import { useUserProfiles } from "@/hooks/useUserProfiles";
 import { useEffect } from "react";
 import { showEditProfileModal } from "@/components/EditProfileModal";
+import { useRelationship } from "@/hooks/useRelationship";
 
 export const UserProfiles: React.FC = async () => {
   const { auth } = useAuth();
@@ -14,6 +15,7 @@ export const UserProfiles: React.FC = async () => {
   const { userProfiles, recipes, reload, loading, error } = useUserProfiles(
     name as string
   );
+  const { isFollowed } = useRelationship();
 
   useEffect(() => {
     reload();
