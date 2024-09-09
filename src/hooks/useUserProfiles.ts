@@ -17,9 +17,6 @@ export const useUserProfiles = (name: string) => {
   const fetchProfile = useCallback(async () => {
     try {
       const res = await axiosInstance.get(`/users/${name}`);
-      console.log(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.avatar.url}`
-      );
       setUserDetails({
         ...res.data,
         avatar: {

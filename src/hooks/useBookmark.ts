@@ -46,7 +46,7 @@ export const useBookmark = (recipeId: number | string) => {
 
   useEffect(() => {
     checkBookmarked();
-  }, [checkBookmarked]);
+  }, [recipeId, checkBookmarked]);
 
   return { isBookmarked, loading, checkBookmarked, bookmark, unbookmark };
 };

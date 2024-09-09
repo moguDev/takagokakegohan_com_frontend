@@ -5,9 +5,11 @@ import Link from "next/link";
 import defaultImage from "/public/images/default_avatar.png";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "./Toast";
+import { useRelationship } from "@/hooks/useRelationship";
 
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
+  const { followings, followers } = useRelationship(auth.name);
   const setMessage = useSetRecoilState(toastState);
   return (
     <div
@@ -34,11 +36,11 @@ export const CardMenu: React.FC = () => {
               </p>
               <div className="flex items-center p-1 text-xl select-none">
                 <p className="font-bold mr-3">
-                  {0}
+                  {followings.length}
                   <span className="text-sm font-normal ml-1">フォロー</span>
                 </p>
                 <p className="font-bold">
-                  {0}
+                  {followers.length}
                   <span className="text-sm font-normal ml-1">フォロワー</span>
                 </p>
               </div>

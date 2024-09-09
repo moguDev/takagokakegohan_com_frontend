@@ -9,6 +9,7 @@ import Loading from "@/app/loading";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
 import { useBookmark } from "@/hooks/useBookmark";
+import { useRelationship } from "@/hooks/useRelationship";
 
 export const RecipeDetailsPage = () => {
   const setMessage = useSetRecoilState(toastState);
@@ -97,16 +98,10 @@ export const RecipeDetailsPage = () => {
                           fill
                         />
                       </div>
-                      <p className="font-semibold">{recipe?.user.nickname}</p>
+                      <p className="font-semibold underline">
+                        {recipe?.user.nickname}
+                      </p>
                     </Link>
-                    {auth.name !== recipe.user.name && (
-                      <button
-                        type="button"
-                        className="text-xs text-white mx-1 px-2 py-0.5 bg-yellow-600 rounded-full my-btn"
-                      >
-                        フォロー
-                      </button>
-                    )}
                   </div>
                   <div className="text-xs">
                     <span className="mr-1">調理時間</span>

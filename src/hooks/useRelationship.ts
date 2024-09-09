@@ -1,52 +1,69 @@
 "use client";
 import { useCallback, useEffect, useState } from "react";
-import { useAuth } from "./useAuth";
 import { axiosInstance } from "@/lib/axiosInstance";
+import { UserProfiles } from "@/types";
 
-export const useRelationship = () => {
-  const { auth } = useAuth();
+export const useRelationship = (name: string | number) => {
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
+  const [followings, setFollowings] = useState<UserProfiles[]>([]);
+  const [followers, setFollowers] = useState<UserProfiles[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const check = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axiosInstance.get(
-        `/users${auth.name}/is_user_followed`
+      const resCheck = await axiosInstance.get(
+        `/users/${name}/is_user_followed`
       );
-      console.log(res);
+      setIsFollowed(resCheck.data.is_followed);
+      const resFollowings = await axiosInstance.get(
+        `/users/${name}/followings`
+      );
+      setFollowings(resFollowings.data);
+      const resFollowers = await axiosInstance.get(`/users/${name}/followers`);
+      setFollowers(resFollowers.data);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-  }, [auth]);
+  }, [name, setIsFollowed]);
 
-  const follow = useCallback(async () => {
+  const follow = async () => {
     setLoading(true);
     try {
-      await axiosInstance.post(`/users/${auth.name}/relationship`);
+      await axiosInstance.post(`/users/${name}/relationship`);
+      check();
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [auth]);
+  };
 
-  const unfollow = useCallback(async () => {
+  const unfollow = async () => {
     setLoading(true);
     try {
-      await axiosInstance.delete(`/users/${auth.name}/relationship`);
+      await axiosInstance.delete(`/users/${name}/relationship`);
+      check();
     } catch (error) {
       console.error(error);
     } finally {
       setLoading(false);
     }
-  }, [auth]);
+  };
 
   useEffect(() => {
     check();
-  }, [auth, check]);
+  }, [name, check]);
 
-  return { isFollowed, loading, follow, unfollow };
+  return {
+    isFollowed,
+    followings,
+    followers,
+    loading,
+    check,
+    follow,
+    unfollow,
+  };
 };
