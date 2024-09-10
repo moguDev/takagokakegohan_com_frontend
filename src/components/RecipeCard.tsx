@@ -7,7 +7,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
     <Link href={`/recipes/${recipe.id}`} className="p-1 inline-block">
       <div className="p-0.5 cursor-pointer transition-all duration-300 w-full my-btn">
-        <div className="h-40 relative">
+        <div className="md:h-52 h-40 relative">
           {recipe.image.url ? (
             <Image
               src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`}
@@ -23,7 +23,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           )}
         </div>
         <section className="p-1">
-          <p className="text-sm select-none font-semibold text-black">
+          <p className="text-base select-none font-semibold text-black">
             {recipe.title || "無題"}
           </p>
           <div className="flex items-center justify-between text-gray-500 my-1">

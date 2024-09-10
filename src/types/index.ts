@@ -2,6 +2,7 @@ export type UserProfiles = {
   name: string;
   nickname: string;
   avatar: { url: string | null };
+  rank?: string;
 };
 
 export type Recipe = {
@@ -14,6 +15,7 @@ export type Recipe = {
   steps: Step[];
   user: UserProfiles;
   status: RecipeStatus;
+  bookmarkCount: number;
 };
 
 export type Ingredient = {

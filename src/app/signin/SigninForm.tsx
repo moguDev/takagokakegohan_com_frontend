@@ -29,7 +29,7 @@ export const SigninForm = () => {
     try {
       await login(data.email, data.password);
       router.back();
-      setMessage("ログインしました");
+      setMessage("ログインしました。");
     } catch (error) {
       console.error(error);
     }
@@ -37,7 +37,7 @@ export const SigninForm = () => {
 
   return (
     <div className="pt-5">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-xl mx-auto">
         <form onSubmit={handleSubmit(onsubmit)} method="post" className="px-5">
           <div className="flex flex-col my-5">
             <label htmlFor="email" className="text-sm text-gray-400 p-1">
@@ -47,7 +47,7 @@ export const SigninForm = () => {
               <span className="material-icons opacity-20 p-2">email</span>
               <input
                 type="email"
-                className="bg-white w-full rounded-lg outline-none"
+                className="bg-white w-full outline-none"
                 placeholder="メールアドレス"
                 {...register("email", {
                   required: "メールアドレスを入力してください。",
@@ -70,7 +70,7 @@ export const SigninForm = () => {
               <span className="material-icons opacity-20 p-2">password</span>
               <input
                 type="password"
-                className="bg-white h-full w-full rounded-lg outline-none"
+                className="bg-white h-full w-full outline-none"
                 placeholder="パスワード"
                 {...register("password", {
                   required: "パスワードを入力してください。",

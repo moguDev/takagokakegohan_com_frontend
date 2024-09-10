@@ -36,7 +36,7 @@ export const SignupForm = () => {
 
   useEffect(() => {
     checkName(name);
-  }, [name]);
+  }, [name, checkName]);
 
   const onsubmit = async (data: FormData) => {
     try {
@@ -49,7 +49,7 @@ export const SignupForm = () => {
 
   return (
     <div className="p-2">
-      <div className="max-w-4xl mx-auto p-5">
+      <div className="max-w-xl mx-auto p-5">
         <form onSubmit={handleSubmit(onsubmit)} method="post">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="text-xs text-gray-400 p-1">

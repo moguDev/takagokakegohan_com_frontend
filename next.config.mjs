@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "localhost",
         pathname: "/uploads/**",
       },
+      {
+        protocol: "https",
+        hostname: "tamagokakegohan-com-backend.onrender.com",
+        pathname: "/uploads/**",
+      },
     ],
   },
 };

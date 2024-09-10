@@ -33,13 +33,14 @@ export const useRecipeDetails = (id: number) => {
         ...res.data,
         ingredients: adaptIngredients(res.data.recipe_ingredients),
         steps: adaptSteps(res.data.steps),
+        bookmarkCount: res.data.bookmark_count,
       });
     } catch (error) {
       throw Error("レシピの取得に失敗しました。");
     } finally {
       setLoading(false);
     }
-  }, [setRecipe]);
+  }, [id]);
 
   const update = useCallback(
     async (recipe: Recipe) => {
@@ -63,12 +64,12 @@ export const useRecipeDetails = (id: number) => {
         setLoading(false);
       }
     },
-    [setRecipe]
+    [id]
   );
 
   useEffect(() => {
     fetch();
-  }, []);
+  }, [fetch]);
 
-  return { recipe, loading, update };
+  return { recipe, loading, fetch, update };
 };

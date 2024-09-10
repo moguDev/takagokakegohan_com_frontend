@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { usePathname } from "next/navigation";
 export const TabNavigation = () => {
   const { auth } = useAuth();
   const pathName = usePathname();
-  const { create } = useEditRecipe();
+  const { create, loading } = useEditRecipe();
 
   const handleCreateRecipe = () => {
     create();
@@ -27,15 +28,15 @@ export const TabNavigation = () => {
       <div
         className={`
         flex items-center justify-between md:rounded-full shadow
-        text-gray-400 bg-white bg-opacity-75 backdrop-blur-xl
-        md:mb-2 md:border border-t border-gray-100 max-w-2xl w-full h-16 py-4
+        text-gray-400 bg-white bg-opacity-80 backdrop-blur
+        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-16 pt-4 pb-6
         fixed bottom-0 z-40`}
       >
         <Link
           href="/recipes"
           className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
             pathName.includes("/recipes")
-              ? "text-yellow-950 font-semibold scale-100"
+              ? "text-yellow-600 font-semibold scale-100"
               : "scale-90"
           }`}
         >
@@ -48,8 +49,8 @@ export const TabNavigation = () => {
             onClick={handleCreateRecipe}
             className="absolute flex flex-col items-center justify-center rounded-full h-24 w-24 bg-gradient shadow my-btn select-none -bottom-6"
           >
-            <span className="material-icons text-white text-opacity-80 mb-1 scale-150 select-none">
-              edit_note
+            <span className="material-icons text-white text-opacity-80 mb-2 scale-110 select-none">
+              edit
             </span>
             <p className="text-xs font-semibold text-white select-none">
               レシピを書く
@@ -61,7 +62,7 @@ export const TabNavigation = () => {
           href={auth.isAuthenticated ? `/${auth.name}` : `/signin`}
           className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
             pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
-              ? "text-black font-semibold scale-100"
+              ? "text-yellow-600 font-semibold scale-100"
               : "scale-90"
           }`}
         >
@@ -71,6 +72,11 @@ export const TabNavigation = () => {
           <p className="text-xs font-bold">プロフィール</p>
         </Link>
       </div>
+      {loading && (
+        <div className="fixed top-0 h-full w-full z-10 opacity-90">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };

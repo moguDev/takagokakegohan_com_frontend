@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
 import { EditProfileModal } from "@/components/EditProfileModal";
-import { UserProfiles } from "./UserProfiles";
+import { UserProfilesPage } from "./UserProfilesPage";
 import Loading from "../loading";
 
-const UserProfilesPage: React.FC = () => {
+const Page: React.FC = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <Suspense fallback={<Loading />}>
-        <UserProfiles />
+        <UserProfilesPage />
         <EditProfileModal />
       </Suspense>
     </div>

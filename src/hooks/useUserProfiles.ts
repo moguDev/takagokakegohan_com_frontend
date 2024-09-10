@@ -8,6 +8,7 @@ export const useUserProfiles = (name: string) => {
     name: "",
     nickname: "",
     avatar: { url: null },
+    rank: "",
   });
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,7 +21,7 @@ export const useUserProfiles = (name: string) => {
         ...res.data,
         avatar: {
           url: res.data.avatar.url
-            ? `http://localhost:3000${res.data.avatar.url}`
+            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.avatar.url}`
             : null,
         },
       });

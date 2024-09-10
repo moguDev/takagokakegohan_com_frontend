@@ -3,27 +3,25 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import { Recipe } from "@/types";
 import { useCallback, useEffect, useState } from "react";
 
-export const useRecipes = () => {
+export const useBookmarkRecipes = (userId: number | string) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const fetch = useCallback(async (filter?: string) => {
+  const fetch = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await axiosInstance.get(
-        filter ? `/recipes?filter=${filter}` : "/recipes"
-      );
+      const res = await axiosInstance.get(`/users/${userId}/bookmarks`);
       setRecipes(res.data);
     } catch (error) {
-      throw new Error("レシピの取得に失敗しました。");
+      console.error(error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
-    fetch("new");
+    fetch();
   }, [fetch]);
 
-  return { recipes, loading, fetch };
+  return { recipes, loading };
 };

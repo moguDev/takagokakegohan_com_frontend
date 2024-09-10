@@ -5,20 +5,22 @@ import Link from "next/link";
 import defaultImage from "/public/images/default_avatar.png";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "./Toast";
+import { useRelationship } from "@/hooks/useRelationship";
 
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
+  const { followings, followers } = useRelationship(auth.name);
   const setMessage = useSetRecoilState(toastState);
   return (
     <div
       tabIndex={0}
       className="dropdown-content menu bg-gradient-single w-80 mx-auto rounded-md z-[1] mt-7 shadow-2xl"
     >
-      <section className="menu min-h-full pt-8 pb-3 px-3 rounded-l">
+      <section className="menu min-h-full pt-8 pb-3 px-2 rounded-l">
         {auth.isAuthenticated ? (
           <>
             <div className="mb-5 flex flex-col items-center">
-              <div className="border-2 border-white border-opacity-50 shadow rounded-full h-20 w-20 relative">
+              <div className="border-2 border-white border-opacity-50 shadow rounded-full h-28 w-28 relative">
                 <Image
                   src={auth.avatar.url || defaultImage}
                   alt="アイコン"
@@ -26,28 +28,31 @@ export const CardMenu: React.FC = () => {
                   fill
                 />
               </div>
-              <p className="text-2xl font-bold pt-1 select-none pb-3">
+              <p className="text-xl font-bold pt-1 select-none pb-3">
                 {auth.nickname}
               </p>
-              <p className="text-xs bg-gradient text-white rounded-full ml-2 px-6 py-0.5 shadow select-none">
-                {"三つ星 ★★★"}
+              <p className="text-xs bg-yellow-50 text-black rounded-full ml-2 px-6 py-1 shadow select-none">
+                {"かけだし"}料理人
               </p>
               <div className="flex items-center p-1 text-xl select-none">
                 <p className="font-bold mr-3">
-                  {0}
+                  {followings.length}
                   <span className="text-sm font-normal ml-1">フォロー</span>
                 </p>
                 <p className="font-bold">
-                  {0}
+                  {followers.length}
                   <span className="text-sm font-normal ml-1">フォロワー</span>
                 </p>
               </div>
             </div>
-            <ul className="mx-2 mb-1 divide-y divide-gray-300">
+            <ul className="mx-3 mb-1 divide-y divide-gray-300">
               <li className="py-1 my-btn">
                 <Link
                   href={`/${auth.name}`}
                   className="relative hover:text-blue-500 select-none"
+                  onClick={() =>
+                    document.getElementById("accout-circle")?.click()
+                  }
                 >
                   <span className="material-icons">person</span>
                   プロフィール
@@ -57,18 +62,40 @@ export const CardMenu: React.FC = () => {
                 </Link>
               </li>
               <li className="py-1">
-                <label className="relative hover:text-blue-500 my-btn">
+                <Link
+                  href="/recipes/drafts"
+                  className="relative hover:text-blue-500 select-none"
+                  onClick={() =>
+                    document.getElementById("accout-circle")?.click()
+                  }
+                >
+                  <span className="material-icons">edit_note</span>
+                  下書きレシピ
+                  <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
+                    navigate_next
+                  </span>
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link
+                  href="/recipes/bookmark"
+                  className="relative hover:text-blue-500 select-none"
+                  onClick={() =>
+                    document.getElementById("accout-circle")?.click()
+                  }
+                >
                   <span className="material-icons">bookmark</span>
                   ブックマーク
                   <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
                     navigate_next
                   </span>
-                </label>
+                </Link>
               </li>
               <li className="py-1 my-btn">
                 <button
                   className="relative hover:text-blue-500"
                   onClick={() => {
+                    document.getElementById("accout-circle")?.click();
                     logout();
                     setMessage("ログアウトしました");
                   }}
