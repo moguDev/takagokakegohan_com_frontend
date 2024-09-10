@@ -4,7 +4,9 @@ import { useRecipes } from "@/hooks/useRecipes";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../loading";
-import { atom, useRecoilState } from "recoil";
+import { atom, useRecoilState, useSetRecoilState } from "recoil";
+import { useAuth } from "@/hooks/useAuth";
+import { toastState } from "@/components/Toast";
 
 const items: string[] = [
   "#新着TKG",
@@ -40,6 +42,8 @@ const heads = [
 const selectIndexState = atom<number>({ key: "selectIndexState", default: 0 });
 
 export const RecipesPage = () => {
+  const { auth } = useAuth();
+  const setMessage = useSetRecoilState(toastState);
   const navContainerRef = useRef<HTMLDivElement | null>(null);
   const [selectIndex, setSelectIndex] =
     useRecoilState<number>(selectIndexState);
@@ -47,6 +51,10 @@ export const RecipesPage = () => {
   const { recipes, loading, fetch } = useRecipes();
 
   const handleClick = (index: number) => {
+    if (!auth.isAuthenticated && items[index] === "#フォロー中") {
+      setMessage("ログインしてください。");
+      return;
+    }
     setSelectIndex(index);
     const ref = itemRefs.current[index];
     if (ref) {
@@ -73,7 +81,7 @@ export const RecipesPage = () => {
         fetch();
         break;
       case "#フォロー中":
-        fetch("following");
+        if (auth.isAuthenticated) fetch("following");
         break;
       default:
         fetch();

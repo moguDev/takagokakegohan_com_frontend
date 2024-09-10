@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import { RecipeDetailsPage } from "./RecipeDetailsPage";
 import { axiosInstance } from "@/lib/axiosInstance";
-import defaultOGP from "@/app/opengraph-image.png";
 
 export async function generateMetadata({
   params,
@@ -23,13 +22,21 @@ export async function generateMetadata({
         {
           url: recipe?.image.url
             ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`
-            : "/src/app/opengraph-image.png",
+            : "https://たまごかけごはん.com/images/opengraph-image.png",
           width: 1200,
           height: 630,
           alt: recipe?.title,
         },
       ],
       type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: recipe?.title,
+      description: recipe.body || "たまごかけごはん専用の料理レシピサービス",
+      images: recipe?.image.url
+        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`
+        : "https://たまごかけごはん.com/images/opengraph-image.png",
     },
   };
 }

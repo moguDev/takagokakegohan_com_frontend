@@ -15,6 +15,7 @@ type FormData = {
 };
 
 export const SignupForm = () => {
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const { loading, signup } = useAuth();
   const { isUnique, checkName } = useCheckName();
   const router = useRouter();
@@ -54,7 +55,7 @@ export const SignupForm = () => {
           <span className="material-icons text-yellow-600 mr-1">
             person_add
           </span>
-          アカウント作成
+          アカウントを作成
         </h1>
         <form onSubmit={handleSubmit(onsubmit)} method="post">
           <div className="flex flex-col my-5">
@@ -153,7 +154,7 @@ export const SignupForm = () => {
             <div className="bg-white flex items-center border-b border-gray-200 p-1">
               <span className="material-icons opacity-20 p-2">password</span>
               <input
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 className="bg-white h-full w-full outline-none"
                 placeholder="パスワード"
                 {...register("password", {
@@ -164,8 +165,11 @@ export const SignupForm = () => {
                   },
                 })}
               />
-              <span className="material-icons opacity-20 p-2">
-                visibility_off
+              <span
+                className="material-icons opacity-20 p-2"
+                onClick={() => setIsPasswordVisible((prev) => !prev)}
+              >
+                {isPasswordVisible ? "visibility" : "visibility_off"}
               </span>
             </div>
             <div className="text-red-500 text-xs p-1">
@@ -179,15 +183,18 @@ export const SignupForm = () => {
             <div className="bg-white flex items-center border-b border-gray-200 p-1">
               <span className="material-icons opacity-20 p-2">password</span>
               <input
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 className="bg-white h-full w-full outline-none"
                 placeholder="パスワード（確認用）"
                 {...register("passwordConfirmation", {
                   required: "パスワード（確認用）を入力してください。",
                 })}
               />
-              <span className="material-icons opacity-20 p-2">
-                visibility_off
+              <span
+                className="material-icons opacity-20 p-2"
+                onClick={() => setIsPasswordVisible((prev) => !prev)}
+              >
+                {isPasswordVisible ? "visibility" : "visibility_off"}
               </span>
             </div>
             <div className="text-red-500 text-xs p-1">
