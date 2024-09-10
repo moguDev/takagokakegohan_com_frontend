@@ -4,6 +4,7 @@ import { useRecipes } from "@/hooks/useRecipes";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Loading from "../loading";
+import { atom, useRecoilState } from "recoil";
 
 const items: string[] = [
   "#新着TKG",
@@ -36,9 +37,12 @@ const heads = [
   </>,
 ];
 
+const selectIndexState = atom<number>({ key: "selectIndexState", default: 0 });
+
 export const RecipesPage = () => {
   const navContainerRef = useRef<HTMLDivElement | null>(null);
-  const [selectIndex, setSelectIndex] = useState(0);
+  const [selectIndex, setSelectIndex] =
+    useRecoilState<number>(selectIndexState);
   const itemRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const { recipes, loading, fetch } = useRecipes();
 
@@ -79,8 +83,8 @@ export const RecipesPage = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-white w-full px-4 fixed top-16 pb-2 z-10 shadow flex">
-        <div className="bg-gray-50 rounded-full border border-gray-300 shadow-sm flex items-center p-2 w-full">
+      <div className="bg-white w-full px-4 fixed top-16 pb-3 z-10 flex border-b border-gray-200">
+        <div className="bg-gray-50 rounded-full border border-gray-200 shadow-sm flex items-center p-2 w-full">
           <span className="material-icons text-gray-300">search</span>
           <input
             type="text"
@@ -95,7 +99,7 @@ export const RecipesPage = () => {
           ref={navContainerRef}
           className="overflow-x-auto whitespace-nowrap scrollbar-hide"
         >
-          <nav className="flex items-center md:px-3 px-1">
+          <nav className="flex items-center md:mx-4 mx-2">
             {items.map((item, index) => (
               <Link
                 key={index}
@@ -103,8 +107,8 @@ export const RecipesPage = () => {
                 ref={(el) => {
                   itemRefs.current[index] = el;
                 }}
-                onClick={() => handleClick(index)}
-                className={`relative nav-item mx-1 pt-3 pb-5 rounded-t-lg transition-all duration-400 ${
+                onClick={() => !loading && handleClick(index)}
+                className={`relative nav-item pt-3 pb-5 rounded-t-lg transition-all duration-400 ${
                   index === selectIndex
                     ? "font-semibold text-yellow-600 bg-white text-base px-12"
                     : "text-gray-500 text-sm px-4"
@@ -129,13 +133,25 @@ export const RecipesPage = () => {
             </h2>
             <p className="text-gray-500 font-semibold">{recipes.length}件</p>
           </div>
-          {loading ? (
-            <Loading />
-          ) : (
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+          {recipes.length > 0 ? (
+            <div className="relative grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+              {loading && (
+                <div className="absolute flex flex-col items-center justify-center h-full w-full bg-white bg-opacity-30 z-10">
+                  <span className="loading loading-dots loading-lg text-yellow-500" />
+                  <p className="text-xs text-gray-500 font-semibold">
+                    読み込み中
+                  </p>
+                </div>
+              )}
               {recipes.map((recipe, index) => (
                 <RecipeCard key={index} recipe={recipe} />
               ))}
+            </div>
+          ) : (
+            <div className="p-5 min-h-64 flex items-center justify-center">
+              <p className="text-center text-gray-400">
+                レシピが見つかりませんでした。
+              </p>
             </div>
           )}
         </section>

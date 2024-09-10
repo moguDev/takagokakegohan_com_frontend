@@ -32,9 +32,11 @@ export const DraftRecipesPage = () => {
               ))}
           </div>
         ) : (
-          <p className="p-5 text-center text-gray-500">
-            下書き中のレシピはありません
-          </p>
+          <div className="p-5 min-h-64 flex items-center justify-center">
+            <p className="text-center text-gray-400">
+              下書き中のレシピはありません。
+            </p>
+          </div>
         )}
       </section>
     </div>
