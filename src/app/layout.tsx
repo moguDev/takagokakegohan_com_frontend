@@ -23,6 +23,12 @@ export const metadata: Metadata = {
     siteName: "たまごかけごはん.com",
     images: "./opengraph-image.png",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "たまごかけごはん.com",
+    description: "たまごかけごはん専用の料理レシピサービス",
+    images: "./opengraph-image.png",
+  },
 };
 
 export default function RootLayout({
