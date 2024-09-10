@@ -1,15 +1,11 @@
-/** @type {import('next').NextConfig} */
-
-// @ts-ignore
-import withPWA from "next-pwa";
-
-const withPWA = nextPwa({
+const withPWA = require("next-pwa")({
   dest: "public",
   register: true,
   skipWaiting: true,
 });
 
-const nextConfig = withPWA({
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -24,6 +20,6 @@ const nextConfig = withPWA({
       },
     ],
   },
-});
+};
 
-export default nextConfig;
+export default withPWA(nextConfig);
