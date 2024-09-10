@@ -90,39 +90,38 @@ export const Header = () => {
   }, [auth.name, pathName]);
 
   return (
-    <header className={`z-40 ${pathName === "/" && "hidden"} `}>
-      <div
-        className={`
-        bg-white fixed top-0 h-16 w-full pl-5 pr-3 md:px-5 py-2 ${
-          !pathName.includes("recipes")
-            ? "border-b border-gray-200"
-            : "shadow-none"
-        }}`}
-      >
-        <div className="flex items-center justify-between w-full h-full">
-          <h1 className="text-black md:text-2xl text-xl font-bold select-none">
-            <Link href="/" className="md:block hidden font-black">
-              たまごかけごはん
-              <span className="text-yellow-600">.</span>
-              <span className="text-base">com</span>
-            </Link>
-            <span className="md:hidden">{headerText}</span>
-          </h1>
-          <div className="items-center flex">
-            {loading ? (
-              <div className="flex items-center text-white">
-                <span className="loading loading-spinner loading-xs mr-2" />
-                Loading...
-              </div>
-            ) : auth.isAuthenticated ? (
-              <AccountCircle
-                image={auth.avatar.url || defaultImage}
-                name={auth.nickname}
-              />
-            ) : (
-              <LoginButton hidden={pathName === "/signin"} />
-            )}
-          </div>
+    <header
+      className={`z-40 ${
+        pathName === "/" && "hidden"
+      } bg-white fixed top-0 h-16 w-full pl-5 pr-3 md:px-5 py-2 ${
+        !pathName.includes("recipes")
+          ? "border-b border-gray-200"
+          : "shadow-none"
+      }`}
+    >
+      <div className="flex items-center justify-between w-full h-full">
+        <h1 className="text-black md:text-2xl text-xl font-bold select-none">
+          <Link href="/" className="md:block hidden font-black">
+            たまごかけごはん
+            <span className="text-yellow-600">.</span>
+            <span className="text-base">com</span>
+          </Link>
+          <span className="md:hidden">{headerText}</span>
+        </h1>
+        <div className="items-center flex">
+          {loading ? (
+            <div className="flex items-center text-white">
+              <span className="loading loading-spinner loading-xs mr-2" />
+              Loading...
+            </div>
+          ) : auth.isAuthenticated ? (
+            <AccountCircle
+              image={auth.avatar.url || defaultImage}
+              name={auth.nickname}
+            />
+          ) : (
+            <LoginButton hidden={pathName === "/signin"} />
+          )}
         </div>
       </div>
     </header>
