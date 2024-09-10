@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "たまごかけごはん.com",
     description: "たまごかけごはん専用の料理レシピサービス",
-    images: "./opengraph-image.png",
+    images: "https://たまごかけごはん.com/images/opengraph-image.png",
   },
 };
 
