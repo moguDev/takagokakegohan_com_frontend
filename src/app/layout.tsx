@@ -50,10 +50,6 @@ export default function RootLayout({
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
-        <meta
-          name="twitter:image"
-          content="http://localhost:3030/twitter-image"
-        />
       </head>
       <body className={`${font.className} text-black bg-theme`}>
         <RecoilRootWrapper>

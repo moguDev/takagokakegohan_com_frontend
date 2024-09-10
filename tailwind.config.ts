@@ -64,7 +64,7 @@ const config: Config = {
         theme: "#f7f7e6",
         primary: "#1B191A",
         secondary: "#C5A797",
-        white: "#fcfcf3",
+        white: "#fcfcf5",
         haader: "#fcfce0",
         black: "#333333",
       },
