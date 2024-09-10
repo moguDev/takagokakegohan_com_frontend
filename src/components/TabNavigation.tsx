@@ -1,4 +1,5 @@
 "use client";
+import Loading from "@/app/loading";
 import { useAuth } from "@/hooks/useAuth";
 import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Link from "next/link";
@@ -7,7 +8,7 @@ import { usePathname } from "next/navigation";
 export const TabNavigation = () => {
   const { auth } = useAuth();
   const pathName = usePathname();
-  const { create } = useEditRecipe();
+  const { create, loading } = useEditRecipe();
 
   const handleCreateRecipe = () => {
     create();
@@ -35,7 +36,7 @@ export const TabNavigation = () => {
           href="/recipes"
           className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
             pathName.includes("/recipes")
-              ? "text-yellow-950 font-semibold scale-100"
+              ? "text-yellow-600 font-semibold scale-100"
               : "scale-90"
           }`}
         >
@@ -61,7 +62,7 @@ export const TabNavigation = () => {
           href={auth.isAuthenticated ? `/${auth.name}` : `/signin`}
           className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
             pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
-              ? "text-black font-semibold scale-100"
+              ? "text-yellow-600 font-semibold scale-100"
               : "scale-90"
           }`}
         >
@@ -71,6 +72,11 @@ export const TabNavigation = () => {
           <p className="text-xs font-bold">プロフィール</p>
         </Link>
       </div>
+      {loading && (
+        <div className="fixed top-0 h-full w-full z-10 opacity-90">
+          <Loading />
+        </div>
+      )}
     </div>
   );
 };

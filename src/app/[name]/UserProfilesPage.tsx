@@ -15,6 +15,8 @@ import Loading from "../loading";
 import { UserProfiles } from "@/types";
 import Link from "next/link";
 import { axiosInstance } from "@/lib/axiosInstance";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "@/components/Toast";
 
 const FollowListModal = ({
   title,
@@ -27,6 +29,7 @@ const FollowListModal = ({
 }) => {
   const { auth } = useAuth();
   const { loading, followings, check } = useRelationship(auth.name);
+  const setMessage = useSetRecoilState(toastState);
 
   const follow = async (name: string) => {
     try {
@@ -102,7 +105,9 @@ const FollowListModal = ({
                       <button
                         className="text-xs rounded-full bg-yellow-600 px-3 py-2 text-white font-semibold my-btn"
                         onClick={() => {
-                          follow(user.name);
+                          auth.isAuthenticated
+                            ? follow(user.name)
+                            : setMessage("ログインしてください。");
                         }}
                       >
                         フォローする
@@ -232,19 +237,25 @@ export const UserProfilesPage: React.FC = () => {
           </div>
         </div>
       </section>
-      <section className="mx-2 my-5 p-2 py-3 bg-white rounded shadow">
-        <div className="flex items-center justify-between text-gray-500 mb-2 px-2">
-          <h2 className="font-semibold text-lg">投稿したレシピ</h2>
-          <p>
-            {recipes.filter((recipe) => recipe.status === "published").length}件
-          </p>
-        </div>
-        <div className="grid md:grid-cols-4 grid-cols-2">
-          {recipes
-            .filter((recipe) => recipe.status === "published")
-            .map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} />
-            ))}
+      <section className="my-5 mx-2 py-3 bg-white rounded-lg ">
+        <div className="md:mx-4 mx-2 mt-2">
+          <div className="flex items-center justify-between text-black mb-2 px-2">
+            <h2 className="flex items-center font-semibold text-xl">
+              <span className="material-icons text-yellow-600 mr-1">edit</span>
+              投稿したレシピ
+            </h2>
+            <p className="font-semibold text-gray-500">
+              {recipes.filter((recipe) => recipe.status === "published").length}
+              件
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+            {recipes
+              .filter((recipe) => recipe.status === "published")
+              .map((recipe, index) => (
+                <RecipeCard key={index} recipe={recipe} />
+              ))}
+          </div>
         </div>
       </section>
       <EditProfileModal />

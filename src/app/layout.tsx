@@ -48,8 +48,8 @@ export default function RootLayout({
                 <Header />
                 <Toast />
                 <div className="flex w-screen">
-                  <div className="lg:py-24 py-20 w-full">{children}</div>
-                  <div className="my-16 mr-2 w-1/4 h-screen relative md:block hidden">
+                  <div className="py-24 w-full">{children}</div>
+                  <div className="my-[53px] w-80 relative md:block hidden">
                     <SideNavigation />
                   </div>
                 </div>

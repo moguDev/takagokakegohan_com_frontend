@@ -104,7 +104,9 @@ export const RecipeDetailsPage = () => {
                     </Link>
                   </div>
                   <div className="text-xs">
-                    <span className="mr-1">調理時間</span>
+                    <span className="material-icons text-yellow-500 scale-90 translate-y-[4px]">
+                      timer
+                    </span>
                     <span className="text-lg font-semibold">
                       {recipe?.cooking_time}
                     </span>
@@ -159,8 +161,8 @@ export const RecipeDetailsPage = () => {
       <div className="max-w-4xl mx-auto z-40">
         <div
           className={`
-        fixed bottom-0 bg-white backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl h-16 w-full
-        lg:mb-2 px-2 py-2 flex justify-between shadow-xl`}
+        md:relative fixed bottom-0 bg-white backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl h-16 w-full
+        lg:mb-2 mt-1 px-2 py-2 flex justify-between`}
         >
           <button
             onClick={() => router.back()}

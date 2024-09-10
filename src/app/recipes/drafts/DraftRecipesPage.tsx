@@ -8,10 +8,12 @@ export const DraftRecipesPage = () => {
   const { auth } = useAuth();
   const { recipes, loading, error } = useUserProfiles(auth.name as string);
   return (
-    <section className="max-w-7xl mx-auto">
-      <section className="px-1 py-3 bg-white rounded-lg md:mx-4 mx-2">
-        <div className="flex items-center justify-between mx-2 mb-2">
-          <h2 className={`flex items-center text-black text-base font-bold`}>
+    <div className="md:px-4 px-2">
+      <section className="bg-white rounded-lg max-w-7xl mx-auto md:p-5 p-2">
+        <div className="flex items-center justify-between p-2 pb-3">
+          <h2
+            className={`flex items-center text-black md:text-xl text-base font-bold`}
+          >
             <span className="material-icons text-yellow-600 mr-1">
               edit_note
             </span>
@@ -21,14 +23,20 @@ export const DraftRecipesPage = () => {
             {recipes.filter((recipe) => recipe.status === "draft").length}件
           </p>
         </div>
-        <div className="grid md:grid-cols-4 grid-cols-2 p-2">
-          {recipes
-            .filter((recipe) => recipe.status === "draft")
-            .map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} />
-            ))}
-        </div>
+        {recipes.filter((recipe) => recipe.status === "draft").length > 0 ? (
+          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+            {recipes
+              .filter((recipe) => recipe.status === "draft")
+              .map((recipe, index) => (
+                <RecipeCard key={index} recipe={recipe} />
+              ))}
+          </div>
+        ) : (
+          <p className="p-5 text-center text-gray-500">
+            下書き中のレシピはありません
+          </p>
+        )}
       </section>
-    </section>
+    </div>
   );
 };

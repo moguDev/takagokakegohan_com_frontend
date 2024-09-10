@@ -1,6 +1,5 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
-import { CardMenu } from "./CardMenu";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import defaultImage from "/public/images/default_avatar.png";
@@ -66,6 +65,12 @@ export const Header = () => {
       case pathName === "/recipes":
         setHeaderText("みつける");
         break;
+      case pathName === "/recipes/bookmark":
+        setHeaderText("ブックマーク");
+        break;
+      case pathName === "/recipes/drafts":
+        setHeaderText("下書き");
+        break;
       case pathName === "/signin":
         setHeaderText("ログイン");
         break;
@@ -87,13 +92,18 @@ export const Header = () => {
   return (
     <header
       className={`
-        bg-white fixed top-0 h-16 w-full pl-5 pr-3 lg:px-8 py-2 font-Zen_Kaku_Gothic_New z-40 ${
+        bg-white fixed top-0 h-16 w-full pl-5 pr-3 md:px-5 py-2 z-40 ${
           pathName === "/" && "hidden"
-        } ${pathName !== "/recipes" && "border-b border-gray-200 shadow"}}`}
+        } ${pathName !== "/recipes" && "shadow-sm"}}`}
     >
       <div className="flex items-center justify-between w-full h-full">
-        <h1 className="text-black text-xl font-bold select-none">
-          {headerText}
+        <h1 className="text-black md:text-2xl text-xl font-bold select-none">
+          <span className="md:block hidden font-black">
+            たまごかけごはん
+            <span className="text-yellow-600">.</span>
+            <span className="text-base">com</span>
+          </span>
+          <span className="md:hidden">{headerText}</span>
         </h1>
         <div className="items-center flex">
           {loading ? (
