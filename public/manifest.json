@@ -15,12 +15,12 @@
       "type": "image/png"
     }
   ],
-  "orientation": "any",
+  "orientation": "portrait",
   "display": "standalone",
   "dir": "auto",
   "lang": "ja",
   "name": "たまごかけごはん.com",
   "short_name": "たまごかけごはん.com",
-  "start_url": "https://xn--u8jmhc5czfqe0h.com/",
+  "start_url": "/",
   "scope": "/tamagokakegohancom/"
 }
