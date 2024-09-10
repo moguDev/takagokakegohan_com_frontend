@@ -61,7 +61,7 @@ const config: Config = {
         hero: "580px",
       },
       backgroundColor: {
-        theme: "#f7f7e9",
+        theme: "#f7f7e6",
         primary: "#1B191A",
         secondary: "#C5A797",
         white: "#fcfcf3",

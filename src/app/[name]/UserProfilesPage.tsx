@@ -240,7 +240,7 @@ export const UserProfilesPage: React.FC = () => {
       <section className="my-5 mx-2 py-3 bg-white rounded-lg ">
         <div className="md:mx-4 mx-2 mt-2">
           <div className="flex items-center justify-between text-black mb-2 px-2">
-            <h2 className="flex items-center font-semibold text-xl">
+            <h2 className="flex items-center font-semibold md:text-xl text-base">
               <span className="material-icons text-yellow-600 mr-1">edit</span>
               投稿したレシピ
             </h2>
@@ -249,13 +249,22 @@ export const UserProfilesPage: React.FC = () => {
               件
             </p>
           </div>
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
-            {recipes
-              .filter((recipe) => recipe.status === "published")
-              .map((recipe, index) => (
-                <RecipeCard key={index} recipe={recipe} />
-              ))}
-          </div>
+          {recipes.filter((recipe) => recipe.status === "published").length >
+          0 ? (
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+              {recipes
+                .filter((recipe) => recipe.status === "published")
+                .map((recipe, index) => (
+                  <RecipeCard key={index} recipe={recipe} />
+                ))}
+            </div>
+          ) : (
+            <div className="p-5 min-h-80 flex items-center justify-center">
+              <p className="text-center text-gray-400">
+                投稿したレシピはありません。
+              </p>
+            </div>
+          )}
         </div>
       </section>
       <EditProfileModal />

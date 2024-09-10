@@ -31,11 +31,19 @@ export const BookmarkRecipesPage = () => {
             </h2>
             <p className="text-gray-500 font-semibold">{recipes.length}件</p>
           </div>
-          <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
-            {recipes.map((recipe, index) => (
-              <RecipeCard key={index} recipe={recipe} />
-            ))}
-          </div>
+          {recipes.length > 0 ? (
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
+              {recipes.map((recipe, index) => (
+                <RecipeCard key={index} recipe={recipe} />
+              ))}
+            </div>
+          ) : (
+            <div className="p-5 min-h-64 flex items-center justify-center">
+              <p className="text-center text-gray-400">
+                ブックマークしたレシピはありません。
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </div>

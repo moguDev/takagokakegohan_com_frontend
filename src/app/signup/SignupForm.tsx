@@ -48,8 +48,14 @@ export const SignupForm = () => {
   };
 
   return (
-    <div className="p-2">
-      <div className="max-w-xl mx-auto p-5">
+    <div className="md:pt-7 p-2">
+      <div className="max-w-xl mx-auto bg-white rounded-lg p-5">
+        <h1 className="font-bold flex items-center text-lg">
+          <span className="material-icons text-yellow-600 mr-1">
+            person_add
+          </span>
+          アカウント作成
+        </h1>
         <form onSubmit={handleSubmit(onsubmit)} method="post">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="text-xs text-gray-400 p-1">
