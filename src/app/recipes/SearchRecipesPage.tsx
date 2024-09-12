@@ -9,12 +9,11 @@ export const SearchRecipesPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
+  const { recipes, loading } = useSearch(query || "");
   if (query === null) {
     router.push("/");
     return <></>;
   }
-
-  const { recipes, loading } = useSearch(query || "");
 
   return (
     <section className="bg-white rounded-md max-w-7xl mx-auto p-2">
