@@ -90,7 +90,7 @@ export const RecipesEditForm: React.FC = () => {
         })}
         className="max-w-4xl mx-auto"
       >
-        <div className="w-full px-2 py-3 bg-white rounded-lg shadow">
+        <div className="w-full px-2 bg-white rounded-md">
           <section className="md:flex p-3 mb-1 w-full">
             <button
               type="button"
@@ -110,11 +110,7 @@ export const RecipesEditForm: React.FC = () => {
               </div>
               {recipe?.image.url || imageSource ? (
                 <Image
-                  src={
-                    imageSource
-                      ? imageSource
-                      : `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.image.url}`
-                  }
+                  src={recipe?.image.url || imageSource}
                   alt="レシピの画像"
                   className="object-cover rounded"
                   fill
@@ -325,8 +321,8 @@ export const RecipesEditForm: React.FC = () => {
         </div>
         <div
           className={`
-        md:relative fixed bottom-0 bg-white md:border md:rounded-xl border-t border-gray-200 max-w-4xl
-        h-16 w-full mt-1 md:mb-2 p-2 flex justify-between z-10`}
+        md:relative fixed bottom-0 bg-white md:border-none md:rounded-md border-t border-gray-200 max-w-4xl
+        h-16 w-full mt-2 md:mb-2 p-2 flex justify-between z-10`}
         >
           <button
             type="button"
@@ -340,7 +336,7 @@ export const RecipesEditForm: React.FC = () => {
           <div className="flex items-center">
             <button
               type="button"
-              className="material-icons p-3 m-0.5 bg-red-500 text-white rounded my-btn"
+              className="material-icons p-3 ms-0.5 bg-red-500 text-white rounded my-btn"
               onClick={() =>
                 (
                   document.getElementById("delete_modal") as HTMLDialogElement

@@ -165,7 +165,7 @@ export const UserProfilesPage: React.FC = () => {
     <Loading />
   ) : (
     <div className="max-w-4xl mx-auto">
-      <section className="mx-2 p-5 bg-gradient-single rounded-md shadow">
+      <section className="mx-2 p-5 bg-gradient-single rounded-md shadow-sm">
         <div className="font-bold cursor-pointer flex justify-end mb-1">
           {auth.name === name ? (
             <button

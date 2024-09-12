@@ -23,11 +23,7 @@ export const Toast = () => {
   if (!message) return null;
 
   return (
-    <div
-      className={`z-30 fixed w-full  ${
-        pathName === "/recipes" ? "top-[115px]" : "top-16"
-      } ${message ? "h-20" : "h-0"}`}
-    >
+    <div className={`z-30 w-full ${message ? "h-20" : "h-0"}`}>
       <p
         className={`
           text-center md:text-sm text-xs font-bold py-2

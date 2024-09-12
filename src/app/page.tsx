@@ -1,5 +1,5 @@
-import { TopAnimation } from "@/components/TopAnimation";
+import { RecipesPage } from "./RecipesPage";
 
 export default function Home() {
-  return <TopAnimation />;
+  return <RecipesPage />;
 }

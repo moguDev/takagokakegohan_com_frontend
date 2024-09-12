@@ -14,7 +14,7 @@ export const font = Zen_Kaku_Gothic_New({
 });
 
 export const metadata: Metadata = {
-  title: "たまごかけごはん.com",
+  title: "たまごかけごはん.com : たまごかけごはん専用の料理レシピサービス",
   description: "たまごかけごはん専用の料理レシピサービス",
   openGraph: {
     title: "たまごかけごはん.com",
@@ -56,12 +56,14 @@ export default function RootLayout({
           <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
-              <main className="w-screen">
+              <main className="md:pt-36 pt-32 relative w-screen">
                 <Header />
                 <Toast />
-                <div className="flex w-screen">
-                  <div className="md:py-24 py-20 w-full">{children}</div>
-                  <div className="my-[53px] w-80 relative md:block hidden">
+                <div className="flex w-full">
+                  <div className="md:pb-0 pb-16 md:px-5 px-2 w-full h-full">
+                    {children}
+                  </div>
+                  <div className="w-96 relative md:block hidden">
                     <SideNavigation />
                   </div>
                 </div>

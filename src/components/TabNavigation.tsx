@@ -17,8 +17,7 @@ export const TabNavigation = () => {
   return (
     <div
       className={`max-w-2xl mx-auto pb-2 ${
-        (pathName === "/" ||
-          pathName === "/signup" ||
+        (pathName === "/signup" ||
           pathName === "/recipes/new" ||
           /^\/recipes\/(\d+)\/edit$/.test(pathName) ||
           /^\/recipes\/\d+$/.test(pathName)) &&
@@ -29,25 +28,25 @@ export const TabNavigation = () => {
         className={`
         flex items-center justify-between md:rounded-full shadow
         text-gray-400 bg-white bg-opacity-80 backdrop-blur
-        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-16 pt-4 pb-6
+        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-[72px] pt-4 pb-6 px-2
         fixed bottom-0 z-40`}
       >
         <Link
-          href="/recipes"
-          className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
-            pathName.includes("/recipes")
+          href="/"
+          className={`w-1/2 text-center transition-all duration-300 select-none ${
+            pathName === "/"
               ? "text-yellow-600 font-semibold scale-100"
               : "scale-90"
           }`}
         >
-          search
-          <p className="text-xs font-bold">みつける</p>
+          <span className="material-icons">search</span>
+          <p className="text-xs font-bold">さがす</p>
         </Link>
 
         <div className="relative w-1/3 flex justify-center">
           <button
             onClick={handleCreateRecipe}
-            className="absolute flex flex-col items-center justify-center rounded-full h-24 w-24 bg-gradient shadow my-btn select-none -bottom-6"
+            className="absolute flex flex-col items-center justify-center rounded-full h-24 w-24 bg-gradient shadow my-btn select-none -bottom-8"
           >
             <span className="material-icons text-white text-opacity-80 mb-2 scale-110 select-none">
               edit
@@ -60,15 +59,17 @@ export const TabNavigation = () => {
 
         <Link
           href={auth.isAuthenticated ? `/${auth.name}` : `/signin`}
-          className={`material-icons w-1/2 text-center transition-all duration-300 select-none ${
+          className={`w-1/2 text-center transition-all duration-300 select-none ${
             pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
               ? "text-yellow-600 font-semibold scale-100"
               : "scale-90"
           }`}
         >
-          {pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
-            ? "person"
-            : "person_outline"}
+          <span className="material-icons">
+            {pathName.includes(auth.isAuthenticated ? `/${auth.name}` : `/sign`)
+              ? "person"
+              : "person_outline"}
+          </span>
           <p className="text-xs font-bold">プロフィール</p>
         </Link>
       </div>

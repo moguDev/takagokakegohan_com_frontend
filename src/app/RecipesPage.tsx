@@ -3,14 +3,13 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { useRecipes } from "@/hooks/useRecipes";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import Loading from "../loading";
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useAuth } from "@/hooks/useAuth";
 import { toastState } from "@/components/Toast";
 
 const items: string[] = [
   "#新着TKG",
-  "#注目TKG",
+  "#注目のTKG",
   "#爆速TKG",
   "#殿堂入りTKG",
   "#フォロー中",
@@ -75,7 +74,7 @@ export const RecipesPage = () => {
         fetch("highlight");
         break;
       case "#爆速TKG":
-        fetch();
+        fetch("fast");
         break;
       case "#殿堂入りTKG":
         fetch();
@@ -90,24 +89,13 @@ export const RecipesPage = () => {
   }, [selectIndex, fetch]);
 
   return (
-    <div className="w-full">
-      <div className="bg-white w-full px-4 fixed top-16 pb-3 z-10 flex border-b border-gray-200">
-        <div className="bg-gray-50 rounded-full border border-gray-200 shadow-sm flex items-center p-2 w-full">
-          <span className="material-icons text-gray-300">search</span>
-          <input
-            type="text"
-            className="bg-gray-50 w-full outline-none"
-            placeholder="食材や調味料で検索"
-          />
-        </div>
-        <div className="md:w-80" />
-      </div>
-      <section className="lg:pt-6 pt-10 max-w-7xl mx-auto translate-y-2">
+    <div className="w-full h-auto -translate-y-2">
+      <section className="max-w-7xl mx-auto translate-y-2">
         <div
           ref={navContainerRef}
           className="overflow-x-auto whitespace-nowrap scrollbar-hide"
         >
-          <nav className="flex items-center md:mx-4 mx-2">
+          <nav className="flex items-center">
             {items.map((item, index) => (
               <Link
                 key={index}
@@ -133,8 +121,8 @@ export const RecipesPage = () => {
           </nav>
         </div>
       </section>
-      <div className="md:px-4 px-2">
-        <section className="relative bg-white rounded-lg max-w-7xl mx-auto md:p-5 p-2">
+      <div className="h-full">
+        <section className="relative bg-white rounded-md max-w-7xl mx-auto p-2">
           <div className="flex items-center justify-between p-2 pb-3">
             <h2 className="flex items-center text-black md:text-xl text-base font-bold">
               {heads[selectIndex]}
@@ -144,8 +132,8 @@ export const RecipesPage = () => {
           {recipes.length > 0 ? (
             <div className="relative grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
               {loading && (
-                <div className="absolute flex flex-col items-center justify-center h-full w-full bg-white bg-opacity-30 z-10">
-                  <span className="loading loading-dots loading-lg text-yellow-500" />
+                <div className="absolute flex flex-col items-center justify-center h-full w-full bg-white bg-opacity-80 z-10">
+                  <span className="loading loading-dots text-yellow-500" />
                   <p className="text-xs text-gray-500 font-semibold">
                     読み込み中
                   </p>

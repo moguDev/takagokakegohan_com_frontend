@@ -52,9 +52,7 @@ export const useAuth = () => {
         name: res.data.data.name,
         nickname: res.data.data.nickname,
         avatar: {
-          url:
-            res.data.data.avatar.url &&
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+          url: res.data.data.avatar.url && `${res.data.data.avatar.url}`,
         },
         rank: res.data.data.rank,
       });
@@ -97,9 +95,7 @@ export const useAuth = () => {
             name: res.data.data.name,
             nickname: res.data.data.nickname,
             avatar: {
-              url:
-                res.data.data.avatar.url &&
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+              url: res.data.data.avatar.url,
             },
           });
         }
@@ -129,9 +125,7 @@ export const useAuth = () => {
             name: res.data.data.name,
             nickname: res.data.data.nickname,
             avatar: {
-              url:
-                res.data.data.avatar.url &&
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+              url: res.data.data.avatar.url,
             },
           });
         }
@@ -184,7 +178,6 @@ export const useAuth = () => {
           },
           { headers: { "Content-Type": "multipart/form-data" } }
         );
-        console.log(res.data.data.nickname);
         const { "access-token": accessToken, client, uid } = res.headers;
         if (accessToken && client && uid) {
           setCookies(accessToken, client, uid);
@@ -194,9 +187,7 @@ export const useAuth = () => {
             name: res.data.data.name,
             nickname: res.data.data.nickname,
             avatar: {
-              url:
-                res.data.data.avatar.url &&
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.data.avatar.url}`,
+              url: res.data.data.avatar.url,
             },
           });
         }

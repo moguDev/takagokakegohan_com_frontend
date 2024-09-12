@@ -20,9 +20,7 @@ export const useUserProfiles = (name: string) => {
       setUserDetails({
         ...res.data,
         avatar: {
-          url: res.data.avatar.url
-            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${res.data.avatar.url}`
-            : null,
+          url: res.data.avatar.url ? `${res.data.avatar.url}` : null,
         },
       });
     } catch (err) {

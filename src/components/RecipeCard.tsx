@@ -5,12 +5,19 @@ import defaultImage from "/public/images/default_avatar.png";
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
-    <Link href={`/recipes/${recipe.id}`} className="p-1 inline-block">
+    <Link
+      href={
+        recipe.status === "published"
+          ? `/recipes/${recipe.id}`
+          : `/recipes/${recipe.id}/edit`
+      }
+      className="p-1 inline-block"
+    >
       <div className="p-0.5 cursor-pointer transition-all duration-300 w-full my-btn">
         <div className="md:h-52 h-40 relative">
           {recipe.image.url ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`}
+              src={recipe.image.url}
               alt="sampleImage"
               className="object-cover rounded"
               fill
@@ -30,11 +37,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             <div className="flex items-center">
               <div className="rounded-full h-4 w-4 relative mr-0.5">
                 <Image
-                  src={
-                    recipe?.user.avatar.url
-                      ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}`
-                      : defaultImage
-                  }
+                  src={recipe?.user.avatar.url || defaultImage}
                   alt="アイコン"
                   className="object-cover rounded-full"
                   fill

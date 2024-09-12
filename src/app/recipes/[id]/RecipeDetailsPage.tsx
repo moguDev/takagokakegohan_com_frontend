@@ -35,7 +35,7 @@ export const RecipeDetailsPage = () => {
   return recipe ? (
     <div className="w-full">
       <section className="px-2">
-        <div className="bg-white max-w-4xl mx-auto p-4 rounded-lg shadow">
+        <div className="bg-white max-w-4xl mx-auto p-4 rounded-md">
           {auth.name === recipe.user.name && (
             <div className="flex justify-between pb-4">
               <div>
@@ -63,7 +63,7 @@ export const RecipeDetailsPage = () => {
             <div className="p-3 w-full h-96 relative">
               {recipe?.image.url ? (
                 <Image
-                  src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`}
+                  src={recipe.image.url}
                   alt="sampleImage"
                   className="object-cover rounded"
                   fill
@@ -89,11 +89,7 @@ export const RecipeDetailsPage = () => {
                       >
                         <div className="rounded-full h-5 w-5 relative mr-0.5">
                           <Image
-                            src={
-                              recipe?.user.avatar.url
-                                ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}`
-                                : defaultImage
-                            }
+                            src={recipe?.user.avatar.url || defaultImage}
                             alt="アイコン"
                             className="object-cover rounded-full"
                             fill
@@ -116,7 +112,7 @@ export const RecipeDetailsPage = () => {
                   </div>
                   <p className="p-1 text-sm">{recipe?.body}</p>
                 </div>
-                <div className="bg-gray-100 rounded-lg px-2 py-3 w-full">
+                <div className="bg-theme rounded-md px-2 py-3 w-full">
                   <h2 className="flex items-center text-base text-gray-600 font-semibold">
                     <span className="material-icons text-yellow-500 mr-1">
                       egg
@@ -165,8 +161,8 @@ export const RecipeDetailsPage = () => {
       <section className="max-w-4xl mx-auto z-40">
         <div
           className={`
-        md:relative fixed bottom-0 bg-white backdrop-blur-xl lg:border lg:rounded-xl border-t border-gray-200 max-w-4xl h-16 w-full
-        lg:mb-2 mt-1 px-2 py-2 flex justify-between`}
+        md:relative fixed bottom-0 bg-white backdrop-blur-xl md:border-none md:rounded-md border-t border-gray-200 max-w-4xl h-20 w-full
+        lg:mb-2 mt-2 px-2 py-2 flex justify-between`}
         >
           <button
             onClick={() => router.back()}
@@ -181,7 +177,7 @@ export const RecipeDetailsPage = () => {
                 href={twitterShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-black bg-opacity-90 text-white text-sm rounded-lg p-2 flex items-center mr-1 my-btn"
+                className="bg-black bg-opacity-90 text-white text-xs rounded-lg p-2 flex items-center mr-1 my-btn"
               >
                 <span className="material-icons mr-1"></span>
                 Xでシェアする
@@ -208,7 +204,40 @@ export const RecipeDetailsPage = () => {
                   }
                 }}
               >
-                <p className="flex items-center">
+                <p className="flex items-center font-sans">
+                  <span
+                    className={`material-icons mr-0.5 my-auto ${
+                      auth.isAuthenticated && isBookmarked
+                        ? "text-red-600"
+                        : "text-black"
+                    }`}
+                  >
+                    {`${
+                      auth.isAuthenticated && isBookmarked
+                        ? "favorite"
+                        : "favorite_outline"
+                    }`}
+                  </span>
+                  {recipe.bookmarkCount}
+                </p>
+              </button>
+            </div>
+            <div className="relative">
+              {loadingBookmark && (
+                <div className="absolute h-full w-full flex items-center justify-center bg-white opacity-90 z-10" />
+              )}
+              <button
+                className={`rounded p-1 flex items-center my-btn transition-all duration-1000 active:scale-125`}
+                onClick={async () => {
+                  if (auth.isAuthenticated) {
+                    isBookmarked ? await unbookmark() : await bookmark();
+                    fetch();
+                  } else {
+                    setMessage("ログインしてください。");
+                  }
+                }}
+              >
+                <p className="flex items-center font-sans">
                   <span
                     className={`material-icons mr-0.5 my-auto ${
                       auth.isAuthenticated && isBookmarked
