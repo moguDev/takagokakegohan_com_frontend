@@ -1,13 +1,13 @@
 "use client";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { Recipe } from "@/types";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useSearch = (query: string) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
 
-  const fetch = async () => {
+  const fetch = useCallback(async () => {
     setLoading(true);
     try {
       console.log(`/recipes/search?q=${query}`);
@@ -18,7 +18,7 @@ export const useSearch = (query: string) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query]);
 
   useEffect(() => {
     fetch();
