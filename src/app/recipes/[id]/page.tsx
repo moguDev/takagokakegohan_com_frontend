@@ -21,7 +21,7 @@ export async function generateMetadata({
       images: [
         {
           url: recipe?.image.url
-            ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`
+            ? recipe.image.url
             : "https://たまごかけごはん.com/images/opengraph-image.png",
           width: 1200,
           height: 630,
@@ -35,7 +35,7 @@ export async function generateMetadata({
       title: recipe?.title,
       description: recipe.body || "たまごかけごはん専用の料理レシピサービス",
       images: recipe?.image.url
-        ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`
+        ? recipe.image.url
         : "https://たまごかけごはん.com/images/opengraph-image.png",
     },
   };

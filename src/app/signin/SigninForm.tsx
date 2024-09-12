@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
+import { useState } from "react";
 
 type FormData = {
   email: string;
@@ -13,6 +14,7 @@ type FormData = {
 
 export const SigninForm = () => {
   const { login } = useAuth();
+  const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
   const setMessage = useSetRecoilState(toastState);
   const router = useRouter();
   const defaultValues = {
@@ -73,7 +75,7 @@ export const SigninForm = () => {
             <div className="bg-white flex items-center border-b border-gray-200 p-1">
               <span className="material-icons opacity-20 p-2">password</span>
               <input
-                type="password"
+                type={isPasswordVisible ? "text" : "password"}
                 className="bg-white h-full w-full outline-none"
                 placeholder="パスワード"
                 {...register("password", {
@@ -84,8 +86,11 @@ export const SigninForm = () => {
                   },
                 })}
               />
-              <span className="material-icons opacity-20 p-2">
-                visibility_off
+              <span
+                className="material-icons opacity-20 p-2"
+                onClick={() => setIsPasswordVisible((prev) => !prev)}
+              >
+                {isPasswordVisible ? "visibility" : "visibility_off"}
               </span>
             </div>
             <div className="text-red-500 text-xs p-1">

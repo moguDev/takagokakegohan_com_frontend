@@ -8,22 +8,23 @@ import { useFieldArray, useForm } from "react-hook-form";
 import defaultImage from "/public/images/default_avatar.png";
 import { useRecipeDetails } from "@/hooks/useRecipeDetails";
 import { useEditRecipe, RecipeFormData } from "@/hooks/useEditRecipe";
-import Loading from "@/app/loading";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
+import { Loading } from "@/components/Loading";
+import { getImageUrl } from "@/lib";
 
 export const RecipesEditForm: React.FC = () => {
   const setMessage = useSetRecoilState(toastState);
   const { id } = useParams();
   const router = useRouter();
   const { auth } = useAuth();
-  const { update } = useEditRecipe();
-  const { recipe, loading } = useRecipeDetails(Number(id));
+  const { update, loading } = useEditRecipe();
+  const { recipe } = useRecipeDetails(Number(id));
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const defaultValues: RecipeFormData = {
     title: "",
     body: "",
-    cooking_time: 0,
+    cookingTime: 0,
     image: null,
     ingredients: [{ name: "生卵", amount: "1個" }],
     steps: [],
@@ -64,8 +65,14 @@ export const RecipesEditForm: React.FC = () => {
       }
       setValue("title", recipe.title);
       setValue("body", recipe.body);
-      setValue("cooking_time", recipe.cooking_time);
-      setValue("ingredients", recipe.ingredients || [{ name: "", amount: "" }]);
+      setValue("cookingTime", recipe.cookingTime);
+      setValue(
+        "ingredients",
+        recipe.recipeIngredients.map(({ ingredientName, amount }) => ({
+          name: ingredientName,
+          amount,
+        })) || [{ name: "", amount: "" }]
+      );
       setValue("steps", recipe.steps || [{ instruction: "", image: null }]);
     }
   }, [recipe]);
@@ -81,8 +88,9 @@ export const RecipesEditForm: React.FC = () => {
     imageFile && console.log(imageFile[0]);
   }, [imageFile]);
 
-  return recipe?.user.name === auth.name ? (
-    <div className="w-full">
+  return (
+    <div className="w-full relative">
+      {loading && <Loading text="更新中..." />}
       <form
         method="post"
         onSubmit={handleSubmit((data: RecipeFormData) => {
@@ -90,7 +98,7 @@ export const RecipesEditForm: React.FC = () => {
         })}
         className="max-w-4xl mx-auto"
       >
-        <div className="w-full px-2 py-3 bg-white rounded-lg shadow">
+        <div className="w-full px-2 bg-white rounded-md">
           <section className="md:flex p-3 mb-1 w-full">
             <button
               type="button"
@@ -111,9 +119,8 @@ export const RecipesEditForm: React.FC = () => {
               {recipe?.image.url || imageSource ? (
                 <Image
                   src={
+                    getImageUrl(recipe?.image.url as string | null) ||
                     imageSource
-                      ? imageSource
-                      : `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.image.url}`
                   }
                   alt="レシピの画像"
                   className="object-cover rounded"
@@ -156,7 +163,7 @@ export const RecipesEditForm: React.FC = () => {
               <div className="flex items-center px-2">
                 <div className="rounded-full h-5 w-5 relative mr-1">
                   <Image
-                    src={auth.avatar.url || defaultImage}
+                    src={getImageUrl(auth.avatar.url) || defaultImage}
                     alt="アイコン"
                     className="object-cover rounded-full"
                     fill
@@ -194,7 +201,7 @@ export const RecipesEditForm: React.FC = () => {
                       type="number"
                       className="text-center w-1/4 bg-gray-100 rounded outline-none my-1 mr-1 p-1.5"
                       placeholder="30"
-                      {...register("cooking_time", {
+                      {...register("cookingTime", {
                         required: "調理時間を入力してください",
                         min: {
                           value: 1,
@@ -208,7 +215,7 @@ export const RecipesEditForm: React.FC = () => {
                     </span>
                   </div>
                   <div className="text-red-500 text-xs p-1">
-                    {errors.cooking_time?.message}
+                    {errors.cookingTime?.message}
                   </div>
                 </section>
                 <section className="border-b border-gray-300">
@@ -325,8 +332,8 @@ export const RecipesEditForm: React.FC = () => {
         </div>
         <div
           className={`
-        md:relative fixed bottom-0 bg-white md:border md:rounded-xl border-t border-gray-200 max-w-4xl
-        h-16 w-full mt-1 md:mb-2 p-2 flex justify-between z-10`}
+        md:relative fixed bottom-0 left-0 bg-white md:border-none md:rounded-md border-t border-gray-200 max-w-4xl
+        h-16 w-full mt-2 md:mb-2 p-2 flex justify-between z-10`}
         >
           <button
             type="button"
@@ -408,7 +415,5 @@ export const RecipesEditForm: React.FC = () => {
         </form>
       </dialog>
     </div>
-  ) : (
-    <Loading />
   );
 };

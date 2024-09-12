@@ -6,6 +6,7 @@ import defaultImage from "/public/images/default_avatar.png";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "./Toast";
 import { useRelationship } from "@/hooks/useRelationship";
+import { getImageUrl } from "@/lib";
 
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
@@ -22,7 +23,7 @@ export const CardMenu: React.FC = () => {
             <div className="mb-5 flex flex-col items-center">
               <div className="border-2 border-white border-opacity-50 shadow rounded-full h-28 w-28 relative">
                 <Image
-                  src={auth.avatar.url || defaultImage}
+                  src={getImageUrl(auth.avatar.url) || defaultImage}
                   alt="アイコン"
                   className="object-cover rounded-full"
                   fill
@@ -63,21 +64,6 @@ export const CardMenu: React.FC = () => {
               </li>
               <li className="py-1">
                 <Link
-                  href="/recipes/drafts"
-                  className="relative hover:text-blue-500 select-none"
-                  onClick={() =>
-                    document.getElementById("accout-circle")?.click()
-                  }
-                >
-                  <span className="material-icons">edit_note</span>
-                  下書きレシピ
-                  <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
-                    navigate_next
-                  </span>
-                </Link>
-              </li>
-              <li className="py-1">
-                <Link
                   href="/recipes/bookmark"
                   className="relative hover:text-blue-500 select-none"
                   onClick={() =>
@@ -86,6 +72,21 @@ export const CardMenu: React.FC = () => {
                 >
                   <span className="material-icons">bookmark</span>
                   ブックマーク
+                  <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
+                    navigate_next
+                  </span>
+                </Link>
+              </li>
+              <li className="py-1">
+                <Link
+                  href="/recipes/drafts"
+                  className="relative hover:text-blue-500 select-none"
+                  onClick={() =>
+                    document.getElementById("accout-circle")?.click()
+                  }
+                >
+                  <span className="material-icons">edit_note</span>
+                  下書きレシピ
                   <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
                     navigate_next
                   </span>

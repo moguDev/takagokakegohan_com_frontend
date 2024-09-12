@@ -2,15 +2,28 @@ import Image from "next/image";
 import Link from "next/link";
 import { Recipe } from "@/types";
 import defaultImage from "/public/images/default_avatar.png";
+import { getImageUrl } from "@/lib";
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   return (
-    <Link href={`/recipes/${recipe.id}`} className="p-1 inline-block">
+    <Link
+      href={
+        recipe.status === "published"
+          ? `/recipes/${recipe.id}`
+          : `/recipes/${recipe.id}/edit`
+      }
+      className="p-1 inline-block relative transition-all duration-200 hover:brightness-90 hover:scale-105"
+    >
+      {recipe.status === "draft" && (
+        <p className="absolute top-3 left-3 text-xs bg-gray-400 text-white py-0.5 px-3 rounded-md z-10 opacity-80">
+          下書き
+        </p>
+      )}
       <div className="p-0.5 cursor-pointer transition-all duration-300 w-full my-btn">
         <div className="md:h-52 h-40 relative">
           {recipe.image.url ? (
             <Image
-              src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe.image.url}`}
+              src={getImageUrl(recipe.image.url) || defaultImage}
               alt="sampleImage"
               className="object-cover rounded"
               fill
@@ -30,11 +43,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
             <div className="flex items-center">
               <div className="rounded-full h-4 w-4 relative mr-0.5">
                 <Image
-                  src={
-                    recipe?.user.avatar.url
-                      ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${recipe?.user.avatar.url}`
-                      : defaultImage
-                  }
+                  src={getImageUrl(recipe?.user.avatar.url) || defaultImage}
                   alt="アイコン"
                   className="object-cover rounded-full"
                   fill
@@ -42,10 +51,17 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
               </div>
               <p className="text-xs">{recipe.user.nickname}</p>
             </div>
-            <p className="text-xs flex items-center text-yellow-500">
-              <span>★</span>
-              {4.5}
-            </p>
+            {recipe.status === "published" && (
+              <p className="text-xs flex items-center text-red-600 font-sans">
+                <span
+                  className="material-icons mr-0.5"
+                  style={{ fontSize: "14px" }}
+                >
+                  favorite
+                </span>
+                {recipe.likeCount}
+              </p>
+            )}
           </div>
         </section>
       </div>

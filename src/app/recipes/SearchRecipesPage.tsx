@@ -1,18 +1,28 @@
 "use client";
 
 import { RecipeCard } from "@/components/RecipeCard";
-import { useAuth } from "@/hooks/useAuth";
-import { useBookmarkRecipes } from "@/hooks/useBookmarkRecipes";
+import { useSearch } from "@/hooks/useSearch";
+import { useRouter, useSearchParams } from "next/navigation";
+import Loading from "../loading";
 
-export const BookmarkRecipesPage = () => {
-  const { auth } = useAuth();
-  const { recipes } = useBookmarkRecipes(auth.user_id);
+export const SearchRecipesPage = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const query = searchParams.get("q");
+  const { recipes, loading } = useSearch(query || "");
+  if (query === null) {
+    router.push("/");
+    return <></>;
+  }
+
   return (
     <section className="bg-white rounded-md max-w-7xl mx-auto p-2">
       <div className="flex items-center justify-between p-2 pb-3">
-        <h2 className="flex items-center text-black md:text-xl text-base font-bold">
-          <span className="material-icons text-yellow-600 mr-1">bookmark</span>
-          ブックマークしたレシピ
+        <h2
+          className={`flex items-center text-black md:text-xl text-base font-bold`}
+        >
+          <span className="material-icons text-yellow-600 mr-1">search</span>
+          キーワード：{query}
         </h2>
         <p className="text-gray-500 font-semibold">{recipes.length}件</p>
       </div>
@@ -25,7 +35,7 @@ export const BookmarkRecipesPage = () => {
       ) : (
         <div className="p-5 min-h-64 flex items-center justify-center">
           <p className="text-center text-gray-400">
-            ブックマークしたレシピはありません。
+            レシピが見つかりませんでした。
           </p>
         </div>
       )}

@@ -2,6 +2,7 @@
 import { axiosInstance } from "@/lib/axiosInstance";
 import { Recipe } from "@/types";
 import { useCallback, useEffect, useState } from "react";
+import camelcaseKeys from "camelcase-keys";
 
 export const useRecipes = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -13,7 +14,7 @@ export const useRecipes = () => {
       const res = await axiosInstance.get(
         filter ? `/recipes?filter=${filter}` : "/recipes"
       );
-      setRecipes(res.data);
+      setRecipes(camelcaseKeys(res.data, { deep: true }));
     } catch (error) {
       throw new Error("レシピの取得に失敗しました。");
     } finally {

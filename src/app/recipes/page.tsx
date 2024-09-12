@@ -1,4 +1,5 @@
-import { RecipesPage } from "./RecipesPage";
+import { SearchRecipesPage } from "./SearchRecipesPage";
+
 export default function Page() {
-  return <RecipesPage />;
+  return <SearchRecipesPage />;
 }
