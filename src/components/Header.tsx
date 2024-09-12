@@ -107,7 +107,7 @@ export const Header = () => {
           </h1>
           <p className="font-medium text-yellow-900 text-center md:translate-y-1 md:text-sm text-[9.5px] md:px-2.5 md:pt-0 pt-0.5 h-full">
             <span className="text-yellow-600 font-semibold">
-              "たまごかけごはん専用"
+              {`"たまごかけごはん専用"`}
             </span>
             の料理レシピサービス
           </p>
