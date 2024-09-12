@@ -17,6 +17,7 @@ import Link from "next/link";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
+import { getImageUrl } from "@/lib";
 
 const FollowListModal = ({
   title,
@@ -66,11 +67,7 @@ const FollowListModal = ({
                 <Link href={`/${user.name}`} className="flex items-center">
                   <div className="h-10 w-10 rounded-full border-2 border-white border-opacity-50 shadow relative">
                     <Image
-                      src={
-                        user.avatar.url
-                          ? `${process.env.NEXT_PUBLIC_BACKEND_URL}${user.avatar.url}`
-                          : defaultImage
-                      }
+                      src={getImageUrl(user.avatar.url) || defaultImage}
                       alt="アイコン"
                       className="object-cover rounded-full"
                       fill
@@ -193,7 +190,7 @@ export const UserProfilesPage: React.FC = () => {
         <div className="flex flex-col justify-center items-center">
           <div className="h-32 w-32 rounded-full border-4 border-white border-opacity-50 shadow relative">
             <Image
-              src={userProfiles.avatar.url || defaultImage}
+              src={getImageUrl(userProfiles.avatar.url) || defaultImage}
               alt="アイコン"
               className="object-cover rounded-full"
               fill

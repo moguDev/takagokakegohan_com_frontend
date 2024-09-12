@@ -2,6 +2,7 @@
 import { axiosInstance } from "@/lib/axiosInstance";
 import { Recipe } from "@/types";
 import { useCallback, useEffect, useState } from "react";
+import camelcaseKeys from "camelcase-keys";
 
 export const useBookmarkRecipes = (userId: number | string) => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -11,7 +12,7 @@ export const useBookmarkRecipes = (userId: number | string) => {
     setLoading(true);
     try {
       const res = await axiosInstance.get(`/users/${userId}/bookmarks`);
-      setRecipes(res.data);
+      setRecipes(camelcaseKeys(res.data, { deep: true }));
     } catch (error) {
       console.error(error);
     } finally {

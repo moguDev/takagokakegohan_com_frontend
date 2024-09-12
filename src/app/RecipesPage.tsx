@@ -77,7 +77,7 @@ export const RecipesPage = () => {
         fetch("fast");
         break;
       case "#殿堂入りTKG":
-        fetch();
+        fetch("halloffame");
         break;
       case "#フォロー中":
         if (auth.isAuthenticated) fetch("following");

@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import { useCheckName } from "@/hooks/useCheckName";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "./Toast";
+import { Loading } from "./Loading";
+import { getImageUrl } from "@/lib";
 
 interface FormData {
   avatar: FileList | null;
@@ -27,7 +29,7 @@ export const closeEditProfileModal = () =>
 export const EditProfileModal = () => {
   const setMessage = useSetRecoilState(toastState);
   const router = useRouter();
-  const { auth, updateProfile } = useAuth();
+  const { auth, loading, updateProfile } = useAuth();
   const { isUnique, checkName } = useCheckName();
   const defaultValues: FormData = {
     avatar: null,
@@ -72,7 +74,8 @@ export const EditProfileModal = () => {
       await updateProfile(
         data.avatar ? data.avatar[0] : null,
         data.name,
-        data.nickname
+        data.nickname,
+        data.introduction
       );
       closeEditProfileModal();
       router.push(`/${data.name}`);
@@ -96,7 +99,12 @@ export const EditProfileModal = () => {
             close
           </button>
         </div>
-        <form method="put" onSubmit={handleSubmit(onsubmit)}>
+        <form
+          method="put"
+          onSubmit={handleSubmit(onsubmit)}
+          className="relative"
+        >
+          {loading && <Loading text="更新中..." />}
           <button
             type="button"
             onClick={() => {
@@ -114,11 +122,7 @@ export const EditProfileModal = () => {
               </span>
             </div>
             <Image
-              src={
-                imageSource !== ""
-                  ? imageSource
-                  : auth.avatar.url || defaultImage
-              }
+              src={getImageUrl(auth.avatar.url) || defaultImage}
               alt="アイコン"
               className="object-cover rounded-full"
               fill

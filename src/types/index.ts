@@ -3,28 +3,30 @@ export type UserProfiles = {
   nickname: string;
   avatar: { url: string | null };
   rank?: string;
+  introduction: string;
 };
 
 export type Recipe = {
   id: number;
   title: string;
   body: string;
-  cooking_time: number;
+  cookingTime: number;
   image: { url: string | null };
-  ingredients: Ingredient[];
+  recipeIngredients: Ingredient[];
   steps: Step[];
   user: UserProfiles;
   status: RecipeStatus;
   bookmarkCount: number;
+  likeCount: number;
 };
 
 export type Ingredient = {
-  name: string;
+  ingredientName: string;
   amount: string;
 };
 
 export type Step = {
-  stemNumber?: number;
+  stepNumber?: number;
   instruction: string;
   image?: FileList | null;
 };

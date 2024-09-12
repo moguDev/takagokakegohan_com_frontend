@@ -9,13 +9,20 @@ import Loading from "@/app/loading";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
 import { useBookmark } from "@/hooks/useBookmark";
-import { useRelationship } from "@/hooks/useRelationship";
+import { getImageUrl } from "@/lib";
+import { useFavorite } from "@/hooks/useFavorite";
 
 export const RecipeDetailsPage = () => {
   const setMessage = useSetRecoilState(toastState);
   const { auth } = useAuth();
   const { id } = useParams();
   const { recipe, fetch } = useRecipeDetails(Number(id));
+  const {
+    isFavorited,
+    loading: loadingFavorite,
+    favorite,
+    unfavorite,
+  } = useFavorite(id as string);
   const {
     isBookmarked,
     loading: loadingBookmark,
@@ -27,15 +34,10 @@ export const RecipeDetailsPage = () => {
   const currentUrl = `https://たまごかけごはん.com${pathName}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${recipe?.title}&url=${currentUrl}`;
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setMessage("リンクをコピーしました");
-  };
-
   return recipe ? (
     <div className="w-full">
       <section className="px-2">
-        <div className="bg-white max-w-4xl mx-auto p-4 rounded-md">
+        <div className="bg-white max-w-4xl mx-auto md:p-4 p-2 pt-4 rounded-md">
           {auth.name === recipe.user.name && (
             <div className="flex justify-between pb-4">
               <div>
@@ -54,7 +56,9 @@ export const RecipeDetailsPage = () => {
                 className="flex items-center rounded-full text-xs text-gray-600 border border-gray-200 bg-gray-100 px-4 py-0.5 my-btn"
                 replace
               >
-                <span className="material-icons ">edit</span>
+                <span className="material-icons" style={{ fontSize: "14px" }}>
+                  edit
+                </span>
                 レシピを編集
               </Link>
             </div>
@@ -63,7 +67,7 @@ export const RecipeDetailsPage = () => {
             <div className="p-3 w-full h-96 relative">
               {recipe?.image.url ? (
                 <Image
-                  src={recipe.image.url}
+                  src={getImageUrl(recipe.image.url) || defaultImage}
                   alt="sampleImage"
                   className="object-cover rounded"
                   fill
@@ -89,7 +93,10 @@ export const RecipeDetailsPage = () => {
                       >
                         <div className="rounded-full h-5 w-5 relative mr-0.5">
                           <Image
-                            src={recipe?.user.avatar.url || defaultImage}
+                            src={
+                              getImageUrl(recipe?.user.avatar.url) ||
+                              defaultImage
+                            }
                             alt="アイコン"
                             className="object-cover rounded-full"
                             fill
@@ -105,7 +112,7 @@ export const RecipeDetailsPage = () => {
                         timer
                       </span>
                       <span className="text-lg font-semibold">
-                        {recipe?.cooking_time}
+                        {recipe?.cookingTime}
                       </span>
                       <span className="ml-1">秒</span>
                     </div>
@@ -120,12 +127,12 @@ export const RecipeDetailsPage = () => {
                     材料<span className="text-xs">（1人前）</span>
                   </h2>
                   <div className="p-1 divide-y divide-gray-300 divide-dashed">
-                    {recipe.ingredients &&
-                      recipe?.ingredients.map((ingredient, index) => (
+                    {recipe.recipeIngredients &&
+                      recipe?.recipeIngredients.map((ingredient, index) => (
                         <p key={index} className="my-auto py-2">
                           <span className="font-black text-yellow-600">・</span>
                           <span className="font-semibold">
-                            {ingredient.name}
+                            {ingredient.ingredientName}
                           </span>
                           <span className="ml-2">{ingredient.amount}</span>
                         </p>
@@ -148,7 +155,7 @@ export const RecipeDetailsPage = () => {
                   <div key={index} className="flex items-start py-3">
                     <div className="font-bold text-center mr-2 relative">
                       <span className="z-10 text-gray-500 w-5">
-                        {step.stemNumber}.
+                        {step.stepNumber}.
                       </span>
                     </div>
                     <p>{step.instruction}</p>
@@ -161,12 +168,12 @@ export const RecipeDetailsPage = () => {
       <section className="max-w-4xl mx-auto z-40">
         <div
           className={`
-        md:relative fixed bottom-0 bg-white backdrop-blur-xl md:border-none md:rounded-md border-t border-gray-200 max-w-4xl h-20 w-full
-        lg:mb-2 mt-2 px-2 py-2 flex justify-between`}
+        md:relative fixed bottom-0 left-0 bg-white backdrop-blur-xl md:border-none md:rounded-md border-t border-gray-200 max-w-4xl h-20 w-full
+        md:mb-2 mt-2 py-2 flex justify-between`}
         >
           <button
             onClick={() => router.back()}
-            className="flex items-center my-btn text-sm"
+            className="flex items-center my-btn text-sm pl-1"
           >
             <span className="material-icons">navigate_before</span>
             もどる
@@ -177,27 +184,21 @@ export const RecipeDetailsPage = () => {
                 href={twitterShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-black bg-opacity-90 text-white text-xs rounded-lg p-2 flex items-center mr-1 my-btn"
+                className="bg-black bg-opacity-90 text-white text-xs rounded p-2 flex items-center mx-2 my-btn"
               >
                 <span className="material-icons mr-1"></span>
                 Xでシェアする
               </a>
             )}
-            <button
-              className="text-black rounded p-2 flex items-center  my-btn"
-              onClick={handleCopyLink}
-            >
-              <span className="material-icons mr-0.5 my-auto">link</span>
-            </button>
-            <div className="relative">
-              {loadingBookmark && (
+            <div className="relative mx-1">
+              {loadingFavorite && (
                 <div className="absolute h-full w-full flex items-center justify-center bg-white opacity-90 z-10" />
               )}
               <button
                 className={`rounded p-1 flex items-center my-btn transition-all duration-1000 active:scale-125`}
                 onClick={async () => {
                   if (auth.isAuthenticated) {
-                    isBookmarked ? await unbookmark() : await bookmark();
+                    isFavorited ? await unfavorite() : await favorite();
                     fetch();
                   } else {
                     setMessage("ログインしてください。");
@@ -207,22 +208,22 @@ export const RecipeDetailsPage = () => {
                 <p className="flex items-center font-sans">
                   <span
                     className={`material-icons mr-0.5 my-auto ${
-                      auth.isAuthenticated && isBookmarked
+                      auth.isAuthenticated && isFavorited
                         ? "text-red-600"
                         : "text-black"
                     }`}
                   >
                     {`${
-                      auth.isAuthenticated && isBookmarked
+                      auth.isAuthenticated && isFavorited
                         ? "favorite"
                         : "favorite_outline"
                     }`}
                   </span>
-                  {recipe.bookmarkCount}
+                  {recipe.likeCount}
                 </p>
               </button>
             </div>
-            <div className="relative">
+            <div className="relative mx-1">
               {loadingBookmark && (
                 <div className="absolute h-full w-full flex items-center justify-center bg-white opacity-90 z-10" />
               )}

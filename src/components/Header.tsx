@@ -1,17 +1,17 @@
 "use client";
 import { useAuth } from "@/hooks/useAuth";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Image from "next/image";
 import defaultImage from "/public/images/default_avatar.png";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import { getImageUrl } from "@/lib";
 
 const AccountCircle = ({
   image,
   name,
 }: {
-  image: StaticImport | string;
+  image: string | null;
   name: string;
 }) => {
   return (
@@ -23,7 +23,7 @@ const AccountCircle = ({
     >
       <div className="border border-white border-opacity-50 rounded-full h-10 w-10 relative m-1">
         <Image
-          src={image}
+          src={getImageUrl(image) || defaultImage}
           alt="アイコン"
           className="object-cover rounded-full"
           fill
@@ -52,6 +52,10 @@ export const Header = () => {
   const { auth, loading, checkAuth } = useAuth();
   const pathName = usePathname();
   const [headerText, setHeaderText] = useState<string>("たまごかけごはん.com");
+  const [query, setQuery] = useState<string>("");
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setQuery(e.target.value);
 
   useEffect(() => {
     checkAuth();
@@ -115,25 +119,32 @@ export const Header = () => {
               Loading...
             </div>
           ) : auth.isAuthenticated ? (
-            <AccountCircle
-              image={auth.avatar.url || defaultImage}
-              name={auth.nickname}
-            />
+            <AccountCircle image={auth.avatar.url} name={auth.nickname} />
           ) : (
             <LoginButton hidden={pathName === "/signin"} />
           )}
         </div>
       </div>
       <div className="pb-3 px-3 z-10 flex">
-        <div className="bg-gray-50 rounded-md border border-gray-200 shadow-sm flex items-center p-1.5 w-full">
-          <span className="material-icons text-gray-300">search</span>
+        <div className="bg-gray-50 rounded-md border border-gray-200 shadow-sm flex items-center p-1 w-full">
+          <span className="material-icons text-gray-300 mx-1">search</span>
           <input
             type="text"
             className="bg-gray-50 w-full outline-none"
             placeholder="食材や調味料でさがす"
+            onChange={handleChange}
           />
+          <Link
+            href={{
+              pathname: "/recipes",
+              query: { q: query.replace("　", " ") },
+            }}
+            className="bg-yellow-600 text-white text-center text-sm font-semibold rounded-md p-2 w-20 my-btn"
+          >
+            検索
+          </Link>
         </div>
-        <div className="md:w-80" />
+        <div className="md:w-96" />
       </div>
     </header>
   );

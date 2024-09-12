@@ -52,7 +52,7 @@ export const useAuth = () => {
         name: res.data.data.name,
         nickname: res.data.data.nickname,
         avatar: {
-          url: res.data.data.avatar.url && `${res.data.data.avatar.url}`,
+          url: res.data.data.avatar.url,
         },
         rank: res.data.data.rank,
       });
@@ -165,7 +165,7 @@ export const useAuth = () => {
       avatar: File | null,
       name: string,
       nickname: string,
-      introduction?: string
+      introduction: string
     ) => {
       setLoading(true);
       try {
@@ -175,6 +175,7 @@ export const useAuth = () => {
             avatar,
             name,
             nickname,
+            introduction,
           },
           { headers: { "Content-Type": "multipart/form-data" } }
         );

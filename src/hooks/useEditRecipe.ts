@@ -3,6 +3,7 @@
 import { toastState } from "@/components/Toast";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { Ingredient, RecipeStatus, Step } from "@/types";
+import { Tulpen_One } from "next/font/google";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
@@ -10,9 +11,9 @@ import { useSetRecoilState } from "recoil";
 export interface RecipeFormData {
   title: string;
   body: string;
-  cooking_time: number;
+  cookingTime: number;
   image: FileList | null;
-  ingredients: Ingredient[];
+  ingredients: { name: string; amount: string }[];
   steps: Step[];
 }
 
@@ -58,12 +59,14 @@ export const useEditRecipe = () => {
         setMessage("レシピのタイトルを入力してください。");
         return;
       }
+      setLoading(true);
       try {
         const res = await axiosInstance.put(
           `/recipes/${id}`,
           {
             recipe: {
               ...data,
+              cooking_time: data.cookingTime,
               image: data.image ? data.image[0] : null,
               status: status,
             },
@@ -78,6 +81,8 @@ export const useEditRecipe = () => {
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     },
     []

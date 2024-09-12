@@ -2,6 +2,7 @@ import { axiosInstance } from "@/lib/axiosInstance";
 import { Recipe, UserProfiles } from "@/types";
 import { AxiosError } from "axios";
 import { useState, useEffect, useCallback } from "react";
+import camelcaseKeys from "camelcase-keys";
 
 export const useUserProfiles = (name: string) => {
   const [userProfiles, setUserDetails] = useState<UserProfiles>({
@@ -9,6 +10,7 @@ export const useUserProfiles = (name: string) => {
     nickname: "",
     avatar: { url: null },
     rank: "",
+    introduction: "",
   });
   const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,8 +39,7 @@ export const useUserProfiles = (name: string) => {
   const fetchRecipes = useCallback(async () => {
     try {
       const res = await axiosInstance.get(`/users/${name}/recipes`);
-      console.log(res.data);
-      setRecipes(res.data);
+      setRecipes(camelcaseKeys(res.data, { deep: true }));
     } catch (error) {
       new Error("レシピの取得に失敗しました。");
     }
