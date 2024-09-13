@@ -168,7 +168,7 @@ export const RecipeDetailsPage = () => {
       <section className="max-w-4xl mx-auto z-40">
         <div
           className={`
-        md:relative fixed bottom-0 left-0 bg-white backdrop-blur-xl md:border-none md:rounded-md border-t border-gray-200 max-w-4xl h-20 w-full
+        md:relative fixed bottom-0 left-0 bg-white backdrop-blur-xl md:border-none md:rounded-md border-t border-gray-200 max-w-4xl h-16 w-full
         md:mb-2 mt-2 py-2 flex justify-between`}
         >
           <button
@@ -208,7 +208,9 @@ export const RecipeDetailsPage = () => {
                 <p className="flex items-center font-sans">
                   <span
                     className={`material-icons mr-0.5 my-auto ${
-                      auth.isAuthenticated && isFavorited
+                      !auth.isAuthenticated
+                        ? "text-gray-400"
+                        : isFavorited
                         ? "text-red-600"
                         : "text-black"
                     }`}
@@ -219,7 +221,7 @@ export const RecipeDetailsPage = () => {
                         : "favorite_outline"
                     }`}
                   </span>
-                  {recipe.likeCount}
+                  <span className="text-sm">{recipe.likeCount}</span>
                 </p>
               </button>
             </div>
@@ -241,7 +243,9 @@ export const RecipeDetailsPage = () => {
                 <p className="flex items-center font-sans">
                   <span
                     className={`material-icons mr-0.5 my-auto ${
-                      auth.isAuthenticated && isBookmarked
+                      !auth.isAuthenticated
+                        ? "text-gray-400"
+                        : isBookmarked
                         ? "text-yellow-600"
                         : "text-black"
                     }`}
@@ -252,7 +256,7 @@ export const RecipeDetailsPage = () => {
                         : "bookmark_outline"
                     }`}
                   </span>
-                  {recipe.bookmarkCount}
+                  <span className="text-sm">{recipe.bookmarkCount}</span>
                 </p>
               </button>
             </div>

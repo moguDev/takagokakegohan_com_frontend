@@ -36,21 +36,21 @@ export const SideNavigation = () => {
       <li className="relative flex items-center my-3 bg-white rounded-l-md">
         <div
           className={`absolute h-full left-0 w-1 rounded-l-md transition-all duration-200 ${
-            pathName === "/recipes/bookmark"
+            pathName === "/bookmark"
               ? "bg-yellow-500 -translate-x-1"
               : "bg-white"
           }`}
         />
         <Link
-          href={auth.isAuthenticated ? "/recipes/bookmark" : "/signin"}
+          href={auth.isAuthenticated ? "/bookmark" : "/signin"}
           className={`flex items-center select-none w-full p-5 transition-all duration-200 ${
-            pathName === "/recipes/bookmark"
+            pathName === "/bookmark"
               ? "text-yellow-600 font-bold text-xl shadow-md py-7 -translate-x-1"
               : "text-gray-400"
           }`}
         >
           <span className="material-icons mr-1">
-            {pathName === "/recipes/bookmark" ? "bookmark" : "bookmark_outline"}
+            {pathName === "/bookmark" ? "bookmark" : "bookmark_outline"}
           </span>
           ブックマーク
         </Link>
@@ -58,15 +58,13 @@ export const SideNavigation = () => {
       <li className="relative flex items-center my-3 bg-white rounded-l-md">
         <div
           className={`absolute h-full left-0 w-1 rounded-l-md transition-all duration-200 ${
-            pathName === "/recipes/drafts"
-              ? "bg-yellow-500 -translate-x-1"
-              : "bg-white"
+            pathName === "/drafts" ? "bg-yellow-500 -translate-x-1" : "bg-white"
           }`}
         />
         <Link
-          href={auth.isAuthenticated ? "/recipes/drafts" : "/signin"}
+          href={auth.isAuthenticated ? "/drafts" : "/signin"}
           className={`flex items-center select-none w-full p-5 transition-all duration-200 ${
-            pathName === "/recipes/drafts"
+            pathName === "/drafts"
               ? "text-yellow-600 font-bold text-xl shadow-md py-7 -translate-x-1"
               : "text-gray-400"
           }`}

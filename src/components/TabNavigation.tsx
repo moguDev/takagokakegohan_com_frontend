@@ -4,11 +4,34 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export const TabNavigation = () => {
   const { auth } = useAuth();
   const pathName = usePathname();
   const { create, loading } = useEditRecipe();
+  const [scrollY, setScrollY] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+
+  const handleScroll = () => {
+    const currentScrollY = window.scrollY;
+
+    if (currentScrollY > scrollY && currentScrollY > 100) {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+
+    setScrollY(currentScrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrollY]);
 
   const handleCreateRecipe = () => {
     create();
@@ -22,13 +45,13 @@ export const TabNavigation = () => {
           /^\/recipes\/(\d+)\/edit$/.test(pathName) ||
           /^\/recipes\/\d+$/.test(pathName)) &&
         "hidden"
-      }`}
+      } ${!isVisible && "h-0 hidden"}`}
     >
       <div
         className={`
         flex items-center justify-between md:rounded-full shadow
         text-gray-400 bg-white bg-opacity-80 backdrop-blur
-        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-[72px] pt-4 pb-6 px-2
+        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-[70px] pt-4 pb-6 px-2
         fixed bottom-0 z-40`}
       >
         <Link
