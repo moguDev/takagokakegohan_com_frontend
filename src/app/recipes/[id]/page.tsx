@@ -12,7 +12,7 @@ export async function generateMetadata({
   const recipe = res.data;
 
   return {
-    title: "たまごかけごはん.com",
+    title: `${recipe.title} | たまごかけごはん.com`,
     description: "たまごかけごはん専用の料理レシピサービス",
     openGraph: {
       title: recipe?.title,

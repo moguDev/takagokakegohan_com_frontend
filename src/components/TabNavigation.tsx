@@ -5,8 +5,11 @@ import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "./Toast";
 
 export const TabNavigation = () => {
+  const setMessage = useSetRecoilState(toastState);
   const { auth } = useAuth();
   const pathName = usePathname();
   const { create, loading } = useEditRecipe();
@@ -34,7 +37,7 @@ export const TabNavigation = () => {
   }, [scrollY]);
 
   const handleCreateRecipe = () => {
-    create();
+    auth.isAuthenticated ? create() : setMessage("ログインしてください");
   };
 
   return (
@@ -67,7 +70,10 @@ export const TabNavigation = () => {
           <span className="material-icons">search</span>
         </Link>
         <Link
-          href="/bookmark"
+          href={auth.isAuthenticated ? "/bookmark" : "/signin"}
+          onClick={() => {
+            !auth.isAuthenticated && setMessage("ログインしてください");
+          }}
           className={`w-1/4 text-center transition-all duration-300 select-none ${
             pathName === "/bookmark"
               ? "text-yellow-600 font-semibold scale-125"
@@ -98,7 +104,10 @@ export const TabNavigation = () => {
           </button>
         </div>
         <Link
-          href="/drafts"
+          href={auth.isAuthenticated ? "/drafts" : "/signin"}
+          onClick={() => {
+            !auth.isAuthenticated && setMessage("ログインしてください");
+          }}
           className={`w-1/4 text-center transition-all duration-300 select-none ${
             pathName === "/drafts"
               ? "text-yellow-600 font-semibold scale-125"

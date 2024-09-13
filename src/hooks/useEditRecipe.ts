@@ -56,7 +56,7 @@ export const useEditRecipe = () => {
         status === "published" &&
         (data.title === "" || data.title === null)
       ) {
-        setMessage("レシピのタイトルを入力してください。");
+        setMessage("レシピのタイトルを入力してください");
         return;
       }
       setLoading(true);
@@ -77,7 +77,7 @@ export const useEditRecipe = () => {
           router.replace(`/recipes/${id}`);
           setMessage("レシピを公開しました！");
         } else {
-          setMessage("下書きを保存しました。");
+          setMessage("下書きを保存しました");
         }
       } catch (error) {
         console.error(error);

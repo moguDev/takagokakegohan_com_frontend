@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 
 export const SearchBar = () => {
   const router = useRouter();
@@ -8,8 +8,9 @@ export const SearchBar = () => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value);
 
-  const handleSubmit = () => {
-    router.push(`/recipes?q=${query}`);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    router.push(`/recipes?q=${encodeURIComponent(query)}`);
   };
 
   return (
@@ -36,7 +37,6 @@ export const SearchBar = () => {
         <button
           type="submit"
           className="bg-yellow-600 text-white text-center text-sm font-semibold rounded-md p-2 w-20 my-btn"
-          onClick={handleSubmit}
         >
           検索
         </button>

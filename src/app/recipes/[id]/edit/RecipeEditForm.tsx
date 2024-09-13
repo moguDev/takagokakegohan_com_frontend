@@ -90,7 +90,7 @@ export const RecipesEditForm: React.FC = () => {
 
   return (
     <div className="w-full relative">
-      {loading && <Loading text="更新中..." />}
+      <Loading text="更新中..." loading={loading} />
       <form
         method="post"
         onSubmit={handleSubmit((data: RecipeFormData) => {

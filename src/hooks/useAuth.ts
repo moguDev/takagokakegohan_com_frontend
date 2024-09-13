@@ -1,7 +1,8 @@
 import { axiosInstance } from "@/lib/axiosInstance";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { atom, useRecoilState } from "recoil";
 import Cookies from "js-cookie";
+import { AxiosError } from "axios";
 
 type TypeAuth = {
   isAuthenticated: boolean;
@@ -41,6 +42,7 @@ const setCookies = (accessToken: string, client: string, uid: string) => {
 export const useAuth = () => {
   const [auth, setAuth] = useRecoilState(authState);
   const [loading, setLoading] = useRecoilState(loadingState);
+  const [errors, setErrors] = useState<string[]>([]);
 
   const checkAuth = useCallback(async () => {
     setLoading(true);
@@ -100,6 +102,9 @@ export const useAuth = () => {
           });
         }
       } catch (error) {
+        error instanceof AxiosError
+          ? setErrors(error.response?.data.errors.full_messages)
+          : setErrors(["アカウントの作成に失敗しました。"]);
         throw new Error("アカウントの作成に失敗しました。");
       } finally {
         setLoading(false);
@@ -131,7 +136,8 @@ export const useAuth = () => {
         }
         setAuth((prev) => ({ ...prev, isAuthenticated: true }));
       } catch (error) {
-        throw new Error("ログインに失敗しました。");
+        setErrors(["ログインに失敗しました。"]);
+        throw error;
       } finally {
         setLoading(false);
       }
@@ -204,6 +210,7 @@ export const useAuth = () => {
   return {
     auth,
     loading,
+    errors,
     checkAuth,
     signup,
     login,

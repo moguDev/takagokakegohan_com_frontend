@@ -23,11 +23,16 @@ export const Toast = () => {
   if (!message) return null;
 
   return (
-    <div className={`z-30 w-full ${message ? "h-20" : "h-0"}`}>
+    <div
+      className={`z-30 mt-2 w-max mx-auto transition-all duration-300 ${
+        message ? "opacity-100" : "h-0 opacity-0"
+      }`}
+    >
       <p
         className={`
-          text-center md:text-sm text-xs font-bold py-2
-          bg-yellow-600 bg-opacity-60 backdrop-blur-sm text-white w-full
+          text-center md:text-sm text-xs font-semibold px-5 py-1 text-white
+          bg-blue-500 bg-opacity-80 backdrop-blur-sm rounded-full h-full
+          flex items-center justify-center
         `}
       >
         {message}
