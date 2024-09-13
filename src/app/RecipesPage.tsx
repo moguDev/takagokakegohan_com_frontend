@@ -107,7 +107,7 @@ export const RecipesPage = () => {
                 className={`relative nav-item pt-3 pb-5 rounded-t-lg transition-all duration-400 ${
                   index === selectIndex
                     ? "font-semibold text-yellow-600 bg-white text-base px-12"
-                    : "text-gray-500 text-sm px-4"
+                    : "text-gray-500 text-sm px-4 hover:scale-110"
                 }`}
               >
                 <div

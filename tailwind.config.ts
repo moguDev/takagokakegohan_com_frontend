@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        height: "height",
+      },
       keyframes: {
         "fade-up": {
           "0%": { opacity: "0", transform: "translateY(20px)" },

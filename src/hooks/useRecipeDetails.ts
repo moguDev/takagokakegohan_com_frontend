@@ -1,6 +1,6 @@
 "use client";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { Ingredient, Recipe, Step } from "@/types";
+import { Recipe } from "@/types";
 import camelcaseKeys from "camelcase-keys";
 import { useCallback, useEffect, useState } from "react";
 
@@ -12,7 +12,6 @@ export const useRecipeDetails = (id: number) => {
     setLoading(true);
     try {
       const res = await axiosInstance.get(`/recipes/${id}`);
-      console.log(camelcaseKeys(res.data, { deep: true }));
       setRecipe(camelcaseKeys(res.data, { deep: true }));
     } catch (error) {
       throw Error("レシピの取得に失敗しました。");
