@@ -104,7 +104,7 @@ export const EditProfileModal = () => {
           onSubmit={handleSubmit(onsubmit)}
           className="relative"
         >
-          {loading && <Loading text="更新中..." />}
+          <Loading text="更新中..." loading={loading} />
           <button
             type="button"
             onClick={() => {
