@@ -6,6 +6,7 @@ import defaultImage from "/public/images/default_avatar.png";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { getImageUrl } from "@/lib";
+import { Toast } from "./Toast";
 
 const AccountCircle = ({
   image,
@@ -117,12 +118,12 @@ export const Header = () => {
 
   return (
     <header
-      className={`z-40 bg-white bg-opacity-90 backdrop-blur fixed top-0 w-full shadow transition-all duration-500 ease-in-out ${
-        !isVisible && "md:translate-y-0 -translate-y-20"
+      className={`z-40 fixed top-0 w-full transition-all duration-500 ease-in-out ${
+        !isVisible && "md:translate-y-0 -translate-y-16"
       }`}
     >
       <div
-        className={`flex items-center justify-between pl-5 pr-3 md:px-5 py-2 h-16`}
+        className={`bg-white bg-opacity-90 backdrop-blur flex items-center justify-between pl-5 pr-3 md:px-5 py-2 h-16 shadow`}
       >
         <div className="md:flex items-center">
           <h1 className="text-black md:text-2xl text-xl font-bold select-none">
@@ -153,6 +154,7 @@ export const Header = () => {
           )}
         </div>
       </div>
+      <Toast />
     </header>
   );
 };

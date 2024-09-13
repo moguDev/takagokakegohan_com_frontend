@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCheckName } from "@/hooks/useCheckName";
+import { Loading } from "@/components/Loading";
 
 type FormData = {
   email: string;
@@ -16,7 +17,7 @@ type FormData = {
 
 export const SignupForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-  const { loading, signup } = useAuth();
+  const { loading, signup, errors: authErrors } = useAuth();
   const { isUnique, checkName } = useCheckName();
   const router = useRouter();
   const defaultValues = {
@@ -49,14 +50,20 @@ export const SignupForm = () => {
   };
 
   return (
-    <div className="md:pt-7 p-2">
-      <div className="max-w-xl mx-auto bg-white rounded-lg p-5">
+    <div className="relative">
+      <Loading text="アカウントを作成しています..." loading={loading} />
+      <div className="max-w-xl mx-auto bg-white rounded-md p-5">
         <h1 className="font-bold flex items-center text-lg">
           <span className="material-icons text-yellow-600 mr-1">
             person_add
           </span>
           アカウントを作成
         </h1>
+        {authErrors.map((error, index) => (
+          <p key={index} className="text-sm text-red-500 mt-5 font-bold">
+            {error}
+          </p>
+        ))}
         <form onSubmit={handleSubmit(onsubmit)} method="post">
           <div className="flex flex-col my-5">
             <label htmlFor="name" className="text-xs text-gray-400 p-1">
@@ -89,7 +96,7 @@ export const SignupForm = () => {
                     isUnique ? "text-green-500" : "text-red-500"
                   }`}
                 >
-                  <span className="material-icons scale-75">
+                  <span className="material-icons" style={{ fontSize: "12px" }}>
                     {isUnique ? "check" : "close"}
                   </span>
                   {isUnique ? "使用できます" : "使用できません"}

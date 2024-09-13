@@ -58,7 +58,6 @@ export default function RootLayout({
             <div className="drawer-content">
               <main className="md:pt-24 pt-20 relative w-screen">
                 <Header />
-                <Toast />
                 <div className="flex w-full">
                   <div className="md:pb-0 pb-16 md:px-5 px-2 w-full h-full">
                     {children}
