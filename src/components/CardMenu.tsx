@@ -64,7 +64,7 @@ export const CardMenu: React.FC = () => {
               </li>
               <li className="py-1">
                 <Link
-                  href="/recipes/bookmark"
+                  href="/bookmark"
                   className="relative hover:text-blue-500 select-none"
                   onClick={() =>
                     document.getElementById("accout-circle")?.click()
@@ -79,7 +79,7 @@ export const CardMenu: React.FC = () => {
               </li>
               <li className="py-1">
                 <Link
-                  href="/recipes/drafts"
+                  href="/drafts"
                   className="relative hover:text-blue-500 select-none"
                   onClick={() =>
                     document.getElementById("accout-circle")?.click()

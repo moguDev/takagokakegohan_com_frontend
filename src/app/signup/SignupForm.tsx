@@ -133,7 +133,7 @@ export const SignupForm = () => {
               <input
                 type="email"
                 className="bg-white w-full outline-none"
-                placeholder="メールアドレス"
+                placeholder="tkg@example.com"
                 {...register("email", {
                   required: "メールアドレスを入力してください。",
                   pattern: {
@@ -156,7 +156,7 @@ export const SignupForm = () => {
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 className="bg-white h-full w-full outline-none"
-                placeholder="パスワード"
+                placeholder="半角英数のみ8文字以上"
                 {...register("password", {
                   required: "パスワードを入力してください。",
                   minLength: {
@@ -185,7 +185,7 @@ export const SignupForm = () => {
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 className="bg-white h-full w-full outline-none"
-                placeholder="パスワード（確認用）"
+                placeholder="半角英数のみ8文字以上"
                 {...register("passwordConfirmation", {
                   required: "パスワード（確認用）を入力してください。",
                 })}
