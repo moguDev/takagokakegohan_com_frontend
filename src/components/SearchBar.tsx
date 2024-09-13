@@ -13,7 +13,7 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className="p-2 pb-3 z-10 bg-white rounded-md mb-3">
+    <div className="p-3 pb-3 z-10 bg-white max-w-7xl mx-auto rounded-md mb-3">
       <div className="flex items-center justify-between px-1 pt-1 py-3">
         <h2 className="flex items-center text-black md:text-xl text-base font-bold">
           <span className="material-icons text-yellow-600 mr-1">
