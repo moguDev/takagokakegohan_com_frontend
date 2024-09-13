@@ -1,5 +1,11 @@
+import { SearchBar } from "@/components/SearchBar";
 import { RecipesPage } from "./RecipesPage";
 
 export default function Home() {
-  return <RecipesPage />;
+  return (
+    <>
+      <SearchBar />
+      <RecipesPage />
+    </>
+  );
 }

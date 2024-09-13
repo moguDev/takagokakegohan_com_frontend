@@ -45,14 +45,16 @@ export const TabNavigation = () => {
           /^\/recipes\/(\d+)\/edit$/.test(pathName) ||
           /^\/recipes\/\d+$/.test(pathName)) &&
         "hidden"
-      } ${!isVisible && "h-0 hidden"}`}
+      }`}
     >
       <div
         className={`
         flex items-center justify-between md:rounded-full shadow
         text-gray-400 bg-white bg-opacity-80 backdrop-blur
-        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-[70px] pt-4 pb-5 px-1
-        fixed bottom-0 z-40`}
+        md:mb-2 md:border border-t border-gray-200 max-w-2xl w-full h-[70px] pt-4 pb-5 px-2
+        fixed bottom-0 z-40 transition-all duration-500 ease-in-out ${
+          !isVisible && "translate-y-32"
+        }`}
       >
         <Link
           href="/"

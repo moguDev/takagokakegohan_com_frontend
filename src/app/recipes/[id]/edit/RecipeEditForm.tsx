@@ -295,7 +295,9 @@ export const RecipesEditForm: React.FC = () => {
                       className="border-b border-gray-300 border-dashed my-2"
                     >
                       <div className="flex items-center">
-                        <p className="inline">{index + 1}. </p>
+                        <p className="inline text-gray-500 font-bold">
+                          {index + 1}.{" "}
+                        </p>
                         <input
                           type="text"
                           className="w-full bg-gray-50 rounded outline-none my-1 p-2"

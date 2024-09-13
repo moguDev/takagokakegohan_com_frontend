@@ -126,18 +126,18 @@ export const RecipeDetailsPage = () => {
                     </span>
                     材料<span className="text-xs">（1人前）</span>
                   </h2>
-                  <div className="p-1 divide-y divide-gray-300 divide-dashed">
+                  <ul className="p-1 divide-y divide-gray-300 divide-dashed">
                     {recipe.recipeIngredients &&
                       recipe?.recipeIngredients.map((ingredient, index) => (
-                        <p key={index} className="my-auto py-2">
+                        <li key={index} className="my-auto py-2">
                           <span className="font-black text-yellow-600">・</span>
                           <span className="font-semibold">
                             {ingredient.ingredientName}
                           </span>
                           <span className="ml-2">{ingredient.amount}</span>
-                        </p>
+                        </li>
                       ))}
-                  </div>
+                  </ul>
                 </div>
               </section>
             </div>
@@ -152,14 +152,14 @@ export const RecipeDetailsPage = () => {
             <section className="divide-y divide-gray-300 divide-dashed p-1">
               {recipe.steps &&
                 recipe?.steps.map((step, index) => (
-                  <div key={index} className="flex items-start py-3">
-                    <div className="font-bold text-center mr-2 relative">
-                      <span className="z-10 text-gray-500 w-5">
+                  <ul key={index} className="py-3">
+                    <li className="flex items-start mr-2">
+                      <span className="font-bold text-center text-gray-500 w-5 mr-1">
                         {step.stepNumber}.
                       </span>
-                    </div>
-                    <p>{step.instruction}</p>
-                  </div>
+                      <p>{step.instruction}</p>
+                    </li>
+                  </ul>
                 ))}
             </section>
           </section>

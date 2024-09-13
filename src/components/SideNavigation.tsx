@@ -30,7 +30,7 @@ export const SideNavigation = () => {
           }`}
         >
           <span className="material-icons mr-1">search</span>
-          レシピをさがす
+          TKGをさがす
         </Link>
       </li>
       <li className="relative flex items-center my-3 bg-white rounded-l-md">
