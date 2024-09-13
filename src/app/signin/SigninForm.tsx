@@ -54,7 +54,7 @@ export const SigninForm = () => {
               <input
                 type="email"
                 className="bg-white w-full outline-none"
-                placeholder="メールアドレス"
+                placeholder="tkg@example.com"
                 {...register("email", {
                   required: "メールアドレスを入力してください。",
                   pattern: {
@@ -77,7 +77,7 @@ export const SigninForm = () => {
               <input
                 type={isPasswordVisible ? "text" : "password"}
                 className="bg-white h-full w-full outline-none"
-                placeholder="パスワード"
+                placeholder="半角英数のみ8文字以上"
                 {...register("password", {
                   required: "パスワードを入力してください。",
                   minLength: {
