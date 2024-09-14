@@ -2,8 +2,7 @@
 
 import { toastState } from "@/components/Toast";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { Ingredient, RecipeStatus, Step } from "@/types";
-import { Tulpen_One } from "next/font/google";
+import { RecipeStatus, Step } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
@@ -64,7 +63,7 @@ export const useEditRecipe = () => {
       }
       setLoading(true);
       try {
-        const res = await axiosInstance.put(
+        await axiosInstance.put(
           `/recipes/${id}`,
           {
             recipe: {
