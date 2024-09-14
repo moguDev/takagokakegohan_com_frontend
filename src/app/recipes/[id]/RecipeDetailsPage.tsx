@@ -11,9 +11,11 @@ import { toastState } from "@/components/Toast";
 import { useBookmark } from "@/hooks/useBookmark";
 import { getImageUrl } from "@/lib";
 import { useFavorite } from "@/hooks/useFavorite";
+import XIcon from "@mui/icons-material/X";
+import { ParagraphWithLinks } from "@/components/ParagraphWithLinks";
 
 export const RecipeDetailsPage = () => {
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const { auth } = useAuth();
   const { id } = useParams();
   const { recipe, fetch } = useRecipeDetails(Number(id));
@@ -64,6 +66,7 @@ export const RecipeDetailsPage = () => {
             </div>
           )}
           <section className="lg:flex w-full h-full">
+            {/* レシピ画像 */}
             <div className="p-3 w-full h-96 relative">
               {recipe?.image.url ? (
                 <Image
@@ -82,10 +85,12 @@ export const RecipeDetailsPage = () => {
             <div className="px-3 w-full h-auto flex flex-col justify-between">
               <section>
                 <div className="mb-4">
+                  {/* レシピタイトル */}
                   <h1 className="md:text-2xl text-xl font-bold py-2">
                     {recipe?.title || "無題"}
                   </h1>
                   <div className="flex items-end justify-between text-sm mt-1 mb-2">
+                    {/* ユーザ情報 */}
                     <div className="flex items-center">
                       <Link
                         href={`/${recipe.user.name}`}
@@ -107,6 +112,7 @@ export const RecipeDetailsPage = () => {
                         </p>
                       </Link>
                     </div>
+                    {/* 調理時間 */}
                     <div className="text-xs">
                       <span className="material-icons text-yellow-500 scale-90 translate-y-[4px]">
                         timer
@@ -117,7 +123,10 @@ export const RecipeDetailsPage = () => {
                       <span className="ml-1">秒</span>
                     </div>
                   </div>
-                  <p className="p-1 text-sm">{recipe?.body}</p>
+                  {/* 説明 */}
+                  <div className="p-1 text-sm">
+                    <ParagraphWithLinks text={recipe?.body} />
+                  </div>
                 </div>
                 <div className="bg-theme rounded-md px-2 py-3 w-full">
                   <h2 className="flex items-center text-base text-gray-600 font-semibold">
@@ -184,10 +193,10 @@ export const RecipeDetailsPage = () => {
                 href={twitterShareUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-black bg-opacity-90 text-white text-xs rounded p-2 flex items-center mx-2 my-btn"
+                className="bg-black bg-opacity-90 text-white text-xs rounded p-2 flex items-center mx-2 my-btn hover:brightness-110"
               >
-                <span className="material-icons mr-1"></span>
-                Xでシェアする
+                <XIcon style={{ fontSize: "14px", color: "fcfcf5" }} />
+                でシェアする
               </a>
             )}
             <div className="relative mx-1">
@@ -197,12 +206,8 @@ export const RecipeDetailsPage = () => {
               <button
                 className={`rounded p-1 flex items-center my-btn transition-all duration-1000 active:scale-125`}
                 onClick={async () => {
-                  if (auth.isAuthenticated) {
-                    isFavorited ? await unfavorite() : await favorite();
-                    fetch();
-                  } else {
-                    setMessage("ログインしてください。");
-                  }
+                  isFavorited ? await unfavorite() : await favorite();
+                  fetch();
                 }}
               >
                 <p className="flex items-center font-sans">
@@ -232,12 +237,8 @@ export const RecipeDetailsPage = () => {
               <button
                 className={`rounded p-1 flex items-center my-btn transition-all duration-1000 active:scale-125`}
                 onClick={async () => {
-                  if (auth.isAuthenticated) {
-                    isBookmarked ? await unbookmark() : await bookmark();
-                    fetch();
-                  } else {
-                    setMessage("ログインしてください。");
-                  }
+                  isBookmarked ? await unbookmark() : await bookmark();
+                  fetch();
                 }}
               >
                 <p className="flex items-center font-sans">

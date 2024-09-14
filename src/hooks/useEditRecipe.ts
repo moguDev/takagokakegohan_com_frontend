@@ -2,8 +2,7 @@
 
 import { toastState } from "@/components/Toast";
 import { axiosInstance } from "@/lib/axiosInstance";
-import { Ingredient, RecipeStatus, Step } from "@/types";
-import { Tulpen_One } from "next/font/google";
+import { RecipeStatus, Step } from "@/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import { useSetRecoilState } from "recoil";
@@ -18,7 +17,7 @@ export interface RecipeFormData {
 }
 
 export const useEditRecipe = () => {
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -56,12 +55,15 @@ export const useEditRecipe = () => {
         status === "published" &&
         (data.title === "" || data.title === null)
       ) {
-        setMessage("レシピのタイトルを入力してください");
+        setToast({
+          message: "レシピのタイトルを入力してください",
+          case: "alert",
+        });
         return;
       }
       setLoading(true);
       try {
-        const res = await axiosInstance.put(
+        await axiosInstance.put(
           `/recipes/${id}`,
           {
             recipe: {
@@ -75,9 +77,9 @@ export const useEditRecipe = () => {
         );
         if (status === "published") {
           router.replace(`/recipes/${id}`);
-          setMessage("レシピを公開しました！");
+          setToast({ message: "レシピを公開しました！", case: "success" });
         } else {
-          setMessage("下書きを保存しました");
+          setToast({ message: "下書きを保存しました", case: "success" });
         }
       } catch (error) {
         console.error(error);

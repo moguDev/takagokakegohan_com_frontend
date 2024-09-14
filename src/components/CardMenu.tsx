@@ -11,7 +11,7 @@ import { getImageUrl } from "@/lib";
 export const CardMenu: React.FC = () => {
   const { auth, logout } = useAuth();
   const { followings, followers } = useRelationship(auth.name);
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   return (
     <div
       tabIndex={0}
@@ -38,11 +38,11 @@ export const CardMenu: React.FC = () => {
               <div className="flex items-center p-1 text-xl select-none">
                 <p className="font-bold mr-3">
                   {followings.length}
-                  <span className="text-sm font-normal ml-1">フォロー</span>
+                  <span className="text-sm font-normal ml-0.5">フォロー中</span>
                 </p>
                 <p className="font-bold">
                   {followers.length}
-                  <span className="text-sm font-normal ml-1">フォロワー</span>
+                  <span className="text-sm font-normal ml-0.5">フォロワー</span>
                 </p>
               </div>
             </div>
@@ -62,43 +62,16 @@ export const CardMenu: React.FC = () => {
                   </span>
                 </Link>
               </li>
-              <li className="py-1">
-                <Link
-                  href="/bookmark"
-                  className="relative hover:text-blue-500 select-none"
-                  onClick={() =>
-                    document.getElementById("accout-circle")?.click()
-                  }
-                >
-                  <span className="material-icons">bookmark</span>
-                  ブックマーク
-                  <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
-                    navigate_next
-                  </span>
-                </Link>
-              </li>
-              <li className="py-1">
-                <Link
-                  href="/drafts"
-                  className="relative hover:text-blue-500 select-none"
-                  onClick={() =>
-                    document.getElementById("accout-circle")?.click()
-                  }
-                >
-                  <span className="material-icons">edit_note</span>
-                  下書きレシピ
-                  <span className="absolute text-blue-500 w-full text-right material-icons transition-all duration-200 opacity-0 hover:opacity-100 hover:translate-x-1">
-                    navigate_next
-                  </span>
-                </Link>
-              </li>
               <li className="py-1 my-btn">
                 <button
                   className="relative hover:text-blue-500"
                   onClick={() => {
                     document.getElementById("accout-circle")?.click();
                     logout();
-                    setMessage("ログアウトしました");
+                    setToast({
+                      message: "ログアウトしました",
+                      case: "success",
+                    });
                   }}
                 >
                   <span className="material-icons">logout</span>

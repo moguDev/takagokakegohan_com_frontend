@@ -7,8 +7,8 @@ import defaultImage from "/public/images/default_avatar.png";
 import { useRouter } from "next/navigation";
 import { useCheckName } from "@/hooks/useCheckName";
 import { useSetRecoilState } from "recoil";
-import { toastState } from "./Toast";
-import { Loading } from "./Loading";
+import { toastState } from "../../../components/Toast";
+import { Loading } from "../../../components/Loading";
 import { getImageUrl } from "@/lib";
 
 interface FormData {
@@ -27,7 +27,7 @@ export const closeEditProfileModal = () =>
   (document.getElementById("edit-profile-modal") as HTMLDialogElement).close();
 
 export const EditProfileModal = () => {
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const router = useRouter();
   const { auth, loading, updateProfile } = useAuth();
   const { isUnique, checkName } = useCheckName();
@@ -52,7 +52,7 @@ export const EditProfileModal = () => {
   useEffect(() => {
     setValue("name", auth.name);
     setValue("nickname", auth.nickname);
-    setValue("introduction", "");
+    setValue("introduction", auth.introduction);
   }, [auth, setValue]);
 
   useEffect(() => {
@@ -79,7 +79,7 @@ export const EditProfileModal = () => {
       );
       closeEditProfileModal();
       router.push(`/${data.name}`);
-      setMessage("プロフィールを更新しました。");
+      setToast({ message: "プロフィールを更新しました", case: "success" });
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -122,7 +122,11 @@ export const EditProfileModal = () => {
               </span>
             </div>
             <Image
-              src={getImageUrl(auth.avatar.url) || defaultImage}
+              src={
+                imageSource
+                  ? imageSource
+                  : getImageUrl(auth.avatar.url) || defaultImage
+              }
               alt="アイコン"
               className="object-cover rounded-full"
               fill
@@ -205,8 +209,7 @@ export const EditProfileModal = () => {
             <label htmlFor="name" className="text-xs my-1">
               自己紹介
             </label>
-            <input
-              type="text"
+            <textarea
               className="bg-white my-1 p-1 border-b border-gray-300 outline-none"
               {...register("introduction", {
                 maxLength: {

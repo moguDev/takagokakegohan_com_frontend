@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useSetRecoilState } from "recoil";
 import { toastState } from "@/components/Toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loading } from "@/components/Loading";
 
 type FormData = {
@@ -14,9 +14,9 @@ type FormData = {
 };
 
 export const SigninForm = () => {
-  const { login, loading, errors: authErrors } = useAuth();
+  const { auth, login, loading, errors: authErrors } = useAuth();
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const router = useRouter();
   const defaultValues = {
     email: "",
@@ -32,10 +32,16 @@ export const SigninForm = () => {
     await login(data.email, data.password)
       .then(() => {
         router.back();
-        setMessage("ログインしました");
+        setToast({ message: "ログインしました", case: "success" });
       })
       .catch(() => {});
   };
+
+  if (auth.isAuthenticated) {
+    setToast({ message: "ログイン中です", case: "success" });
+    router.push("/");
+    return <></>;
+  }
 
   return (
     <div className="relative">

@@ -11,6 +11,7 @@ type TypeAuth = {
   nickname: string;
   avatar: { url: string | null };
   rank?: string;
+  introduction: string;
 };
 
 const authState = atom<TypeAuth>({
@@ -22,6 +23,7 @@ const authState = atom<TypeAuth>({
     nickname: "",
     avatar: { url: null },
     rank: "かけだし",
+    introduction: "",
   },
 });
 
@@ -50,13 +52,7 @@ export const useAuth = () => {
       const res = await axiosInstance.get("/auth/validate_token");
       setAuth({
         isAuthenticated: true,
-        user_id: res.data.data.id,
-        name: res.data.data.name,
-        nickname: res.data.data.nickname,
-        avatar: {
-          url: res.data.data.avatar.url,
-        },
-        rank: res.data.data.rank,
+        ...res.data.data,
       });
     } catch (error) {
       console.error("認証情報の取得に失敗しました");
@@ -93,12 +89,7 @@ export const useAuth = () => {
           setCookies(accessToken, client, uid);
           setAuth({
             isAuthenticated: true,
-            user_id: res.data.data.id,
-            name: res.data.data.name,
-            nickname: res.data.data.nickname,
-            avatar: {
-              url: res.data.data.avatar.url,
-            },
+            ...res.data.data,
           });
         }
       } catch (error) {
@@ -126,12 +117,7 @@ export const useAuth = () => {
           setCookies(accessToken, client, uid);
           setAuth({
             isAuthenticated: true,
-            user_id: res.data.data.id,
-            name: res.data.data.name,
-            nickname: res.data.data.nickname,
-            avatar: {
-              url: res.data.data.avatar.url,
-            },
+            ...res.data.data,
           });
         }
         setAuth((prev) => ({ ...prev, isAuthenticated: true }));
@@ -158,6 +144,7 @@ export const useAuth = () => {
         name: "",
         nickname: "",
         avatar: { url: null },
+        introduction: "",
       });
     } catch (error) {
       throw new Error("ログアウトに失敗しました。");
@@ -190,12 +177,7 @@ export const useAuth = () => {
           setCookies(accessToken, client, uid);
           setAuth({
             isAuthenticated: true,
-            user_id: res.data.data.id,
-            name: res.data.data.name,
-            nickname: res.data.data.nickname,
-            avatar: {
-              url: res.data.data.avatar.url,
-            },
+            ...res.data.data,
           });
         }
       } catch (error) {

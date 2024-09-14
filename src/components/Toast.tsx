@@ -2,40 +2,43 @@
 import { atom } from "recoil";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { useParams, usePathname } from "next/navigation";
 
-export const toastState = atom<string | null>({
+export const toastState = atom<{
+  message: string;
+  case: "success" | "alert";
+} | null>({
   key: "toastState",
   default: null,
 });
 
 export const Toast = () => {
-  const [message, setMessage] = useRecoilState(toastState);
-  const pathName = usePathname();
+  const [toast, setToast] = useRecoilState(toastState);
 
   useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(null), 3000);
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 3000);
       return () => clearTimeout(timer);
     }
-  }, [message, setMessage]);
+  }, [toast]);
 
-  if (!message) return null;
+  if (!toast) return null;
 
   return (
     <div
-      className={`z-30 mt-2 w-max mx-auto transition-all duration-300 ${
-        message ? "opacity-100" : "h-0 opacity-0"
+      className={`z-30 mt-2 w-max mx-auto transition-transform duration-300 ease-in-out ${
+        toast ? "translate-y-0" : "-translate-y-10"
       }`}
     >
       <p
         className={`
           text-center md:text-sm text-xs font-semibold px-5 py-1 text-white
-          bg-blue-500 bg-opacity-80 backdrop-blur-sm rounded-full h-full
-          flex items-center justify-center
+          bg-opacity-80 backdrop-blur-sm rounded-full h-full
+          flex items-center justify-center ${
+            toast.case === "success" ? "bg-blue-500" : "bg-red-500"
+          }
         `}
       >
-        {message}
+        {toast.message}
       </p>
     </div>
   );

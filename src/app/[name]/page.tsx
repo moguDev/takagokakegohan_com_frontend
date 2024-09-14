@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { EditProfileModal } from "@/components/EditProfileModal";
+import { EditProfileModal } from "@/app/[name]/components/EditProfileModal";
 import { UserProfilesPage } from "./UserProfilesPage";
 import Loading from "../loading";
 import { Metadata } from "next";
