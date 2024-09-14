@@ -28,7 +28,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
           {recipe.image.url ? (
             <>
               {isLoading && (
-                <div className="flex items-center justify-center bg-gray-300 bg-opacity-75 absolute h-full w-full z-10">
+                <div className="flex items-center justify-center bg-gray-100 bg-opacity-75 absolute h-full w-full z-10">
                   <span className="loading loading-spinner loading-sm text-gray-500" />
                 </div>
               )}
@@ -38,6 +38,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                 className="object-cover rounded"
                 fill
                 onLoadingComplete={() => setIsLoading(false)}
+                unoptimized
               />
             </>
           ) : (
