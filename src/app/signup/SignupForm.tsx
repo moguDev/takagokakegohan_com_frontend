@@ -58,6 +58,11 @@ export const SignupForm = () => {
     return <></>;
   }
 
+  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE) {
+    setToast({ message: "メンテナンス中", case: "alert" });
+    router.push("/signin");
+    return <></>;
+  }
   return (
     <div className="relative">
       <Loading text="アカウントを作成しています..." loading={loading} />
