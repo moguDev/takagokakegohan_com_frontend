@@ -3,6 +3,7 @@ import withPWA from "next-pwa";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    unoptimized: true,
     domains: ["s3.ap-northeast-1.amazonaws.com"],
     remotePatterns: [
       {
