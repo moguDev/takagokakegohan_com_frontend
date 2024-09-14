@@ -14,7 +14,7 @@ export const useRelationship = (name: string | number) => {
   const [followers, setFollowers] = useState<UserProfiles[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const check = useCallback(async () => {
+  const checkIsFollowed = useCallback(async () => {
     setLoading(true);
     try {
       const resCheck = await axiosInstance.get(
@@ -34,6 +34,22 @@ export const useRelationship = (name: string | number) => {
     }
   }, [name, setIsFollowed]);
 
+  const fetch = useCallback(async () => {
+    setLoading(true);
+    try {
+      const resFollowings = await axiosInstance.get(
+        `/users/${name}/followings`
+      );
+      setFollowings(resFollowings.data);
+      const resFollowers = await axiosInstance.get(`/users/${name}/followers`);
+      setFollowers(resFollowers.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }, [name, setFollowings, setFollowers]);
+
   const follow = async () => {
     if (!auth.isAuthenticated) {
       setToast({ message: "ログインしてください", case: "alert" });
@@ -42,7 +58,7 @@ export const useRelationship = (name: string | number) => {
     setLoading(true);
     try {
       await axiosInstance.post(`/users/${name}/relationship`);
-      check();
+      checkIsFollowed();
     } catch (error) {
       console.error(error);
     } finally {
@@ -58,7 +74,7 @@ export const useRelationship = (name: string | number) => {
     setLoading(true);
     try {
       await axiosInstance.delete(`/users/${name}/relationship`);
-      check();
+      checkIsFollowed();
     } catch (error) {
       console.error(error);
     } finally {
@@ -67,15 +83,16 @@ export const useRelationship = (name: string | number) => {
   };
 
   useEffect(() => {
-    check();
-  }, [name, check]);
+    checkIsFollowed();
+    fetch();
+  }, [name, checkIsFollowed, fetch]);
 
   return {
     isFollowed,
     followings,
     followers,
     loading,
-    check,
+    check: checkIsFollowed,
     follow,
     unfollow,
   };

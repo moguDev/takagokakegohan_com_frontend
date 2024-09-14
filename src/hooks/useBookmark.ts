@@ -12,18 +12,16 @@ export const useBookmark = (recipeId: number | string) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const checkBookmarked = useCallback(async () => {
-    if (auth.isAuthenticated) {
-      setLoading(true);
-      try {
-        const res = await axiosInstance.get(
-          `/recipes/${recipeId}/is_user_bookmarked`
-        );
-        setIsBookmarked(res.data.is_bookmarked);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+    setLoading(true);
+    try {
+      const res = await axiosInstance.get(
+        `/recipes/${recipeId}/is_user_bookmarked`
+      );
+      setIsBookmarked(res.data.is_bookmarked);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   }, [recipeId]);
 
