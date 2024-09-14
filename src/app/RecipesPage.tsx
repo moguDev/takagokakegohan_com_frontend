@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { atom, useRecoilState, useSetRecoilState } from "recoil";
 import { useAuth } from "@/hooks/useAuth";
 import { toastState } from "@/components/Toast";
+import { RecipesGrid } from "@/components/RecipesGrid";
 
 const items: string[] = [
   "#新着TKG",
@@ -51,7 +52,7 @@ export const RecipesPage = () => {
 
   const handleClick = (index: number) => {
     if (!auth.isAuthenticated && items[index] === "#フォロー中") {
-      setMessage("ログインしてください。");
+      setMessage({ message: "ログインしてください。", case: "alert" });
       return;
     }
     setSelectIndex(index);
@@ -112,7 +113,7 @@ export const RecipesPage = () => {
               >
                 <div
                   className={`absolute top-0 left-0 h-1 w-full ${
-                    index === selectIndex ? "bg-yellow-500" : "bg-opacity-0"
+                    index === selectIndex ? "bg-yellow-400" : "bg-opacity-0"
                   } rounded-t-lg`}
                 />
                 {item}
@@ -129,27 +130,7 @@ export const RecipesPage = () => {
             </h2>
             <p className="text-gray-500 font-semibold">{recipes.length}件</p>
           </div>
-          {recipes.length > 0 ? (
-            <div className="relative grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2">
-              {loading && (
-                <div className="absolute flex flex-col items-center justify-center h-full w-full bg-white bg-opacity-80 z-10">
-                  <span className="loading loading-dots text-yellow-500" />
-                  <p className="text-xs text-gray-500 font-semibold">
-                    読み込み中
-                  </p>
-                </div>
-              )}
-              {recipes.map((recipe, index) => (
-                <RecipeCard key={index} recipe={recipe} />
-              ))}
-            </div>
-          ) : (
-            <div className="p-5 min-h-64 flex items-center justify-center">
-              <p className="text-center text-gray-400">
-                レシピが見つかりませんでした。
-              </p>
-            </div>
-          )}
+          <RecipesGrid recipes={recipes} loading={loading} />
         </section>
       </div>
     </div>

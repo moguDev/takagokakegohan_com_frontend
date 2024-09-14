@@ -9,7 +9,7 @@ import { useSetRecoilState } from "recoil";
 import { toastState } from "./Toast";
 
 export const TabNavigation = () => {
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const { auth } = useAuth();
   const pathName = usePathname();
   const { create, loading } = useEditRecipe();
@@ -37,7 +37,9 @@ export const TabNavigation = () => {
   }, [scrollY]);
 
   const handleCreateRecipe = () => {
-    auth.isAuthenticated ? create() : setMessage("ログインしてください");
+    auth.isAuthenticated
+      ? create()
+      : setToast({ message: "ログインしてください", case: "alert" });
   };
 
   return (
@@ -72,7 +74,8 @@ export const TabNavigation = () => {
         <Link
           href={auth.isAuthenticated ? "/bookmark" : "/signin"}
           onClick={() => {
-            !auth.isAuthenticated && setMessage("ログインしてください");
+            !auth.isAuthenticated &&
+              setToast({ message: "ログインしてください", case: "alert" });
           }}
           className={`w-1/4 text-center transition-all duration-300 select-none ${
             pathName === "/bookmark"
@@ -106,7 +109,8 @@ export const TabNavigation = () => {
         <Link
           href={auth.isAuthenticated ? "/drafts" : "/signin"}
           onClick={() => {
-            !auth.isAuthenticated && setMessage("ログインしてください");
+            !auth.isAuthenticated &&
+              setToast({ message: "ログインしてください", case: "alert" });
           }}
           className={`w-1/4 text-center transition-all duration-300 select-none ${
             pathName === "/drafts"

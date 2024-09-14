@@ -126,10 +126,13 @@ export const Header = () => {
         className={`bg-white bg-opacity-90 backdrop-blur flex items-center justify-between pl-5 pr-3 md:px-5 py-2 h-16 shadow`}
       >
         <div className="md:flex items-center">
-          <h1 className="text-black md:text-2xl text-xl font-bold select-none">
+          <h1
+            className="text-black md:text-2xl text-xl font-bold select-none"
+            style={{ textShadow: "1px 1px 5px rgba(0, 0, 0, 0.2)" }}
+          >
             <Link href="/" className="md:block font-black">
               たまごかけごはん
-              <span className="text-yellow-600">.</span>
+              <span className="scale-150 text-yellow-600">.</span>
               <span className="text-xl">com</span>
             </Link>
             <span className="hidden">{headerText}</span>

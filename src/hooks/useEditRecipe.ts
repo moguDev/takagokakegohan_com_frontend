@@ -18,7 +18,7 @@ export interface RecipeFormData {
 }
 
 export const useEditRecipe = () => {
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -56,7 +56,10 @@ export const useEditRecipe = () => {
         status === "published" &&
         (data.title === "" || data.title === null)
       ) {
-        setMessage("レシピのタイトルを入力してください");
+        setToast({
+          message: "レシピのタイトルを入力してください",
+          case: "alert",
+        });
         return;
       }
       setLoading(true);
@@ -75,9 +78,9 @@ export const useEditRecipe = () => {
         );
         if (status === "published") {
           router.replace(`/recipes/${id}`);
-          setMessage("レシピを公開しました！");
+          setToast({ message: "レシピを公開しました！", case: "success" });
         } else {
-          setMessage("下書きを保存しました");
+          setToast({ message: "下書きを保存しました", case: "success" });
         }
       } catch (error) {
         console.error(error);

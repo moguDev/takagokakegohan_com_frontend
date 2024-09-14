@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useCheckName } from "@/hooks/useCheckName";
 import { Loading } from "@/components/Loading";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "@/components/Toast";
 
 type FormData = {
   email: string;
@@ -17,7 +19,8 @@ type FormData = {
 
 export const SignupForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-  const { loading, signup, errors: authErrors } = useAuth();
+  const { auth, loading, signup, errors: authErrors } = useAuth();
+  const setToast = useSetRecoilState(toastState);
   const { isUnique, checkName } = useCheckName();
   const router = useRouter();
   const defaultValues = {
@@ -48,6 +51,12 @@ export const SignupForm = () => {
       console.error(error);
     }
   };
+
+  if (auth.isAuthenticated) {
+    setToast({ message: "ログイン中です", case: "success" });
+    router.push("/");
+    return <></>;
+  }
 
   return (
     <div className="relative">

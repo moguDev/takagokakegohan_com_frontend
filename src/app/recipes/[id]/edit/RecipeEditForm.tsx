@@ -14,7 +14,7 @@ import { Loading } from "@/components/Loading";
 import { getImageUrl } from "@/lib";
 
 export const RecipesEditForm: React.FC = () => {
-  const setMessage = useSetRecoilState(toastState);
+  const setToast = useSetRecoilState(toastState);
   const { id } = useParams();
   const router = useRouter();
   const { auth } = useAuth();
@@ -57,11 +57,22 @@ export const RecipesEditForm: React.FC = () => {
     remove: removeStep,
   } = useFieldArray({ control, name: "steps" });
 
+  const onsubmit = (data: RecipeFormData) => {
+    if (data.ingredients.length === 0) {
+      setToast({ message: "調味料・食材が設定されていません", case: "alert" });
+      return;
+    } else if (data.steps.length === 0) {
+      setToast({ message: "作り方が入力されていません", case: "alert" });
+      return;
+    }
+    update(id as string, data, "published");
+  };
+
   useEffect(() => {
     if (recipe) {
       if (recipe.user.name !== auth.name) {
         router.back();
-        setMessage("レシピの編集権限がありません");
+        setToast({ message: "レシピの編集権限がありません", case: "alert" });
       }
       setValue("title", recipe.title);
       setValue("body", recipe.body);
@@ -93,9 +104,7 @@ export const RecipesEditForm: React.FC = () => {
       <Loading text="更新中..." loading={loading} />
       <form
         method="post"
-        onSubmit={handleSubmit((data: RecipeFormData) => {
-          update(id as string, data, "published");
-        })}
+        onSubmit={handleSubmit(onsubmit)}
         className="max-w-4xl mx-auto"
       >
         <div className="w-full px-2 bg-white rounded-md">
@@ -210,8 +219,8 @@ export const RecipesEditForm: React.FC = () => {
                       })}
                     />
                     秒
-                    <span className="text-xs text-red-400 font-bold ml-1">
-                      ※ご飯の炊飯時間は含みません
+                    <span className="text-xs text-gray-300 font-semibold ml-1">
+                      ※ご飯の炊飯時間などは含みません
                     </span>
                   </div>
                   <div className="text-red-500 text-xs p-1">
@@ -402,7 +411,10 @@ export const RecipesEditForm: React.FC = () => {
                 try {
                   await axiosInstance.delete(`/recipes/${id}`);
                   router.back();
-                  setMessage("レシピを削除しました。");
+                  setToast({
+                    message: "レシピを削除しました",
+                    case: "success",
+                  });
                 } catch (error) {
                   console.error(error);
                 }

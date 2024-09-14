@@ -2,8 +2,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { axiosInstance } from "@/lib/axiosInstance";
 import { UserProfiles } from "@/types";
+import { useAuth } from "./useAuth";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "@/components/Toast";
 
 export const useRelationship = (name: string | number) => {
+  const { auth } = useAuth();
+  const setToast = useSetRecoilState(toastState);
   const [isFollowed, setIsFollowed] = useState<boolean>(false);
   const [followings, setFollowings] = useState<UserProfiles[]>([]);
   const [followers, setFollowers] = useState<UserProfiles[]>([]);
@@ -30,6 +35,10 @@ export const useRelationship = (name: string | number) => {
   }, [name, setIsFollowed]);
 
   const follow = async () => {
+    if (!auth.isAuthenticated) {
+      setToast({ message: "ログインしてください", case: "alert" });
+      return;
+    }
     setLoading(true);
     try {
       await axiosInstance.post(`/users/${name}/relationship`);
@@ -42,6 +51,10 @@ export const useRelationship = (name: string | number) => {
   };
 
   const unfollow = async () => {
+    if (!auth.isAuthenticated) {
+      setToast({ message: "ログインしてください", case: "alert" });
+      return;
+    }
     setLoading(true);
     try {
       await axiosInstance.delete(`/users/${name}/relationship`);

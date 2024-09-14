@@ -56,7 +56,7 @@ export default function RootLayout({
           <div className="drawer drawer-end">
             <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
-              <main className="md:pt-24 pt-20 relative w-screen">
+              <main className="md:pt-20 pt-[72px] relative w-screen">
                 <Header />
                 <div className="flex w-full">
                   <div className="md:pb-0 pb-16 md:px-5 px-2 w-full h-full">

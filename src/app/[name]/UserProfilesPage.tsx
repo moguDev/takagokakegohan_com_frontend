@@ -9,121 +9,16 @@ import { useEffect, useState } from "react";
 import {
   EditProfileModal,
   showEditProfileModal,
-} from "@/components/EditProfileModal";
+} from "@/app/[name]/components/EditProfileModal";
 import { useRelationship } from "@/hooks/useRelationship";
 import Loading from "../loading";
-import { UserProfiles } from "@/types";
-import Link from "next/link";
-import { axiosInstance } from "@/lib/axiosInstance";
-import { useSetRecoilState } from "recoil";
-import { toastState } from "@/components/Toast";
 import { getImageUrl } from "@/lib";
-
-const FollowListModal = ({
-  title,
-  users,
-  onClose,
-}: {
-  title: string;
-  users: UserProfiles[];
-  onClose: () => void;
-}) => {
-  const { auth } = useAuth();
-  const { loading, followings, check } = useRelationship(auth.name);
-  const setMessage = useSetRecoilState(toastState);
-
-  const follow = async (name: string) => {
-    try {
-      await axiosInstance.post(`/users/${name}/relationship`);
-      check();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const unfollow = async (name: string) => {
-    try {
-      await axiosInstance.delete(`/users/${name}/relationship`);
-      check();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  return (
-    <dialog id="follow-list-modal" className="modal" open>
-      <div className="modal-box bg-white rounded-lg shadow-xl border">
-        <div className="flex items-center justify-between pb-3 border-b border-gray-200">
-          <h3 className="font-bold text-lg">{title}</h3>
-          <p className="text-blue-900 text-lg font-bold">{users.length}</p>
-        </div>
-        <ul className="mt-3">
-          {users.length > 0 ? (
-            users.map((user, index) => (
-              <li
-                key={index}
-                className="py-3 flex items-center justify-between"
-              >
-                <Link href={`/${user.name}`} className="flex items-center">
-                  <div className="h-10 w-10 rounded-full border-2 border-white border-opacity-50 shadow relative">
-                    <Image
-                      src={getImageUrl(user.avatar.url) || defaultImage}
-                      alt="アイコン"
-                      className="object-cover rounded-full"
-                      fill
-                    />
-                  </div>
-                  <div className="ml-2">
-                    <p className="font-bold">{user.nickname}</p>
-                    <p className="text-gray-500 font-thin text-xs">
-                      @{user.name}
-                    </p>
-                  </div>
-                </Link>
-                <div className="relative">
-                  {loading && (
-                    <div className="absolute bg-white w-full h-full flex items-center justify-center z-10">
-                      <span className="loading loading-dots loading-xs text-yellow-600" />
-                    </div>
-                  )}
-                  {auth.name !== user.name &&
-                    (followings.some(
-                      (followUser) => followUser.name === user.name
-                    ) ? (
-                      <button
-                        className="text-xs rounded-full bg-opadicy-0 px-3 py-2 text-yellow-600 font-semibold border border-yellow-600 my-btn"
-                        onClick={() => {
-                          unfollow(user.name);
-                        }}
-                      >
-                        フォロー中
-                      </button>
-                    ) : (
-                      <button
-                        className="text-xs rounded-full bg-yellow-600 px-3 py-2 text-white font-semibold my-btn"
-                        onClick={() => {
-                          auth.isAuthenticated
-                            ? follow(user.name)
-                            : setMessage("ログインしてください。");
-                        }}
-                      >
-                        フォローする
-                      </button>
-                    ))}
-                </div>
-              </li>
-            ))
-          ) : (
-            <p className="text-sm text-center text-gray-500">{`${title}のユーザはいません`}</p>
-          )}
-        </ul>
-      </div>
-      <form method="dialog" className="modal-backdrop">
-        <button onClick={onClose}>close</button>
-      </form>
-    </dialog>
-  );
-};
+import {
+  FollowListModal,
+  showFollowListModal,
+} from "./components/FollowListModal";
+import { UserProfiles } from "@/types";
+import { ParagraphWithLinks } from "@/components/ParagraphWithLinks";
 
 export const UserProfilesPage: React.FC = () => {
   const { auth } = useAuth();
@@ -137,13 +32,19 @@ export const UserProfilesPage: React.FC = () => {
   const [modalData, setModalData] = useState<{
     title: string;
     users: UserProfiles[];
-  } | null>(null);
+    isOpen: boolean;
+  }>({ title: "フォロー中", users: followings, isOpen: false });
 
   useEffect(() => {
     reload();
   }, [auth]);
 
-  const handleCloseModal = () => setModalData(null);
+  useEffect(() => {
+    modalData.isOpen && showFollowListModal();
+  }, [modalData]);
+
+  const handleCloseModal = () =>
+    setModalData((prev) => ({ ...prev, isOpen: false }));
 
   return error === "404" ? (
     <div className="fixed inset-0 flex flex-col items-center justify-center h-screen w-screen">
@@ -161,83 +62,99 @@ export const UserProfilesPage: React.FC = () => {
   ) : loading ? (
     <Loading />
   ) : (
-    <div className="max-w-4xl mx-auto">
-      <section className="mx-2 p-5 bg-gradient-single rounded-md shadow-sm">
-        <div className="font-bold cursor-pointer flex justify-end mb-1">
+    <div className="max-w-4xl mx-auto bg-white rounded-lg">
+      {/* メインプロフィール */}
+      <section className="mx-2 p-5">
+        <section>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              {/* アイコン */}
+              <div className="h-16 w-16 rounded-full shadow relative">
+                <Image
+                  src={getImageUrl(userProfiles.avatar.url) || defaultImage}
+                  alt="アイコン"
+                  className="object-cover rounded-full"
+                  fill
+                />
+              </div>
+              {/* 名前・ID */}
+              <h2 className="ml-2 text-xl font-bold">
+                {userProfiles?.nickname}
+              </h2>
+              <p className="ml-1 text-sm text-gray-400">@{userProfiles.name}</p>
+            </div>
+          </div>
+          {/* 料理人ランク */}
+          <p className="w-max text-xs font-semibold bg-white rounded my-3 px-4 py-0.5 bg-gradient-single shadow select-none">
+            <span className="text-black">{userProfiles.rank}料理人</span>
+          </p>
+          {/* 自己紹介 */}
+          <div className="mt-3 text-sm">
+            <ParagraphWithLinks text={userProfiles.introduction} />
+          </div>
+          {/* フォロー中・フォロワー */}
+          <div className="flex items-center text-md w-full">
+            <button
+              className="select-none pr-5 py-2"
+              onClick={() => {
+                setModalData({
+                  title: "フォロー中",
+                  users: followings,
+                  isOpen: true,
+                });
+              }}
+            >
+              <span className="font-black text-lg text-blue-900 mr-0.5">
+                {followings.length}
+              </span>
+              フォロー中
+            </button>
+            <button
+              className="select-none py-2"
+              onClick={() => {
+                setModalData({
+                  title: "フォロワー",
+                  users: followers,
+                  isOpen: true,
+                });
+              }}
+            >
+              <span className="font-black text-lg text-blue-900 mr-0.5">
+                {followers.length}
+              </span>
+              フォロワー
+            </button>
+          </div>
+          {/* 自分以外ならフォロー・フォロー中ボタンの表示 */}
           {auth.name === name ? (
             <button
-              className="font-bold text-gray-600 w-max border rounded-full border-gray-300 bg-gray-100 text-xs px-5 py-1 my-btn"
+              className="text-gray-500 bg-opacity-0 w-full border border-gray-400 rounded-md text-sm mt-3 py-2 my-btn"
               onClick={showEditProfileModal}
             >
-              編集
+              プロフィールを編集
             </button>
           ) : isFollowed ? (
             <button
-              className="text-yellow-600 bg-opacity-0 w-max border border-yellow-600 rounded-full text-xs px-4 py-2 my-btn"
+              className="text-yellow-600 bg-opacity-0 w-full border border-yellow-600 rounded-md text-sm mt-3 py-2 my-btn"
               onClick={unfollow}
             >
               フォロー中
             </button>
           ) : (
             <button
-              className="text-white bg-yellow-600 w-max border rounded-full text-xs px-4 py-2 my-btn"
+              className="text-white bg-yellow-600 w-full border rounded-md text-sm mt-3 py-2 my-btn"
               onClick={follow}
             >
               フォローする
             </button>
           )}
-        </div>
-        <div className="flex flex-col justify-center items-center">
-          <div className="h-32 w-32 rounded-full border-4 border-white border-opacity-50 shadow relative">
-            <Image
-              src={getImageUrl(userProfiles.avatar.url) || defaultImage}
-              alt="アイコン"
-              className="object-cover rounded-full"
-              fill
-            />
-          </div>
-          <h2 className="text-2xl font-bold mt-2">{userProfiles?.nickname}</h2>
-          <p className="text-gray-500">@{userProfiles.name}</p>
-          <p className="font-bold bg-white rounded-full my-3 px-10 py-1 border border-white shadow-sm select-none">
-            <span className="text-black">{userProfiles.rank}料理人</span>
-          </p>
-          <div className="w-full border-b mb-2" />
-          <div className="flex items-center justify-center w-full">
-            <button
-              className="flex flex-col items-center select-none md:w-1/5 w-1/3 p-2 rounded-lg"
-              onClick={() =>
-                setModalData({
-                  title: "フォロー中",
-                  users: followings,
-                })
-              }
-            >
-              <span className="text-xs text-gray-600">フォロー中</span>
-              <span className="mr-1 font-black text-2xl text-blue-900">
-                {followings.length}
-              </span>
-            </button>
-            <button
-              className="flex flex-col items-center select-none md:w-1/5 w-1/3 p-2 rounded-lg"
-              onClick={() =>
-                setModalData({
-                  title: "フォロワー",
-                  users: followers,
-                })
-              }
-            >
-              <span className="text-xs text-gray-600">フォロワー</span>
-              <span className="mr-1 font-black text-2xl text-blue-900">
-                {followers.length}
-              </span>
-            </button>
-          </div>
-        </div>
+        </section>
       </section>
-      <section className="my-5 mx-2 py-3 bg-white rounded-lg ">
+      {/* 投稿したレシピ一覧 */}
+      <section className="mb-5 mx-2 py-3 border-t border-gray-200">
         <div className="md:mx-4 mx-2 mt-2">
           <div className="flex items-center justify-between text-black mb-2 px-2">
-            <h2 className="flex items-center font-semibold md:text-xl text-base">
+            <h2 className="flex items-center font-semibold md:text-lg text-base">
               <span className="material-icons text-yellow-600 mr-1">edit</span>
               投稿したレシピ
             </h2>
@@ -265,13 +182,11 @@ export const UserProfilesPage: React.FC = () => {
         </div>
       </section>
       <EditProfileModal />
-      {modalData && (
-        <FollowListModal
-          title={modalData.title}
-          users={modalData.users}
-          onClose={handleCloseModal}
-        />
-      )}
+      <FollowListModal
+        title={modalData.title}
+        users={modalData.users}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
