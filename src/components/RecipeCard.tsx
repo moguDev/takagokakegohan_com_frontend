@@ -1,10 +1,14 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Recipe } from "@/types";
 import defaultImage from "/public/images/default_avatar.png";
 import { getImageUrl } from "@/lib";
+import { useState } from "react";
+import { Loading } from "./Loading";
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
+  const [isLoading, setIsLoading] = useState(true);
   return (
     <Link
       href={
@@ -22,12 +26,20 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
       <div className="p-0.5 cursor-pointer transition-all duration-300 w-full my-btn">
         <div className="md:h-52 h-40 relative">
           {recipe.image.url ? (
-            <Image
-              src={getImageUrl(recipe.image.url) || defaultImage}
-              alt="sampleImage"
-              className="object-cover rounded"
-              fill
-            />
+            <>
+              {isLoading && (
+                <div className="flex items-center justify-center bg-gray-300 bg-opacity-75 absolute h-full w-full z-10">
+                  <span className="loading loading-spinner loading-sm text-gray-500" />
+                </div>
+              )}
+              <Image
+                src={getImageUrl(recipe.image.url) || defaultImage}
+                alt="sampleImage"
+                className="object-cover rounded"
+                fill
+                onLoadingComplete={() => setIsLoading(false)}
+              />
+            </>
           ) : (
             <div className="bg-gray-200 bg-opacity-50 rounded text-gray-300 w-full h-full flex flex-col items-center justify-center">
               <span className="material-icons">hide_image</span>
