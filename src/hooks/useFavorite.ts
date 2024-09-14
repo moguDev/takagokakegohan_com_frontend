@@ -12,18 +12,14 @@ export const useFavorite = (recipeId: number | string) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const checkFavorited = useCallback(async () => {
-    if (auth.isAuthenticated) {
-      setLoading(true);
-      try {
-        const res = await axiosInstance.get(
-          `/recipes/${recipeId}/is_user_liked`
-        );
-        setIsFavorited(res.data.is_liked);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+    setLoading(true);
+    try {
+      const res = await axiosInstance.get(`/recipes/${recipeId}/is_user_liked`);
+      setIsFavorited(res.data.is_liked);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
   }, [recipeId]);
 
