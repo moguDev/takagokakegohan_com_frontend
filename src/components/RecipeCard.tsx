@@ -34,7 +34,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
               )}
               <Image
                 src={getImageUrl(recipe.image.url) || defaultImage}
-                alt="sampleImage"
+                alt={recipe.title}
                 className="object-cover rounded"
                 fill
                 onLoadingComplete={() => setIsLoading(false)}
