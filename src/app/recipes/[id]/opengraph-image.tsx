@@ -5,20 +5,13 @@ import sharp from "sharp";
 
 export const runtime = "nodejs";
 export const alt = "About Acme";
-export const contentType = "image/png";
+export const contentType = "image/webp";
 
 export default async function OpengraphImage({
   params,
 }: {
   params: { id: string };
 }) {
-  const css = `
-    @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap');
-
-    body {
-      font-family: 'Zen+Kaku+Gothic+New', sans-serif;
-    }
-  `;
   const { id } = params;
   const res = await axiosInstance.get(`/recipes/${id}`);
   const recipe = res.data;
@@ -37,7 +30,7 @@ export default async function OpengraphImage({
       (
         <div
           style={{
-            background: "#FCD34D",
+            background: "#F59E0B",
             padding: "20px",
             display: "flex",
             flexDirection: "row",
@@ -47,7 +40,6 @@ export default async function OpengraphImage({
             height: "100%",
           }}
         >
-          <style>{css}</style>
           <div
             style={{
               width: "50%",
@@ -86,21 +78,22 @@ export default async function OpengraphImage({
                 maxWidth: "100%",
                 display: "flex",
                 fontWeight: "700",
-                fontSize: "40px",
+                fontSize: "48px",
               }}
             >
               {recipe.title}
             </h1>
             <p
               style={{
-                maxWidth: "100%",
-                display: "flex",
-                fontWeight: "20px",
-                fontSize: "28px",
+                width: "100%",
+                fontWeight: "400",
+                fontSize: "32px",
                 color: "#6B7280",
+                textAlign: "right",
+                alignSelf: "flex-end",
               }}
             >
-              {recipe.user.nickname}
+              by {recipe.user.nickname}
             </p>
           </div>
         </div>
