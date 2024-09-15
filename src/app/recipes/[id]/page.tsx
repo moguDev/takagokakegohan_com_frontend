@@ -12,7 +12,7 @@ export async function generateMetadata({
   const recipe = res.data;
 
   return {
-    title: `${recipe.title} | たまごかけごはん.com`,
+    title: `${recipe.title} |たまごかけごはん.com`,
     description: "たまごかけごはん専用の料理レシピサービス",
     openGraph: {
       title: recipe?.title,
@@ -20,9 +20,7 @@ export async function generateMetadata({
       url: `https://たまごかけごはん.com/recipes/${id}`,
       images: [
         {
-          url: recipe?.image.url
-            ? recipe.image.url
-            : "https://たまごかけごはん.com/images/opengraph-image.png",
+          url: `https://たまごかけごはん.com/recipes/${id}/opengraph-image`,
           width: 1200,
           height: 630,
           alt: recipe?.title,

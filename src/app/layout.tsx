@@ -4,7 +4,6 @@ import { Header } from "@/components/Header";
 import { RecoilRootWrapper } from "@/components/RecoilRootWrapper";
 import { TabNavigation } from "@/components/TabNavigation";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
-import { Toast } from "@/components/Toast";
 import { SideNavigation } from "@/components/SideNavigation";
 import { CardMenu } from "@/components/CardMenu";
 
