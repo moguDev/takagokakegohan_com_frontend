@@ -30,8 +30,8 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: recipe?.title,
-      description: recipe.body || "たまごかけごはん専用の料理レシピサービス",
+      title: `${recipe?.title} | たまごかけごはん.com`,
+      description: recipe.body,
       images: `https://たまごかけごはん.com/recipes/${id}/opengraph-image`,
     },
   };

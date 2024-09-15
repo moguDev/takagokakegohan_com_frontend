@@ -5,7 +5,7 @@ import sharp from "sharp";
 
 export const runtime = "nodejs";
 export const alt = "About Acme";
-export const contentType = "image/webp";
+export const contentType = "image/png";
 
 export default async function OpengraphImage({
   params,
@@ -16,6 +16,18 @@ export default async function OpengraphImage({
   const res = await axiosInstance.get(`/recipes/${id}`);
   const recipe = res.data;
   const imageUrl = getImageUrl(recipe.image.url);
+
+  const endpoint = new URL("https://www.googleapis.com/webfonts/v1/webfonts");
+  endpoint.searchParams.set("family", "Zen Kaku Gothic New");
+  endpoint.searchParams.set(
+    "key",
+    process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY as string
+  );
+  const info = await fetch(endpoint).then((res) => res.json());
+  console.log(info);
+
+  const fontResponse = await fetch(info.items[0].files["900"]);
+  const fontBuffer = await fontResponse.arrayBuffer();
 
   try {
     const recipeImageResponse = imageUrl
@@ -30,7 +42,8 @@ export default async function OpengraphImage({
       (
         <div
           style={{
-            background: "#F59E0B",
+            background: "#FBBF24",
+            color: "#333333",
             padding: "20px",
             display: "flex",
             flexDirection: "row",
@@ -44,17 +57,25 @@ export default async function OpengraphImage({
             style={{
               width: "50%",
               height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
               borderTopLeftRadius: "32px",
               borderBottomLeftRadius: "32px",
-              backgroundImage: `url(data:image/png;base64,${convertedImageBuffer.toString(
-                "base64"
-              )})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              backgroundAttachment: "fixed",
+              overflow: "hidden",
             }}
-          />
+          >
+            <img
+              src={`data:image/png;base64,${convertedImageBuffer.toString(
+                "base64"
+              )}`}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          </div>
           <div
             style={{
               background: "#fefef5",
@@ -68,39 +89,50 @@ export default async function OpengraphImage({
               borderBottomRightRadius: "32px",
             }}
           >
-            <img
-              src="https://たまごかけごはん.com/images/app-logo.png"
-              alt="logo"
-              style={{ width: "300px" }}
-            />
+            <p style={{ fontSize: "32px", lineHeight: "2px" }}>
+              たまごかけごはん<span style={{ color: "#D97706" }}>.</span>com
+            </p>
             <h1
               style={{
+                color: "2a2a2a",
                 maxWidth: "100%",
                 display: "flex",
                 fontWeight: "700",
-                fontSize: "48px",
+                fontSize: "56px",
               }}
             >
               {recipe.title}
             </h1>
-            <p
+            <div
               style={{
                 width: "100%",
-                fontWeight: "400",
-                fontSize: "32px",
-                color: "#6B7280",
-                textAlign: "right",
-                alignSelf: "flex-end",
+                display: "flex",
+                justifyContent: "flex-end", // ここで右寄せ
               }}
             >
-              by {recipe.user.nickname}
-            </p>
+              <p
+                style={{
+                  fontWeight: "400",
+                  fontSize: "28px",
+                  color: "#6B7280",
+                  lineHeight: "2px",
+                }}
+              >
+                by {recipe.user.nickname}
+              </p>
+            </div>
           </div>
         </div>
       ),
       {
         width: 1200,
         height: 630,
+        fonts: [
+          {
+            name: "Zen_Kaku_Gothic_New",
+            data: fontBuffer,
+          },
+        ],
       }
     );
   } catch (error) {
