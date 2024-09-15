@@ -15,7 +15,8 @@ export default async function OpengraphImage({
   const { id } = params;
   const res = await axiosInstance.get(`/recipes/${id}`);
   const recipe = res.data;
-  const imageUrl = getImageUrl(recipe.image.url);
+  const recipeImageUrl = getImageUrl(recipe.image.url);
+  const userImageUrl = getImageUrl(recipe.user.avatar.url);
 
   const endpoint = new URL("https://www.googleapis.com/webfonts/v1/webfonts");
   endpoint.searchParams.set("family", "Zen Kaku Gothic New");
@@ -30,11 +31,21 @@ export default async function OpengraphImage({
   const fontBuffer = await fontResponse.arrayBuffer();
 
   try {
-    const recipeImageResponse = imageUrl
-      ? await fetch(imageUrl!)
+    const recipeImageResponse = recipeImageUrl
+      ? await fetch(recipeImageUrl)
       : DefaultRecipeImage();
-    const imageBuffer = await recipeImageResponse.arrayBuffer();
-    const convertedImageBuffer = await sharp(Buffer.from(imageBuffer))
+    const recipeImageBuffer = await recipeImageResponse.arrayBuffer();
+    const convertedRecipeImageBuffer = await sharp(
+      Buffer.from(recipeImageBuffer)
+    )
+      .png()
+      .toBuffer();
+
+    const userImageResponse = userImageUrl
+      ? await fetch(userImageUrl)
+      : DefaultUserImage();
+    const userImageBuffer = await userImageResponse.arrayBuffer();
+    const convertedUserImageBuffer = await sharp(Buffer.from(userImageBuffer))
       .png()
       .toBuffer();
 
@@ -42,7 +53,7 @@ export default async function OpengraphImage({
       (
         <div
           style={{
-            background: "#FBBF24",
+            background: "#fcfcf5",
             color: "#333333",
             padding: "20px",
             display: "flex",
@@ -60,13 +71,12 @@ export default async function OpengraphImage({
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              borderTopLeftRadius: "32px",
-              borderBottomLeftRadius: "32px",
+              borderRadius: "32px",
               overflow: "hidden",
             }}
           >
             <img
-              src={`data:image/png;base64,${convertedImageBuffer.toString(
+              src={`data:image/png;base64,${convertedRecipeImageBuffer.toString(
                 "base64"
               )}`}
               style={{
@@ -78,18 +88,17 @@ export default async function OpengraphImage({
           </div>
           <div
             style={{
-              background: "#fefef5",
+              background: "#fcfcf5",
               display: "flex",
               width: "50%",
               height: "100%",
               padding: "25px",
               flexDirection: "column",
               justifyContent: "center",
-              borderTopRightRadius: "32px",
-              borderBottomRightRadius: "32px",
+              borderRadius: "32px",
             }}
           >
-            <p style={{ fontSize: "32px", lineHeight: "2px" }}>
+            <p style={{ fontSize: "32px", margin: 0, padding: 0 }}>
               たまごかけごはん<span style={{ color: "#D97706" }}>.</span>com
             </p>
             <h1
@@ -99,6 +108,9 @@ export default async function OpengraphImage({
                 display: "flex",
                 fontWeight: "700",
                 fontSize: "56px",
+                marginTop: "5px",
+                marginBottom: "5px",
+                padding: 0,
               }}
             >
               {recipe.title}
@@ -106,19 +118,26 @@ export default async function OpengraphImage({
             <div
               style={{
                 width: "100%",
+                height: "44px",
+                margin: 0,
+                padding: 0,
                 display: "flex",
-                justifyContent: "flex-end", // ここで右寄せ
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                gap: "10px",
               }}
             >
               <p
                 style={{
-                  fontWeight: "400",
-                  fontSize: "28px",
-                  color: "#6B7280",
-                  lineHeight: "2px",
+                  height: "100%",
+                  fontSize: "32px",
+                  margin: 0,
+                  padding: 0,
+                  lineHeight: "44px",
                 }}
               >
-                by {recipe.user.nickname}
+                by{recipe.user.nickname}
               </p>
             </div>
           </div>
@@ -162,5 +181,32 @@ const DefaultRecipeImage = () => {
       </div>
     ),
     { width: 630, height: 630 }
+  );
+};
+
+const DefaultUserImage = () => {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          background: "#E5E7EB",
+          color: "#9CA3AF",
+          fontSize: "24px",
+          padding: "10px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <img
+          src="https://たまごかけごはん.com/images/default_avatar.png"
+          alt="user_image"
+        />
+      </div>
+    ),
+    { width: 32, height: 32 }
   );
 };

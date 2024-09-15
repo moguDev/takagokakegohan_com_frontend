@@ -3,11 +3,15 @@ import { useAuth } from "@/hooks/useAuth";
 import { useEditRecipe } from "@/hooks/useEditRecipe";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import XIcon from "@mui/icons-material/X";
 
 export const SideNavigation = () => {
   const pathName = usePathname();
   const { auth } = useAuth();
   const { create } = useEditRecipe();
+  const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    "たまごかけごはん.com : たまごかけごはん専用の料理レシピサービス"
+  )}&url=${encodeURIComponent("https://たまごかけごはん.com")}`;
 
   const handleCreateRecipe = () => {
     create();
@@ -108,6 +112,19 @@ export const SideNavigation = () => {
           <span className="material-icons mr-1">edit</span>
           新しいレシピを書く
         </button>
+      </li>
+      <li
+        className={`mt-4 bg-black text-white font-bold rounded-l-md transition-all duration-500 shadow-md hover:brightness-110 active:shadow-none`}
+      >
+        <a
+          href={twitterShareUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-5 flex items-center"
+        >
+          <XIcon style={{ fontSize: "20px", color: "fcfcf5" }} />
+          でアプリをシェアする
+        </a>
       </li>
     </ul>
   );

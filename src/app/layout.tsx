@@ -6,6 +6,7 @@ import { TabNavigation } from "@/components/TabNavigation";
 import { Zen_Kaku_Gothic_New } from "next/font/google";
 import { SideNavigation } from "@/components/SideNavigation";
 import { CardMenu } from "@/components/CardMenu";
+import { Footer } from "@/components/Footer";
 
 export const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -62,7 +63,7 @@ export default function RootLayout({
               <main className="md:pt-20 pt-[72px] relative w-screen">
                 <Header />
                 <div className="flex w-full">
-                  <div className="md:pb-0 pb-16 md:px-5 px-2 w-full h-full">
+                  <div className="pb-16 md:px-5 px-2 w-full h-full">
                     {children}
                   </div>
                   <div className="w-96 relative md:block hidden">
@@ -71,6 +72,9 @@ export default function RootLayout({
                 </div>
                 <div className="w-full md:hidden">
                   <TabNavigation />
+                </div>
+                <div className="w-full md:flex hidden">
+                  <Footer />
                 </div>
               </main>
             </div>
