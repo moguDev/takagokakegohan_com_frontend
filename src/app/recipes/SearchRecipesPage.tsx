@@ -3,7 +3,6 @@
 import { RecipeCard } from "@/components/RecipeCard";
 import { useSearch } from "@/hooks/useSearch";
 import { useRouter, useSearchParams } from "next/navigation";
-import Loading from "../loading";
 import { SearchBar } from "@/components/SearchBar";
 
 export const SearchRecipesPage = () => {

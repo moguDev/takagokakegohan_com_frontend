@@ -19,6 +19,7 @@ type FormData = {
 
 export const SignupForm = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+  const [termIsChecked, setTermIsChecked] = useState(false);
   const { auth, loading, signup, errors: authErrors } = useAuth();
   const setToast = useSetRecoilState(toastState);
   const { isUnique, checkName } = useCheckName();
@@ -36,12 +37,15 @@ export const SignupForm = () => {
     watch,
     formState: { errors },
   } = useForm({ defaultValues });
-  const [isChecked, setIsChecked] = useState<boolean>(false);
   const name = watch("name");
 
   useEffect(() => {
     checkName(name);
   }, [name, checkName]);
+
+  const handleCheckboxChange = () => {
+    setTermIsChecked((prev) => !prev);
+  };
 
   const onsubmit = async (data: FormData) => {
     try {
@@ -58,11 +62,6 @@ export const SignupForm = () => {
     return <></>;
   }
 
-  if (process.env.NEXT_PUBLIC_MAINTENANCE_MODE) {
-    setToast({ message: "メンテナンス中", case: "alert" });
-    router.push("/signin");
-    return <></>;
-  }
   return (
     <div className="relative">
       <Loading text="アカウントを作成しています..." loading={loading} />
@@ -225,9 +224,9 @@ export const SignupForm = () => {
           <label className="flex items-center cursor-pointer text-xs mx-1 mb-5">
             <input
               type="checkbox"
-              checked={isChecked}
-              onClick={() => setIsChecked((prev) => !prev)}
-              className="checkbox checkbox-info mr-1"
+              checked={termIsChecked}
+              onChange={handleCheckboxChange}
+              className="scale-125 mr-1"
             />
             <span>
               <Link
@@ -249,8 +248,11 @@ export const SignupForm = () => {
           <button
             type="submit"
             className={`
-              bg-yellow-600 px-6 py-4 rounded mx-1transition-all duration-300 active:scale-95 w-full
+              ${
+                termIsChecked ? "bg-yellow-600 active:scale-95" : "bg-gray-300"
+              } px-6 py-4 rounded mx-1 transition-all duration-300 w-full
             `}
+            disabled={!termIsChecked}
           >
             <p className="text-white font-semibold flex items-center justify-center">
               <span className="material-icons mr-1">person_add</span>
