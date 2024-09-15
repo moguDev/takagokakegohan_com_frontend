@@ -69,7 +69,7 @@ export default async function OpengraphImage({
             }}
           >
             <img
-              src="http://localhost:3030/images/app-logo.png"
+              src="https://たまごかけごはん.com/images/app-logo.png"
               alt="logo"
               style={{ width: "300px" }}
             />

@@ -33,7 +33,7 @@ export const RecipeDetailsPage = () => {
   } = useBookmark(id as string);
   const router = useRouter();
   const pathName = usePathname();
-  const currentUrl = `https://たまごかけごはん.com${pathName}`;
+  const currentUrl = `https://tamagokakegohan.com${pathName}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${
     recipe?.title
   }${" by "}${recipe?.user.nickname}&url=${currentUrl}`;
