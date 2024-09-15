@@ -12,18 +12,23 @@ export default async function OpengraphImage({
 }: {
   params: { id: string };
 }) {
+  const css = `
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap');
+
+    body {
+      font-family: 'Zen+Kaku+Gothic+New', sans-serif;
+    }
+  `;
   const { id } = params;
   const res = await axiosInstance.get(`/recipes/${id}`);
   const recipe = res.data;
-  // recipe.image.url が null または undefined の場合、デフォルト画像を使用
   const imageUrl = getImageUrl(recipe.image.url);
 
   try {
-    // 画像を取得
-    const imageResponse = imageUrl
+    const recipeImageResponse = imageUrl
       ? await fetch(imageUrl!)
       : DefaultRecipeImage();
-    const imageBuffer = await imageResponse.arrayBuffer();
+    const imageBuffer = await recipeImageResponse.arrayBuffer();
     const convertedImageBuffer = await sharp(Buffer.from(imageBuffer))
       .png()
       .toBuffer();
@@ -33,7 +38,7 @@ export default async function OpengraphImage({
         <div
           style={{
             background: "#FCD34D",
-            padding: "10px",
+            padding: "20px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
@@ -42,18 +47,20 @@ export default async function OpengraphImage({
             height: "100%",
           }}
         >
+          <style>{css}</style>
           <div
             style={{
               width: "50%",
               height: "100%",
-              borderTopLeftRadius: "20px",
-              borderBottomLeftRadius: "20px",
+              borderTopLeftRadius: "32px",
+              borderBottomLeftRadius: "32px",
               backgroundImage: `url(data:image/png;base64,${convertedImageBuffer.toString(
                 "base64"
               )})`,
-              backgroundSize: "cover", // 画像を要素に合わせて拡大・縮小
-              backgroundPosition: "center", // 中心を基準に切り抜き
-              backgroundRepeat: "no-repeat", // 画像の繰り返しを無効化
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
             }}
           />
           <div
@@ -62,21 +69,24 @@ export default async function OpengraphImage({
               display: "flex",
               width: "50%",
               height: "100%",
+              padding: "25px",
               flexDirection: "column",
-              alignItems: "center",
               justifyContent: "center",
-              borderTopRightRadius: "20px",
-              borderBottomRightRadius: "20px",
+              borderTopRightRadius: "32px",
+              borderBottomRightRadius: "32px",
             }}
           >
+            <img
+              src="http://localhost:3030/images/app-logo.png"
+              alt="logo"
+              style={{ width: "300px" }}
+            />
             <h1
-              className="zen-kaku-gothic-new-bold"
               style={{
                 maxWidth: "100%",
                 display: "flex",
-                fontWeight: "bolder",
+                fontWeight: "700",
                 fontSize: "40px",
-                fontFamily: "Noto Sans JP, sans-serif",
               }}
             >
               {recipe.title}
@@ -85,10 +95,9 @@ export default async function OpengraphImage({
               style={{
                 maxWidth: "100%",
                 display: "flex",
-                fontWeight: "bolder",
-                fontSize: "32px",
+                fontWeight: "20px",
+                fontSize: "28px",
                 color: "#6B7280",
-                fontFamily: "Noto Sans JP, sans-serif",
               }}
             >
               {recipe.user.nickname}
