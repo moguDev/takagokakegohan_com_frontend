@@ -53,9 +53,9 @@ export default async function OpengraphImage({
       (
         <div
           style={{
-            background: "#fcfcf5",
+            background: "#FDE68AAA",
             color: "#333333",
-            padding: "20px",
+            padding: "15px",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
@@ -71,7 +71,8 @@ export default async function OpengraphImage({
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
-              borderRadius: "32px",
+              borderTopLeftRadius: "32px",
+              borderBottomLeftRadius: "32px",
               overflow: "hidden",
             }}
           >
@@ -92,10 +93,11 @@ export default async function OpengraphImage({
               display: "flex",
               width: "50%",
               height: "100%",
-              padding: "25px",
+              padding: "15px",
               flexDirection: "column",
               justifyContent: "center",
-              borderRadius: "32px",
+              borderTopRightRadius: "32px",
+              borderBottomRightRadius: "32px",
             }}
           >
             <p style={{ fontSize: "32px", margin: 0, padding: 0 }}>
@@ -107,7 +109,7 @@ export default async function OpengraphImage({
                 maxWidth: "100%",
                 display: "flex",
                 fontWeight: "700",
-                fontSize: "56px",
+                fontSize: "60px",
                 marginTop: "5px",
                 marginBottom: "5px",
                 padding: 0,

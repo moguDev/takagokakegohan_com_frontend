@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title:
+    "プライバシーポリシー | たまごかけごはん.com : たまごかけごはん専用の料理レシピサービス",
+};
+
 export default function PrivacyPage() {
   return (
     <div className="max-w-4xl mx-auto px-10 py-5 mb-5 bg-white rounded-md text-sm select-none">

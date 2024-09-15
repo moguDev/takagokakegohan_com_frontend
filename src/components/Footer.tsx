@@ -2,14 +2,14 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="fixed bottom-0 mt-5 p-2 bg-black text-white w-full bg-opacity-90 backdrop-blur">
+    <footer className="fixed bottom-0 mt-5 p-1.5 bg-black text-white w-full bg-opacity-90 backdrop-blur">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <Link
             href="/terms"
             className="lg:text-center text-sm px-3 py-1 hover:text-blue-300 hover:underline transition-all duration-300"
           >
-            利用規約
+            ご利用規約
           </Link>
           <Link
             href="/privacy"

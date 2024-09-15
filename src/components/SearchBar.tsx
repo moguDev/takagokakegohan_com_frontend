@@ -1,16 +1,23 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { toastState } from "./Toast";
 
 export const SearchBar = () => {
   const router = useRouter();
+  const setToast = useSetRecoilState(toastState);
   const [query, setQuery] = useState<string>("");
   const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setQuery(e.target.value);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    router.push(`/recipes?q=${encodeURIComponent(query)}`);
+    if (query !== "") {
+      router.push(`/recipes?q=${encodeURIComponent(query)}`);
+    } else {
+      setToast({ message: "キーワードが入力されていません", case: "alert" });
+    }
   };
 
   return (
