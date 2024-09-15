@@ -17,7 +17,7 @@ export async function generateMetadata({
     openGraph: {
       title: recipe?.title,
       description: recipe?.body ? recipe.body : "",
-      url: `https://たまごかけごはん.com/recipes/${id}`,
+      url: `https://tamagokakegohan.com/recipes/${id}`,
       images: [
         {
           url: `https://たまごかけごはん.com/recipes/${id}/opengraph-image`,
@@ -32,9 +32,7 @@ export async function generateMetadata({
       card: "summary_large_image",
       title: recipe?.title,
       description: recipe.body || "たまごかけごはん専用の料理レシピサービス",
-      images: recipe?.image.url
-        ? recipe.image.url
-        : "https://たまごかけごはん.com/images/opengraph-image.png",
+      images: `https://たまごかけごはん.com/recipes/${id}/opengraph-image`,
     },
   };
 }
