@@ -139,15 +139,21 @@ export const RecipeDetailsPage = () => {
                   </h2>
                   <ul className="p-1 divide-y divide-gray-300 divide-dashed">
                     {recipe.recipeIngredients &&
-                      recipe?.recipeIngredients.map((ingredient, index) => (
-                        <li key={index} className="my-auto py-2">
-                          <span className="font-black text-yellow-600">・</span>
-                          <span className="font-semibold">
-                            {ingredient.ingredientName}
-                          </span>
-                          <span className="ml-2">{ingredient.amount}</span>
-                        </li>
-                      ))}
+                      recipe?.recipeIngredients
+                        .sort(
+                          (a, b) => a.ingredientNumber! - b.ingredientNumber!
+                        )
+                        .map((ingredient, index) => (
+                          <li key={index} className="my-auto py-2">
+                            <span className="font-black text-yellow-600">
+                              ・
+                            </span>
+                            <span className="font-semibold">
+                              {ingredient.ingredientName}
+                            </span>
+                            <span className="ml-2">{ingredient.amount}</span>
+                          </li>
+                        ))}
                   </ul>
                 </div>
               </section>
@@ -162,16 +168,18 @@ export const RecipeDetailsPage = () => {
             </h2>
             <section className="divide-y divide-gray-300 divide-dashed p-1">
               {recipe.steps &&
-                recipe?.steps.map((step, index) => (
-                  <ul key={index} className="py-3">
-                    <li className="flex items-start mr-2">
-                      <span className="font-bold text-center text-gray-500 w-5 mr-1">
-                        {step.stepNumber}.
-                      </span>
-                      <p>{step.instruction}</p>
-                    </li>
-                  </ul>
-                ))}
+                recipe?.steps
+                  .sort((a, b) => a.stepNumber! - b.stepNumber!)
+                  .map((step, index) => (
+                    <ul key={index} className="py-3">
+                      <li className="flex items-start mr-2">
+                        <span className="font-bold text-center text-gray-500 w-5 mr-1">
+                          {step.stepNumber}.
+                        </span>
+                        <p>{step.instruction}</p>
+                      </li>
+                    </ul>
+                  ))}
             </section>
           </section>
         </div>

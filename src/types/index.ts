@@ -23,6 +23,7 @@ export type Recipe = {
 export type Ingredient = {
   ingredientName: string;
   amount: string;
+  ingredientNumber?: number;
 };
 
 export type Step = {
