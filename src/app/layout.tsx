@@ -7,6 +7,7 @@ import { Zen_Kaku_Gothic_New } from "next/font/google";
 import { SideNavigation } from "@/components/SideNavigation";
 import { CardMenu } from "@/components/CardMenu";
 import { Footer } from "@/components/Footer";
+import GoogleAnalytics from "@/components/googleAnalytics/GoogleAnalytics";
 
 export const font = Zen_Kaku_Gothic_New({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png"></link>
         <meta name="theme-color" content="#fcfcf5" />
+        <GoogleAnalytics />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
