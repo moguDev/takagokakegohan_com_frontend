@@ -47,11 +47,11 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon.png"></link>
         <meta name="theme-color" content="#fcfcf5" />
-        <GoogleAnalytics />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
         />
+        <GoogleAnalytics />
       </head>
       <body className={`${font.className} text-black bg-theme`}>
         <RecoilRootWrapper>
