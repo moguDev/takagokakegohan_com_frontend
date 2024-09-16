@@ -79,14 +79,21 @@ export const RecipesEditForm: React.FC = () => {
       setValue("cookingTime", recipe.cookingTime);
       setValue(
         "ingredients",
-        recipe.recipeIngredients.map(({ ingredientName, amount }) => ({
-          name: ingredientName,
-          amount,
-        })) || [{ name: "", amount: "" }]
+        recipe.recipeIngredients
+          .sort((a, b) => a.ingredientNumber! - b.ingredientNumber!)
+          .map(({ ingredientName, amount }) => ({
+            name: ingredientName,
+            amount,
+          })) || [{ name: "", amount: "" }]
       );
-      setValue("steps", recipe.steps || [{ instruction: "", image: null }]);
+      setValue(
+        "steps",
+        recipe.steps.sort((a, b) => a.stepNumber! - b.stepNumber!) || [
+          { instruction: "", image: null },
+        ]
+      );
     }
-  }, [recipe]);
+  }, [auth, recipe]);
 
   useEffect(() => {
     if (imageFile && imageFile[0]) {
