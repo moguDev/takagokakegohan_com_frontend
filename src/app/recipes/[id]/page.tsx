@@ -17,7 +17,7 @@ export async function generateMetadata({
     openGraph: {
       title: `${recipe?.title} | たまごかけごはん.com`,
       description: recipe?.body ? recipe.body : "",
-      url: `https://tamagokakegohan.com/recipes/${id}`,
+      url: `https://たまごかけごはん.com/recipes/${id}`,
       images: [
         {
           url: `https://たまごかけごはん.com/recipes/${id}/opengraph-image`,
