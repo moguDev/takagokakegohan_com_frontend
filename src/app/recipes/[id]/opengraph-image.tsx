@@ -93,7 +93,7 @@ export default async function OpengraphImage({
               display: "flex",
               width: "50%",
               height: "100%",
-              padding: "15px",
+              padding: "20px",
               flexDirection: "column",
               justifyContent: "center",
               borderTopRightRadius: "32px",
