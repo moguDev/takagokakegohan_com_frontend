@@ -139,7 +139,8 @@ export default async function OpengraphImage({
                   lineHeight: "44px",
                 }}
               >
-                by{recipe.user.nickname}
+                {"by "}
+                {recipe.user.nickname}
               </p>
             </div>
           </div>
