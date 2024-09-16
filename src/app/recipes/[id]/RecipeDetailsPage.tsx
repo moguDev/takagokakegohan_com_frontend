@@ -35,7 +35,7 @@ export const RecipeDetailsPage = () => {
   const pathName = usePathname();
   const currentUrl = `https://たまごかけごはん.com${pathName}`;
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    `${recipe?.title} by ${recipe?.user.nickname} #たまごかけごはん #TKG`
+    `${recipe?.title} by ${recipe?.user.nickname} \n #たまごかけごはん #TKG \n`
   )}&url=${encodeURIComponent(currentUrl)}`;
 
   return recipe ? (

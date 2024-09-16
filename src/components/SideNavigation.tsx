@@ -10,7 +10,7 @@ export const SideNavigation = () => {
   const { auth } = useAuth();
   const { create } = useEditRecipe();
   const twitterShareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    "たまごかけごはん.com : たまごかけごはん専用の料理レシピサービス"
+    `たまごかけごはん.com : たまごかけごはん専用の料理レシピサービス \n #たまごかけごはん #TKG \n`
   )}&url=${encodeURIComponent("https://たまごかけごはん.com")}`;
 
   const handleCreateRecipe = () => {

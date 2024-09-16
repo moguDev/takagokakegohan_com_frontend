@@ -87,7 +87,7 @@ export const RecipesPage = () => {
         fetch();
         break;
     }
-  }, [selectIndex, fetch]);
+  }, [selectIndex, fetch, auth]);
 
   return (
     <div className="w-full h-auto -translate-y-2">
