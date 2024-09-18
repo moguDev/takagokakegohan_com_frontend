@@ -201,7 +201,7 @@ export const RecipeDetailsPage = () => {
             className="flex items-center my-btn text-sm pl-1"
           >
             <span className="material-icons">navigate_before</span>
-            もどる
+            {window.history.length > 1 ? "もどる" : "トップへ"}
           </button>
           <div className="flex items-center justify-end px-3 py-2">
             {recipe.status === "published" && (
