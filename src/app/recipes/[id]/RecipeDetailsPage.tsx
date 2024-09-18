@@ -191,7 +191,13 @@ export const RecipeDetailsPage = () => {
         md:mb-2 mt-2 py-2 flex justify-between`}
         >
           <button
-            onClick={() => router.back()}
+            onClick={() => {
+              if (window.history.length > 1) {
+                router.back();
+              } else {
+                router.push("/");
+              }
+            }}
             className="flex items-center my-btn text-sm pl-1"
           >
             <span className="material-icons">navigate_before</span>
