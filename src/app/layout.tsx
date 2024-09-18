@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   title: "たまごかけごはん.com : たまごかけごはん専用の料理レシピサービス",
   description: "たまごかけごはん専用の料理レシピサービス",
   openGraph: {
-    title: "たまごかけごはん.com",
+    title: "たまごかけごはん.com | たまごかけごはん専用の料理レシピサービス",
     description: "たまごかけごはん専用の料理レシピサービス",
     url: "https://たまごかけごはん.com",
     siteName: "たまごかけごはん.com",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "たまごかけごはん.com",
+    title: "たまごかけごはん.com | たまごかけごはん専用の料理レシピサービス",
     description: "たまごかけごはん専用の料理レシピサービス",
     images: "https://たまごかけごはん.com/images/opengraph-image.png",
   },
