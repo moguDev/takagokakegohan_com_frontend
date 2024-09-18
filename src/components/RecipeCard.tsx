@@ -32,6 +32,7 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                 </div>
               )}
               <Image
+                key={recipe.id}
                 src={getImageUrl(recipe.image.url) || defaultImage}
                 alt={recipe.title}
                 className="object-cover rounded"
