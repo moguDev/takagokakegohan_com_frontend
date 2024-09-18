@@ -5,7 +5,6 @@ import { Recipe } from "@/types";
 import defaultImage from "/public/images/default_avatar.png";
 import { getImageUrl } from "@/lib";
 import { useState } from "react";
-import { Loading } from "./Loading";
 
 export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,7 +36,8 @@ export const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
                 alt={recipe.title}
                 className="object-cover rounded"
                 fill
-                onLoadingComplete={() => setIsLoading(false)}
+                loading="lazy"
+                onLoad={() => setIsLoading(false)}
                 unoptimized
               />
             </>
